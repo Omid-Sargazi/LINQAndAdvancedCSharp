@@ -11,6 +11,16 @@ builder.Services.AddDbContext<AdventureWorks2019Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379";
+    options.InstanceName = "AdventureWorksRedis";
+});
+
+
+
+builder.Services.AddMemoryCache();  
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
