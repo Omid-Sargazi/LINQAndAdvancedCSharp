@@ -47,6 +47,26 @@ namespace AdventureWorksLINQ.Controllers
             .ToList();
             return Ok(products);
         }
+
+        [HttpGet("orders/by-year/{year:int}")]
+        public IActionResult GetOrdersByYear(int year)
+        {
+            var orders = _context.SalesOrderHeaders
+            .Where(o => o.OrderDate.Year == year)
+            .Include(o => o.Customer)
+            .ThenInclude(c => c.Person)
+            .Select(o => new
+            {
+                o.SalesOrderId,
+                o.OrderDate,
+                CustomerName = o.Customer.Person != null ? o.Customer.Person.FirstName + " " + o.Customer.Person.LastName : "N/A",
+            })
+            .OrderByDescending(o => o.OrderDate)
+            .Take(20)
+            .ToList();
+
+            return Ok(orders);
+        }
     }
 
 }
