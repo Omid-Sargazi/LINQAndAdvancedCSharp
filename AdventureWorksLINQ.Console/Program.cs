@@ -3,4 +3,5 @@ using AdventureWorksLINQ.Console.Product;
 
 Console.WriteLine("Hello, World!");
 
-ActiveProducts.Run();
+// ActiveProducts.Run();
+ProductOfSubcategory.Run();

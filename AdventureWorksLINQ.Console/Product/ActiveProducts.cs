@@ -18,7 +18,7 @@ namespace AdventureWorksLINQ.Console.Product
             }).Take(10)
             .ToList();
 
-           foreach (var product in activeProducts)
+            foreach (var product in activeProducts)
             {
                 System.Console.WriteLine($"Name: {product.Name}, Number: {product.ProductNumber}");
             }
