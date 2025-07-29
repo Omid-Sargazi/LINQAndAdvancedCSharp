@@ -1,12 +1,13 @@
 using AdventureWorksLINQ.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksLINQ.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController:ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly AdventureWorks2019Context _context;
         public ProductsController(AdventureWorks2019Context context)
@@ -26,7 +27,25 @@ namespace AdventureWorksLINQ.Controllers
             }).Take(10)
             .ToList();
             return Ok(result);
-            
+
+        }
+
+        [HttpGet("by-subcategory/{subcategoryId:int}")]
+        public IActionResult GetProductsBySubcategory(int subcategoryId)
+        {
+            var products = _context.Products
+            .Where(p => p.ProductSubcategoryId == subcategoryId)
+            .Include(p => p.ProductSubcategory)
+            .ThenInclude(sc => sc.ProductCategory)
+            .Select(p => new
+            {
+                p.Name,
+                p.ProductNumber,
+                Subcategory = p.ProductSubcategory!.Name,
+                Category = p.ProductSubcategory.ProductCategory!.Name
+            }).OrderBy(p => p.Name)
+            .ToList();
+            return Ok(products);
         }
     }
 
