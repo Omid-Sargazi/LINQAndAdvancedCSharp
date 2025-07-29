@@ -67,6 +67,43 @@ namespace AdventureWorksLINQ.Controllers
 
             return Ok(orders);
         }
+
+        [HttpGet("topselling/join/sync")]
+        public IActionResult GetTopSellingProductsSync()
+        {
+            var topProducts = (from detail in _context.SalesOrderDetails
+                               join product in _context.Products on detail.ProductId equals product.ProductId
+                               group detail by new { product.ProductId, product.Name, product.ProductNumber } into g
+                               select new
+                               {
+                                   g.Key.ProductId,
+                                   g.Key.ProductNumber,
+                                   TotalQuantity = g.Sum(g => g.OrderQty)
+                               }
+            ).OrderByDescending(p => p.TotalQuantity)
+            .Take(10)
+            .ToList();
+            return Ok(topProducts);
+        }
+        [HttpGet("topselling/join/async")]
+        public async Task<IActionResult> GetTopSellingProductsAsync()
+        {
+            var topProducts = await (from detail in _context.SalesOrderDetails
+                                     join product in _context.Products on detail.ProductId equals product.ProductId
+                                     group detail by new { product.ProductId, product.Name, product.ProductNumber } into g
+                                     select new
+                                     {
+                                         g.Key.Name,
+                                         g.Key.ProductNumber,
+                                         TotalQuantity = g.Sum(d => d.OrderQty)
+                                     })
+                                     .OrderByDescending(p => p.TotalQuantity)
+                                     .Take(10)
+                                     .ToListAsync();
+
+            return Ok(topProducts);
+        }
+
     }
 
 }
