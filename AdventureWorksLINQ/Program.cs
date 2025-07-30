@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AdventureWorks2019Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        options.UseLazyLoadingProxies();
+    }
 );
 
 builder.Services.AddStackExchangeRedisCache(options =>
