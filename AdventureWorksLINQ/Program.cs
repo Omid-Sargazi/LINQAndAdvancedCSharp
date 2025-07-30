@@ -1,3 +1,4 @@
+using AdventureWorksLINQ.AuthDemo.Infrastructure.Auth;
 using AdventureWorksLINQ.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,11 @@ builder.Services.AddDbContext<AdventureWorks2019Context>(options =>
         options.UseLazyLoadingProxies();
     }
 );
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
+});
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
