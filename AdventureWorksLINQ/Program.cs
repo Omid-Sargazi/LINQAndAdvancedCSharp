@@ -1,4 +1,6 @@
+using AdventureWorksLINQ.AuthDemo.Application.Services;
 using AdventureWorksLINQ.AuthDemo.Infrastructure.Auth;
+using AdventureWorksLINQ.AuthDemo.Infrastructure.Services;
 using AdventureWorksLINQ.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +21,9 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
 });
+
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
