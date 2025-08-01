@@ -24,6 +24,13 @@ public partial class AdventureWorks2019Context : DbContext
         .ToListAsync();
     }
 
+    public async Task<List<CustomerOrderDto>> GetOrdersByCustomerAsync(int customerId)
+    {
+        return await this.Set<CustomerOrderDto>()
+        .FromSqlInterpolated($"EXCE GetOrdersByCustomer @CustomerId={customerId}").ToListAsync();
+
+    }
+
     public virtual DbSet<Address> Addresses { get; set; }
 
     public virtual DbSet<AddressType> AddressTypes { get; set; }
