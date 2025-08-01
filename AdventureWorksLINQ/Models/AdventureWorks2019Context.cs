@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AdventureWorksLINQ.AdventureWorks.Application.Features.Orders.Queries.GetOrdersByCustomer;
 using AdventureWorksLINQ.AdventureWorks.Application.Features.Orders.Queries.GetTopOrders;
 using Microsoft.EntityFrameworkCore;
 
@@ -208,6 +209,7 @@ public partial class AdventureWorks2019Context : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TopOrderDto>().HasNoKey();
+        modelBuilder.Entity<CustomerOrderDto>().HasNoKey();
         modelBuilder.Entity<Address>(entity =>
         {
             entity.HasKey(e => e.AddressId).HasName("PK_Address_AddressID");
