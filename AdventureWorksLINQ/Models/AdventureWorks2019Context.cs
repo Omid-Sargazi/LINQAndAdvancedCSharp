@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AdventureWorksLINQ.AdventureWorks.Application.Features.Orders.Queries.GetTopOrders;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksLINQ.Models;
@@ -13,6 +14,13 @@ public partial class AdventureWorks2019Context : DbContext
     public AdventureWorks2019Context(DbContextOptions<AdventureWorks2019Context> options)
         : base(options)
     {
+    }
+
+    public async Task<List<TopOrderDto>> GetTopOrdersFromSPAsync()
+    {
+        return await this.Set<TopOrderDto>()
+        .FromSqlRaw("EXEC GetTop5Orders")
+        .ToListAsync();
     }
 
     public virtual DbSet<Address> Addresses { get; set; }
@@ -199,6 +207,7 @@ public partial class AdventureWorks2019Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<TopOrderDto>().HasNoKey();
         modelBuilder.Entity<Address>(entity =>
         {
             entity.HasKey(e => e.AddressId).HasName("PK_Address_AddressID");

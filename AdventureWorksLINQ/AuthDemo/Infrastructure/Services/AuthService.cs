@@ -37,13 +37,14 @@ namespace AdventureWorksLINQ.AuthDemo.Infrastructure.Services
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
             return GenerateToken(user);
         }
 
         public async Task<AuthResult> LoginAsync(LoginRequest request)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == request.Email);
-            if (user == null || BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
                 throw new Exception("Invalid email or password.");
             return GenerateToken(user);
 
