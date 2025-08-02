@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AdventureWorksLINQ.AdventureWorks.Application.Features.Orders.Queries.GetOrdersByCustomer;
 using AdventureWorksLINQ.AdventureWorks.Application.Features.Orders.Queries.GetTopOrders;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksLINQ.Models;
@@ -27,7 +28,7 @@ public partial class AdventureWorks2019Context : DbContext
     public async Task<List<CustomerOrderDto>> GetOrdersByCustomerAsync(int customerId)
     {
         return await this.Set<CustomerOrderDto>()
-        .FromSqlInterpolated($"EXCE GetOrdersByCustomer @CustomerId={customerId}").ToListAsync();
+        .FromSqlRaw("EXEC GetOrdersByCustomer  @CustomerId", new SqlParameter("@CustomerId", customerId)).ToListAsync();
 
     }
 
