@@ -17,6 +17,8 @@ namespace AdventureWorksLINQ.Console.EFCore
             var author12 = new Author { Id = 12, Name = "Vahid", Books = author12Books };
             var authors = new List<Author> { author10, author11, author12 };
 
+            var bookDetailsDto = new List<BookDetailsDto>();
+
 
             foreach (var author in authors)
             {
@@ -26,11 +28,25 @@ namespace AdventureWorksLINQ.Console.EFCore
                     foreach (var book in author.Books)
                     {
                         System.Console.WriteLine($"  - {book.Name}");
+
+                        bookDetailsDto.Add(new BookDetailsDto
+                        {
+                            Name = book.Name,
+                            AuthorName = author.Name
+                        });
                     }
                 }
 
             }
+
+
+            foreach (var detail in bookDetailsDto)
+            {
+
+            }
+
             
+
         }
     }
 
@@ -46,5 +62,11 @@ namespace AdventureWorksLINQ.Console.EFCore
         public int Id { get; set; }
         public string Name { get; set; }
         public int AuthorId { get; set; }
+    }
+
+    public class BookDetailsDto
+    {
+        public string Name { get; set; }
+        public string AuthorName { get; set; }
     }
 }
