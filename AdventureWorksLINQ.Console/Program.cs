@@ -1,8 +1,47 @@
-﻿// See https://aka.ms/new-console-template for more information
-using AdventureWorksLINQ.Console.Product;
+﻿using AdventureWorksLINQ.Console.EFCore;
+using Microsoft.EntityFrameworkCore;
 
-// Console.WriteLine("Hello, World!");
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<EFCoreDbcontext>();
+        optionsBuilder.UseInMemoryDatabase("UniversityDB");
 
-// ActiveProducts.Run();
-// ProductOfSubcategory.Run();
-LoadingProduct.Run();
+        using (var context = new EFCoreDbcontext(optionsBuilder.Options))
+        {
+            var student1 = new Student { Name = "Ali" };
+            var student2 = new Student { Name = "Sara" };
+            var course1 = new Course { Title = "Mathematics" };
+            var course2 = new Course { Title = "Physics" };
+
+            context.Students.AddRange(student1, student2);
+            context.Courses.AddRange(course1, course2);
+
+            context.StudentCourses.AddRange(
+                new StudentCourse { Student = student1, Course = course1, EnrollmentDate = DateTime.Now },
+                new StudentCourse { Student = student1, Course = course2, EnrollmentDate = DateTime.Now },
+                new StudentCourse { Student = student2, Course = course2, EnrollmentDate = DateTime.Now },
+                new StudentCourse { Student = student2, Course = course1, EnrollmentDate = DateTime.Now }
+            );
+
+            context.SaveChanges();
+
+            var studentsWithMultipleCourses = context.Students
+            .Include(s => s.StudentCourses)
+            .ThenInclude(sc => sc.Course)
+            .Where(s => s.StudentCourses.Count > 1)
+            .Select(s => new
+            {
+                s.Name,
+                Courses = s.StudentCourses.Select(sc => sc.Course.Title).ToList()
+            }).ToList();
+
+            Console.WriteLine($"Students with more than one course:");
+            foreach (var student in studentsWithMultipleCourses)
+            {
+                Console.WriteLine($"Student: {student.Name}, Courses: {string.Join(", ", student.Courses)}");
+            }
+        }
+    }
+}
