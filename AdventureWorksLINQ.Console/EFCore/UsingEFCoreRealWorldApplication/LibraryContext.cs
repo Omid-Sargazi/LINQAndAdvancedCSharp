@@ -1,0 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+
+namespace AdventureWorksLINQ.Console.EFCore.UsingEFCoreRealWorldApplication
+{
+    public class LibraryContext : DbContext
+    {
+        public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) { }
+        public DbSet<Book> Books { get; set; }
+
+        
+    }
+}
