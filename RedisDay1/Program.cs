@@ -24,5 +24,6 @@ public class Program
         // redis.Dispose();
 
         await Excersice.Run();
+        await DateTimeEx.Run();
     }
 }
