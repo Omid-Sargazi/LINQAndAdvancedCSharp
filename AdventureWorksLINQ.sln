@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLINQ", "Adven
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksLINQ.Console", "AdventureWorksLINQ.Console\AdventureWorksLINQ.Console.csproj", "{5022650A-7E28-46BC-BD93-BDCBACA0785C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.ProducerDemo", "RabbitMQ.ProducerDemo\RabbitMQ.ProducerDemo.csproj", "{AA4F3EFC-E46F-49C3-9B48-EF411D1121CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{5022650A-7E28-46BC-BD93-BDCBACA0785C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5022650A-7E28-46BC-BD93-BDCBACA0785C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5022650A-7E28-46BC-BD93-BDCBACA0785C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4F3EFC-E46F-49C3-9B48-EF411D1121CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4F3EFC-E46F-49C3-9B48-EF411D1121CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4F3EFC-E46F-49C3-9B48-EF411D1121CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4F3EFC-E46F-49C3-9B48-EF411D1121CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
