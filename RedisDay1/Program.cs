@@ -23,7 +23,9 @@ public class Program
 
         // redis.Dispose();
 
-        await Excersice.Run();
-        await DateTimeEx.Run();
+        // await Excersice.Run();
+        // await DateTimeEx.Run();
+
+        await TempKey.Run();
     }
 }
