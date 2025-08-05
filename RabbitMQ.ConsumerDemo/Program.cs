@@ -31,7 +31,26 @@ consumer.Received += (model, ea) =>
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
     Console.WriteLine(" [x] Received: {0}", message);
+
+
+    try
+    {
+        Console.WriteLine(" ✅ Message processed.");
+        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(" ❌ Processing failed: " + ex.Message);
+        channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
+    }
+
 };
+
+
+
+
+
+
 
 channel.BasicConsume(queue: "my-queue",
     autoAck: true,
