@@ -4,6 +4,8 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 Console.WriteLine("Hello, World!");
+
+
 var factory = new ConnectionFactory()
 {
     HostName = "localhost",
@@ -12,6 +14,8 @@ var factory = new ConnectionFactory()
 };
 
 using var connection = factory.CreateConnection();
+
+
 using var channel = connection.CreateModel();
 
 channel.QueueDeclare(queue: "my-queue",
@@ -20,6 +24,7 @@ channel.QueueDeclare(queue: "my-queue",
     autoDelete: false,
     arguments: null
 );
+
 
 
 Console.WriteLine(" [*] Waiting for messages...");
@@ -35,6 +40,10 @@ consumer.Received += (model, ea) =>
 
     try
     {
+        if (message.Contains("error"))
+            throw new Exception("خطای شبیه‌سازی شده!");
+
+
         Console.WriteLine(" ✅ Message processed.");
         channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
     }
@@ -45,11 +54,6 @@ consumer.Received += (model, ea) =>
     }
 
 };
-
-
-
-
-
 
 
 channel.BasicConsume(queue: "my-queue",

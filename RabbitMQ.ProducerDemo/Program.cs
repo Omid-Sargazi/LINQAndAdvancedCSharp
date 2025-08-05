@@ -19,7 +19,9 @@ channel.QueueDeclare(queue: "my-queue",
                      autoDelete: false,
                      arguments: null);
 
-string message = "Hello RabbitMQ!";
+// string message = "Hello RabbitMQ!";
+string message = "This message contains error";
+
 var body = Encoding.UTF8.GetBytes(message);
 
 
