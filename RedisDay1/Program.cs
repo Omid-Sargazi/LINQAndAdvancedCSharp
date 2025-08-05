@@ -27,6 +27,7 @@ public class Program
         // await DateTimeEx.Run();
 
         // await TempKey.Run();
-        await ListRedis.Run();
+        // await ListRedis.Run();
+        await HashSetAsyncRedis.Run();
     }
 }
