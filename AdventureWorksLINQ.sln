@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.ConsumerDemo", "Ra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisDay1", "RedisDay1\RedisDay1.csproj", "{56415414-0E3F-4D96-A604-CA8D133D948A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.DLQDemo", "RabbitMQ.DLQDemo\RabbitMQ.DLQDemo.csproj", "{969A0285-3BF1-4D34-A12D-57C4B8C2FB87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{56415414-0E3F-4D96-A604-CA8D133D948A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56415414-0E3F-4D96-A604-CA8D133D948A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56415414-0E3F-4D96-A604-CA8D133D948A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{969A0285-3BF1-4D34-A12D-57C4B8C2FB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{969A0285-3BF1-4D34-A12D-57C4B8C2FB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{969A0285-3BF1-4D34-A12D-57C4B8C2FB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{969A0285-3BF1-4D34-A12D-57C4B8C2FB87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

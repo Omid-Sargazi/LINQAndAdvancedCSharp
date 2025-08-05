@@ -13,11 +13,17 @@ var factory = new ConnectionFactory()
 using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel();
 
-channel.QueueDeclare(queue: "my-queue",
+var mainQueueArgs = new Dictionary<string, object>
+{
+    {"x-dead-letter-exchange", "dlx"},
+    {"x-dead-letter-routing-key", "main-queue-dlq"}
+};
+
+channel.QueueDeclare(queue: "main-queue",
                      durable: false,
                      exclusive: false,
                      autoDelete: false,
-                     arguments: null);
+                     arguments: mainQueueArgs);
 
 // string message = "Hello RabbitMQ!";
 string message = "This message contains error";
@@ -26,7 +32,7 @@ var body = Encoding.UTF8.GetBytes(message);
 
 
 channel.BasicPublish(exchange: "",
-                     routingKey: "my-queue",
+                     routingKey: "main-queue",
                      basicProperties: null,
                      body: body);
 Console.WriteLine($"[x] Sent: {message}");

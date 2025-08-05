@@ -18,7 +18,7 @@ using var connection = factory.CreateConnection();
 
 using var channel = connection.CreateModel();
 
-channel.QueueDeclare(queue: "my-queue",
+channel.QueueDeclare(queue: "main-queue",
     durable: false,
     exclusive: false,
     autoDelete: false,
@@ -40,8 +40,8 @@ consumer.Received += (model, ea) =>
 
     try
     {
-        if (message.Contains("error"))
-            throw new Exception("خطای شبیه‌سازی شده!");
+        // if (message.Contains("error"))
+        //     throw new Exception("خطای شبیه‌سازی شده!");
 
 
         Console.WriteLine(" ✅ Message processed.");
@@ -55,9 +55,8 @@ consumer.Received += (model, ea) =>
 
 };
 
-
-channel.BasicConsume(queue: "my-queue",
-    autoAck: true,
+channel.BasicConsume(queue: "main-queue",
+    autoAck: false,
     consumer: consumer
 );
 
