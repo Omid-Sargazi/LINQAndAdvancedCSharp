@@ -26,6 +26,7 @@ public class Program
         // await Excersice.Run();
         // await DateTimeEx.Run();
 
-        await TempKey.Run();
+        // await TempKey.Run();
+        await ListRedis.Run();
     }
 }
