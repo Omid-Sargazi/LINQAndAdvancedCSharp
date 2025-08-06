@@ -29,6 +29,8 @@ public class Program
         // await TempKey.Run();
         // await ListRedis.Run();
         // await HashSetAsyncRedis.Run();
-        await RedisSet.Run();
+        // await RedisSet.Run();s
+        // await RedisSortedSet.Run();
+        await UserInfoSystemWithRedis.Run();
     }
 }
