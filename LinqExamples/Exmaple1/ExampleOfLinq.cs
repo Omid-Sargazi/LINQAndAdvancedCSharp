@@ -18,6 +18,9 @@ namespace LinqExamples.Exmaple1
 
             var flattened = listOfLists.SelectMany(x => x);
             Console.WriteLine(string.Join(',', flattened));
+
+            bool hasEven = numbers.Any(x => x % 2 == 0);
+            Console.WriteLine($"Is There Even In Numbers:{hasEven}");
         }
     }
 }
