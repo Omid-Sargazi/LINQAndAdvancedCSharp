@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisRelationships", "Redis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExamples", "LinqExamples\LinqExamples.csproj", "{A1E5CC5C-655C-4A03-95B4-64DA08B6F037}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtAuthLab", "JwtAuthLab\JwtAuthLab.csproj", "{7528811E-05D2-4BB8-96DF-66C421DE9C9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{A1E5CC5C-655C-4A03-95B4-64DA08B6F037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1E5CC5C-655C-4A03-95B4-64DA08B6F037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1E5CC5C-655C-4A03-95B4-64DA08B6F037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7528811E-05D2-4BB8-96DF-66C421DE9C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7528811E-05D2-4BB8-96DF-66C421DE9C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7528811E-05D2-4BB8-96DF-66C421DE9C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7528811E-05D2-4BB8-96DF-66C421DE9C9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
