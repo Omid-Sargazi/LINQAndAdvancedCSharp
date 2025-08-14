@@ -34,6 +34,20 @@ namespace LinqExamples.Exmaple1
 
             var skipTwo = numbers.Skip(2);
             Console.WriteLine(string.Join(", ", skipTwo));
+
+            var sorted = numbers.OrderBy(n => n);
+            Console.WriteLine(string.Join(",", sorted));
+
+            var sortedDesc = numbers.OrderByDescending(n => n);
+
+            var people = new[]
+            {
+                new{Name="Omid",Age=43},
+                new{Name="Saeed",Age=40},
+                new{Name="Vahid",Age=36}
+            };
+            var sortedThenBy = people.OrderBy(p => p.Name)
+            .ThenBy(p => p.Age);
         }
     }
 }
