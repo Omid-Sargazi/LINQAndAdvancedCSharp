@@ -4,14 +4,14 @@ namespace LinqExamples.Exmaple1
     {
         public static void Run()
         {
-            var numbers = new List<int> { 1, 22, 3, 4, 5, 6, 7, 8, 99 };
+            var numbers = new List<int> { 1, 22, 3, 4, 5, 6, 7, 8, 99, 99, 101, -99, 88, 0, 0 };
             var doubled = numbers.Select(n => n * 2);
             Console.WriteLine(string.Join(",", doubled));
 
 
             var listOfLists = new List<List<int>>
             {
-                new List<int>{1,2,3},
+                new (){1,2,3},
                 new List<int>{4,5,6},
                 new List<int>{7,8,9}
             };
@@ -21,6 +21,19 @@ namespace LinqExamples.Exmaple1
 
             bool hasEven = numbers.Any(x => x % 2 == 0);
             Console.WriteLine($"Is There Even In Numbers:{hasEven}");
+
+
+            var events = numbers.Where(n => n % 2 == 0).OrderDescending();
+            Console.WriteLine(string.Join(",", events));
+
+            var unique = numbers.Distinct();
+            Console.WriteLine(string.Join(",", unique));//==============Distinct
+
+            var firstTwo = numbers.Take(2);
+            Console.WriteLine(string.Join(", ", firstTwo));
+
+            var skipTwo = numbers.Skip(2);
+            Console.WriteLine(string.Join(", ", skipTwo));
         }
     }
 }
