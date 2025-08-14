@@ -43,11 +43,25 @@ namespace LinqExamples.Exmaple1
             var people = new[]
             {
                 new{Name="Omid",Age=43},
+                new{Name="Omid",Age=41},
+                new{Name="Omid",Age=40},
+                new{Name="Saeed",Age=40},
                 new{Name="Saeed",Age=40},
                 new{Name="Vahid",Age=36}
             };
-            var sortedThenBy = people.OrderBy(p => p.Name)
+            var sortedThenBy = people.OrderByDescending(p => p.Name)
             .ThenBy(p => p.Age);
+            Console.WriteLine(string.Join(",", sortedThenBy));
+
+            var groups = people.GroupBy(p => p.Name);
+            foreach (var group in groups)
+            {
+                Console.WriteLine($"Name,{group.Key}");
+                foreach (var name in group)
+                {
+                    Console.WriteLine($"-  {name.Name}");
+                }
+            }
         }
     }
 }
