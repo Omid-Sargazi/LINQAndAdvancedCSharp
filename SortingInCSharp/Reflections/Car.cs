@@ -4,6 +4,8 @@ namespace SortingInCSharp.Reflections
 {
     public class Car
     {
+        public string Model { get; set; }
+        public int Year { get; set; }
         public void Drive() { }
         public void Stop(){}
     }
@@ -19,6 +21,12 @@ namespace SortingInCSharp.Reflections
             foreach (var mth in methods)
             {
                 Console.WriteLine(mth.Name);
+            }
+
+            PropertyInfo[] properties = t.GetProperties();
+            foreach (var item in properties)
+            {
+                Console.WriteLine(item.Name);
             }
         }
     }
