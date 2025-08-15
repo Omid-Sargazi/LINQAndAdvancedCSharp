@@ -62,6 +62,36 @@ namespace LinqExamples.Exmaple1
                     Console.WriteLine($"-  {name.Name}");
                 }
             }
+
+            var lookup = people.ToLookup(p => p.Age);
+            foreach (var per in lookup[40])
+            {
+                Console.WriteLine(per);
+            }
+
+
+            var students = new[]
+            {
+                new {Id=1,Name="Omid"},
+                new {Id=2,Name="Saeed"},
+                new {Id=3,Name="Vahid"},
+                new {Id=4,Name="Sara"},
+                new {Id=5,Name="Kobi"},
+            };
+
+            var scores = new[]
+            {
+                new {StudentId=1,Score=20},
+                new {StudentId=2,Score=30},
+                new {StudentId=3,Score=40},
+            };
+
+            var joinResult = students.Join(scores,
+                s=>s.Id,
+                sc=>sc.StudentId,
+                (s,sc)=>new{s.Name,sc.Score}
+
+            );
         }
     }
 }
