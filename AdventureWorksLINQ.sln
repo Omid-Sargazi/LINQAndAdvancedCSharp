@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtLab", "JwtLab\JwtLab.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureEfCoreDemo", "SecureEfCoreDemo\SecureEfCoreDemo.csproj", "{B30F153D-53E6-41DB-AA3C-979E108679B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingInCSharp", "SortingInCSharp\SortingInCSharp.csproj", "{04FE5E8D-F31C-47E6-A978-AB418692CF29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,5 +80,9 @@ Global
 		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FE5E8D-F31C-47E6-A978-AB418692CF29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FE5E8D-F31C-47E6-A978-AB418692CF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FE5E8D-F31C-47E6-A978-AB418692CF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FE5E8D-F31C-47E6-A978-AB418692CF29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
