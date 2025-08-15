@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtAuthLab", "JwtAuthLab\Jw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtLab", "JwtLab\JwtLab.csproj", "{2BAC07BC-1933-40C4-85A8-9C8705A234EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureEfCoreDemo", "SecureEfCoreDemo\SecureEfCoreDemo.csproj", "{B30F153D-53E6-41DB-AA3C-979E108679B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,9 @@ Global
 		{2BAC07BC-1933-40C4-85A8-9C8705A234EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAC07BC-1933-40C4-85A8-9C8705A234EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAC07BC-1933-40C4-85A8-9C8705A234EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B30F153D-53E6-41DB-AA3C-979E108679B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
