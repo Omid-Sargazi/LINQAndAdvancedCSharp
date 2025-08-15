@@ -1,0 +1,25 @@
+using System.Reflection;
+
+namespace SortingInCSharp.Reflections
+{
+    public class Car
+    {
+        public void Drive() { }
+        public void Stop(){}
+    }
+
+    public class Reflection
+    {
+        public static void Run()
+        {
+            Type t = typeof(Car);
+            MethodInfo[] methods = t.GetMethods();
+
+            Console.WriteLine($"Type car is:{t.FullName}");
+            foreach (var mth in methods)
+            {
+                Console.WriteLine(mth.Name);
+            }
+        }
+    }
+}
