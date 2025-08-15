@@ -4,6 +4,8 @@ namespace SortingInCSharp.Reflections
 {
     public class Car
     {
+        public Car(){}
+        public Car(string model){}
         public string Brand;
         public string Model { get; set; }
         public int Year { get; set; }
@@ -30,7 +32,15 @@ namespace SortingInCSharp.Reflections
                 Console.WriteLine(item.Name);
             }
 
-            Get
+            foreach (var item in t.GetFields())
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            foreach (var item in t.GetConstructors())
+            {
+                Console.WriteLine(item.ToString());
+            }
         }
     }
 }
