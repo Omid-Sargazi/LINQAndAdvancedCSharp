@@ -87,11 +87,34 @@ namespace LinqExamples.Exmaple1
             };
 
             var joinResult = students.Join(scores,
-                s=>s.Id,
-                sc=>sc.StudentId,
-                (s,sc)=>new{s.Name,sc.Score}
+                s => s.Id,
+                sc => sc.StudentId,
+                (s, sc) => new { s.Name, sc.Score }
 
             );
+
+            foreach (var item in joinResult)
+            {
+                Console.WriteLine($"{item.Name},{item.Score}");
+            }
+
+
+            var leftJoinGroupJoin = students.GroupJoin(scores,
+                s => s.Id,
+                sc => sc.StudentId,
+                (s, sc) => new { s.Name, Score = sc }
+            );
+
+            foreach (var item in leftJoinGroupJoin)
+            {
+                Console.WriteLine(item.Name + "," + string.Join(",", item.Score.Select(s => s.Score)));
+            }
+
+            var nums = new[] { 1, 2, 3 };
+            var words = new[] { "one", "two", "three" };
+            var zipped = nums.Zip(words, (n, w) => $"{n}-{w}");
+            
+
         }
     }
 }
