@@ -18,5 +18,25 @@ namespace SortingInCSharp
                 if (!swapped) break;
             }
         }
+
+        public static void Selection(int[] a)
+        {
+            for (int start = 0; start <= a.Length - 1; start++)
+            {
+                int minIndex = start;
+                for (int j = start + 1; j <= a.Length; j++)
+                {
+                    if (a[j] < a[minIndex])
+                        minIndex = j;
+                }
+
+                (a[minIndex], a[start]) = (a[start], a[minIndex]);
+            }
+        }
+
+        public static void Insertion(int[] a)
+        {
+            
+        }
     }
 }
