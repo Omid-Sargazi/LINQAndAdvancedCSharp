@@ -4,6 +4,7 @@ namespace SortingInCSharp.Reflections
 {
     public class Car
     {
+        public string Brand;
         public string Model { get; set; }
         public int Year { get; set; }
         public void Drive() { }
@@ -28,6 +29,8 @@ namespace SortingInCSharp.Reflections
             {
                 Console.WriteLine(item.Name);
             }
+
+            Get
         }
     }
 }
