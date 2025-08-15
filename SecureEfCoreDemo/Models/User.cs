@@ -22,19 +22,36 @@ namespace SecureEfCoreDemo.Models
     public class AppDbContext : DbContext
     {
         private readonly int _currentUserId;
-         public AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor accessor)
-        : base(options)
-    {
-        // فرض: کاربر لاگین شده، UserId توی Claims ذخیره شده
-        _currentUserId = int.TryParse(accessor.HttpContext?.User?.FindFirst("UserId")?.Value, out var id) ? id : 0;
+        public AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor accessor)
+       : base(options)
+        {
+            // فرض: کاربر لاگین شده، UserId توی Claims ذخیره شده
+            _currentUserId = int.TryParse(accessor.HttpContext?.User?.FindFirst("UserId")?.Value, out var id) ? id : 0;
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Record> Records { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Record>().HasQueryFilter(r => r.UserId == _currentUserId);
+        }
     }
 
-    public DbSet<User> Users { get; set; }
-    public DbSet<Record> Records { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class PasswordHasher
     {
-        modelBuilder.Entity<Record>().HasQueryFilter(r => r.UserId == _currentUserId);
+        public static void CreatePasswordHash(string password, out byte[] hash, out byte[] salt)
+    {
+        using var hmac = new System.Security.Cryptography.HMACSHA512();
+        salt = hmac.Key;
+        hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+    }
+
+    public static bool VerifyPasswordHash(string password, byte[] hash, byte[] salt)
+    {
+        using var hmac = new System.Security.Cryptography.HMACSHA512(salt);
+        var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+        return computedHash.SequenceEqual(hash);
     }
     }
 }
