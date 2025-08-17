@@ -41,6 +41,9 @@ namespace SortingInCSharp.Reflections
             {
                 Console.WriteLine(item.ToString());
             }
+
+            var method = t.GetMethod("Omid");
+            Console.WriteLine(method != null ? "Exist" : "Not Found");
         }
     }
 }
