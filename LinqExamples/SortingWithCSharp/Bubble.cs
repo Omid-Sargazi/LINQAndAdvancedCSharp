@@ -21,4 +21,27 @@ namespace LinqExamples.SortingWithCSharp
             Console.WriteLine(string.Join(",", arr));
         }
     }
+
+    public class SelectionSort
+    {
+        public static void Run(int[] arr)
+        {
+            for (int i = 0; i <= arr.Length - 1; i++)
+            {
+                int minIndex = i;
+                for (int j = i; j <= arr.Length - 1; j++)
+                {
+                    if (arr[j] < arr[minIndex])
+                    {
+                        minIndex = j;
+                    }
+                }
+
+                (arr[i], arr[minIndex]) = (arr[minIndex], arr[i]);
+            }
+
+
+            Console.WriteLine(string.Join(",", arr));
+        }
+    }
 }
