@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using UsersService.Models;
+
 namespace UsersService.Controllers
 {
 
@@ -8,7 +11,16 @@ namespace UsersService.Controllers
         private static List<User> items = new();
         private static int id = 0;
         [HttpGet] public IEnumerable<User> GetAll() => items;
-        [HttpGet("{id}")] public ActionResult<User> Get(int id) => items.FirstOrDefault(x => x.Id == id) ?? NotFound();
+          [HttpGet("{id}")]
+        public ActionResult<User> Get(int id)
+        {
+            var user = items.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user;
+        }
         [HttpPost] public User Create(User dto) { dto.Id = ++id; items.Add(dto); return dto; }
     }
 
