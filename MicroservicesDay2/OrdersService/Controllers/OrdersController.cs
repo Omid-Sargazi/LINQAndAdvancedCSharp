@@ -1,3 +1,4 @@
+using OrdersService.Models;
 namespace OrdersService.Controllers
 {
 
