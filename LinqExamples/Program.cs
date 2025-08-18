@@ -7,4 +7,6 @@ Console.WriteLine("Hello, World! and Sorting..");
 
 int[] arr = new int[] { 40, -40, 50, -50, 41, 10, 1, 2, 11 };
 // BubbleSorting.Run(arr);
-SelectionSort.Run(arr);
+// SelectionSort.Run(arr);
+
+InsertionSort.Run(arr);
