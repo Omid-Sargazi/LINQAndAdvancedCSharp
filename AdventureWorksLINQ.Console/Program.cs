@@ -1,5 +1,6 @@
 ﻿using AdventureWorksLINQ.Console.EFCore;
 using AdventureWorksLINQ.Console.EFCore.EFCorePerformanceTuning;
+using AdventureWorksLINQ.Console.Product;
 using Microsoft.EntityFrameworkCore;
 
 public class Program
@@ -45,6 +46,8 @@ public class Program
         //     }
         // }
 
-        RunContextOfLibrary.Run();
+        // RunContextOfLibrary.Run();
+
+        SqlBook.Run();
     }
 }

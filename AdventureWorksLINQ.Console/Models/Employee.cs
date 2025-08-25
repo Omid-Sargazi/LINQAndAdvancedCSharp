@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AdventureWorksLINQ.Models;
+namespace AdventureWorksLINQ.Console.Models;
 
 /// <summary>
 /// Employee information such as salary, department, and title.
@@ -84,6 +84,8 @@ public partial class Employee
     public DateTime ModifiedDate { get; set; }
 
     public virtual Person BusinessEntity { get; set; } = null!;
+    
+    
 
     public virtual ICollection<EmployeeDepartmentHistory> EmployeeDepartmentHistories { get; set; } = new List<EmployeeDepartmentHistory>();
 
