@@ -6,5 +6,15 @@ namespace Middlewares.Middleware1
         {
             return builder.UseMiddleware<MyCustomMiddleware>();
         }
+
+        public static IApplicationBuilder UseLoggingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<LoggingMiddleware>();
+        }
+
+        public static IApplicationBuilder UseExceptionHandlingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ExceptionHandlingMiddleware>();
+        }
     }
 }
