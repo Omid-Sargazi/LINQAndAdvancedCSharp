@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesignPatterns", "DesignPat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patterns", "DesignPatterns\Patterns\Patterns.csproj", "{86C38C7D-57D8-49E3-BBF4-C0E2B7B0580A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares", "Middlewares\Middlewares.csproj", "{C340B91D-3564-4619-81CF-6E24F8AB5172}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,10 @@ Global
 		{86C38C7D-57D8-49E3-BBF4-C0E2B7B0580A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86C38C7D-57D8-49E3-BBF4-C0E2B7B0580A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86C38C7D-57D8-49E3-BBF4-C0E2B7B0580A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
