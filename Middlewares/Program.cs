@@ -16,7 +16,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseMiddleware<MyCustomMiddleware>();
+// app.UseMiddleware<MyCustomMiddleware>();
+app.UseMyCustomMiddleware();
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("use 1");
+    await next();
+    Console.WriteLine("use 2");
+});
+
+app.Run(async (context) =>
+{
+    await context.Response.WriteAsync("hello from run");
+});
 
 app.Run();
 
