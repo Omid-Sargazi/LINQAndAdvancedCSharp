@@ -39,7 +39,58 @@ namespace AlgorithemInCSharp.Patterns
 
         public void RenderTriangle(string side)
         {
-              Console.WriteLine($"Drawing an equilateral triangle with side {side} using pixels.");
+            Console.WriteLine($"Drawing an equilateral triangle with side {side} using pixels.");
+        }
+    }
+
+    public abstract class Shape
+    {
+        protected readonly IRenderer _renderer;
+        public Shape(IRenderer renderer)
+        {
+            _renderer = renderer;
+        }
+
+        public abstract void Draw();
+        public abstract void Resize(float factor);
+    }
+
+
+    public class Circle : Shape
+    {
+        protected readonly string _radius;
+        public Circle(string radius, IRenderer renderer) : base(renderer)
+        {
+            _radius = radius;
+        }
+
+        public override void Draw()
+        {
+            _renderer.RenderCirecle(_radius);
+        }
+
+        public override void Resize(float factor)
+        {
+             Console.WriteLine($"Circle resized. New radius: {factor}");
+        }
+    }
+
+    public class Square : Shape
+    {
+        protected readonly string _side;
+        public Square(string side, IRenderer renderer) : base(renderer)
+        {
+            _side = side;
+        }
+
+        public override void Draw()
+        {
+            _renderer.RenderSquare(_side);
+        }
+
+        public override void Resize(float factor)
+        {
+            throw new NotImplementedException();
         }
     }
 }
