@@ -120,8 +120,30 @@ namespace AlgorithemInCSharp.Sorting
                 p3++;
             }
 
-            Console.WriteLine(string.Join(",", result)+ "  Merge Sorting");
-        } 
+            Console.WriteLine(string.Join(",", result) + "  Merge Sorting");
+        }
+
+        public static int LomutoPartition(int[] arr, int lo, int hi)
+        {
+            int pivot = arr[hi];
+
+            int i = lo - 1;
+            for (int j = 0; j < hi; j++)
+            {
+                if (arr[j] <= pivot)
+                {
+                    i++;
+                    (arr[i], arr[j]) = (arr[j], arr[i]);
+                }
+            }
+
+            (arr[i + 1], arr[hi]) = (arr[hi], arr[i + 1]);
+
+            Console.WriteLine(string.Join(",", arr)+$"  Pivoy:{pivot}");
+            return i + 1;
+
+
+        }
         
 
     }
