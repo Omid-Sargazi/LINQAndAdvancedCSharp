@@ -73,6 +73,83 @@ namespace AlgorithemInCSharp.Patterns
 
         }
     }
-    
-    
+
+    public abstract class AbstractRemote
+    {
+        protected readonly IDevice _device;
+        public AbstractRemote(IDevice device)
+        {
+            _device = device;
+        }
+
+        public abstract void TogglePower();
+        public abstract void VolumeUp();
+        public abstract void VolumeDown();
+        public abstract void ChannelUp();
+        public abstract void ChannelDown();
+    }
+
+    public class BasicRemote : AbstractRemote
+    {
+        public BasicRemote(IDevice device) : base(device)
+        {
+        }
+
+        public override void ChannelDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ChannelUp()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void TogglePower()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void VolumeDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void VolumeUp()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class AdvancedRemote : AbstractRemote
+    {
+        public AdvancedRemote(IDevice device) : base(device)
+        {
+        }
+
+        public override void ChannelDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ChannelUp()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void TogglePower()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void VolumeDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void VolumeUp()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
