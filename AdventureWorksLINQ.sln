@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patterns", "DesignPatterns\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middlewares", "Middlewares\Middlewares.csproj", "{C340B91D-3564-4619-81CF-6E24F8AB5172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithemInCSharp", "AlgorithemInCSharp\AlgorithemInCSharp.csproj", "{86D9A29A-B2A2-46D0-B78B-303B5686C511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C340B91D-3564-4619-81CF-6E24F8AB5172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86D9A29A-B2A2-46D0-B78B-303B5686C511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D9A29A-B2A2-46D0-B78B-303B5686C511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D9A29A-B2A2-46D0-B78B-303B5686C511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D9A29A-B2A2-46D0-B78B-303B5686C511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}

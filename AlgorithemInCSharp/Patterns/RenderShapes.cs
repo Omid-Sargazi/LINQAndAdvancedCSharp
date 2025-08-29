@@ -71,7 +71,7 @@ namespace AlgorithemInCSharp.Patterns
 
         public override void Resize(float factor)
         {
-             Console.WriteLine($"Circle resized. New radius: {factor}");
+            Console.WriteLine($"Circle resized. New radius: {factor}");
         }
     }
 
@@ -91,6 +91,15 @@ namespace AlgorithemInCSharp.Patterns
         public override void Resize(float factor)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class CLientRender
+    {
+        public static void Run()
+        {
+            Console.WriteLine("Bridge Pattern: Shapes and Renderers\n");
+            
         }
     }
 }

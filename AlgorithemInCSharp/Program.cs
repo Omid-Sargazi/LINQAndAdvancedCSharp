@@ -4,11 +4,13 @@ using AlgorithemInCSharp.Sorting;
 Console.WriteLine("Hello, World!");
 int[] arr1 = new int[] { 1 };
 int[] arr2 = new int[] { -1 };
-int[] arr3 = new int[] { 0, 180, -80, 70, -70, 100, -100 };
+int[] arr3 = new int[] { 0, 180, -80, 70, -70, 100, -100, -500, -1000 };
+int[] arr4 = new int[] { 70,60,50,40,30,20,40,45};
 
 // Sorting.Bubble(arr3);
 
 // Sorting.Selection(arr3);
 // Sorting.Insertion(arr3);
 
-Sorting.MergeSorting(arr3);
+// Sorting.MergeSorting(arr3);
+Sorting.LomutoPartition(arr4,0,arr4.Length-1);
