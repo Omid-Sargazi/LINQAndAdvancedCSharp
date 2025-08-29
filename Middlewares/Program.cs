@@ -20,6 +20,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseExceptionsHandlingMiddleware();
+
 app.UseHttpsRedirection();
 
 // app.UseMiddleware<MyCustomMiddleware>();

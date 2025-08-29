@@ -16,5 +16,10 @@ namespace Middlewares.Middleware1
         {
             return builder.UseMiddleware<ExceptionHandlingMiddleware>();
         }
+
+        public static IApplicationBuilder UseExceptionsHandlingMiddleware(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<ExceptionsHandlingMiddleware>();
+        }
     }
 }
