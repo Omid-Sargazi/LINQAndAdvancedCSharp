@@ -13,4 +13,5 @@ int[] arr4 = new int[] { 70,60,50,40,30,20,40,45};
 // Sorting.Insertion(arr3);
 
 // Sorting.MergeSorting(arr3);
-Sorting.LomutoPartition(arr4,0,arr4.Length-1);
+// Sorting.LomutoPartition(arr4,0,arr4.Length-1);
+QuickSort.Run(arr3,0,arr3.Length-1);    
