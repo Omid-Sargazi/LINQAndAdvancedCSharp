@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using AlgorithemInCSharp.Sorting;
+using AlgorithemInCSharp.Sorting2;
 
 Console.WriteLine("Hello, World!");
 int[] arr1 = new int[] { 1 };
@@ -17,4 +18,5 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // Sorting.LomutoPartition(arr4,0,arr4.Length-1);
 // QuickSort.Run(arr3,0,arr3.Length-1);    
 // Tree.Run(arr5);
-HeapifySorting.Run(arr3);
+// HeapifySorting.Run(arr3);
+SortingHeapify.Run(arr4);
