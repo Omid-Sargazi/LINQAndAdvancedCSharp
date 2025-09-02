@@ -21,3 +21,4 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // HeapifySorting.Run(arr3);
 // SortingHeapify.Run(arr4);
 SortArrays.Bubble(arr4);
+SortArrays.Selection(arr3);
