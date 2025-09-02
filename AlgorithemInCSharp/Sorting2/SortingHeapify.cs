@@ -98,7 +98,69 @@ namespace AlgorithemInCSharp.Sorting2
                 arr[j + 1] = current;
             }
 
-            Console.WriteLine($"Insertion Sort: {string.Join(",",arr)}");
+            Console.WriteLine($"Insertion Sort: {string.Join(",", arr)}");
+        }
+
+        public static void MergeSort(int[] arr)
+        {
+            int n = arr.Length;
+            if (arr.Length <= 1) return;
+            int mid = n / 2;
+            int[] lef = new int[mid];
+            int[] right = new int[n - mid];
+
+            Array.Copy(arr, 0, lef, 0, mid);
+            Array.Copy(arr, mid, right, 0, right.Length);
+
+            Console.WriteLine($"Left: {string.Join(",", lef)}");
+            Console.WriteLine($"right: {string.Join(",", right)}");
+
+            MergeSort(lef);
+            MergeSort(right);
+            Merge(arr, lef, right);
+        }
+
+        private static void Merge(int[] result, int[] left, int[] righ)
+        {
+            int p1 = 0;
+            int p2 = 0;
+            int p3 = 0;
+
+            int n1 = left.Length;
+            int n2 = righ.Length;
+
+            while (p1 < n1 && p2 < n2)
+            {
+                if (left[p1] < righ[p2])
+                {
+                    result[p3] = left[p1];
+                    p1++;
+                }
+                else
+                {
+                    result[p3] = righ[p2];
+                    p2++;
+                }
+
+                p3++;
+            }
+
+            while (p1 < n1)
+            {
+                result[p3] = left[p1];
+                p3++;
+                p1++;
+            }
+
+            while (p2 < n2)
+            {
+                result[p3] = righ[p2];
+                p2++;
+                p3++;
+            }
+
+
+            Console.WriteLine($"Merge Sort: {string.Join(",",result)}");
         }
     }
 }
