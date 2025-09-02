@@ -1,3 +1,5 @@
+using System.Runtime.Intrinsics.Arm;
+
 namespace AlgorithemInCSharp.Sorting2
 {
     public class SortingHeapify
@@ -78,7 +80,25 @@ namespace AlgorithemInCSharp.Sorting2
                 }
             }
 
-            Console.WriteLine($"Selection: {string.Join(",",arr)}");
+            Console.WriteLine($"Selection: {string.Join(",", arr)}");
+        }
+
+        public static void Insertion(int[] arr)
+        {
+            for (int i = 1; i < arr.Length; i++)
+            {
+                int j = i - 1;
+                int current = arr[i];
+                while (j >= 0 && arr[j] > current)
+                {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+
+                arr[j + 1] = current;
+            }
+
+            Console.WriteLine($"Insertion Sort: {string.Join(",",arr)}");
         }
     }
 }
