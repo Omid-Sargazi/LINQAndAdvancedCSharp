@@ -25,4 +25,5 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // SortArrays.Insertion(arr4);
 
 // SortArrays.MergeSort(arr4);
-SortArrays.QickSorting(arr4,0,arr4.Length-1);
+// SortArrays.QickSorting(arr4,0,arr4.Length-1);
+HeapExample.Run(arr3);
