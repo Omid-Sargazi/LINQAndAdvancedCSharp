@@ -16,4 +16,5 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // Sorting.MergeSorting(arr3);
 // Sorting.LomutoPartition(arr4,0,arr4.Length-1);
 // QuickSort.Run(arr3,0,arr3.Length-1);    
-Tree.Run(arr5);
+// Tree.Run(arr5);
+HeapifySorting.Run(arr5);
