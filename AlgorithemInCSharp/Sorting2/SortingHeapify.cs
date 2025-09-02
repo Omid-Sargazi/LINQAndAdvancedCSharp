@@ -1,4 +1,5 @@
 using System.Runtime.Intrinsics.Arm;
+using AlgorithemInCSharp.Sorting;
 
 namespace AlgorithemInCSharp.Sorting2
 {
@@ -160,7 +161,39 @@ namespace AlgorithemInCSharp.Sorting2
             }
 
 
-            Console.WriteLine($"Merge Sort: {string.Join(",",result)}");
+            Console.WriteLine($"Merge Sort: {string.Join(",", result)}");
+        }
+
+
+        public static void QickSorting(int[] arr, int lo, int hi)
+        {
+
+            if (lo < hi)
+            {
+                int pi = Partition(arr, lo, hi);
+                QickSorting(arr, lo, pi - 1);
+                QickSorting(arr, pi + 1, hi);
+            }
+
+            Console.WriteLine($"Quick Sort: {string.Join(",",arr)}");
+        }
+
+        private static int Partition(int[] arr, int lo, int hi)
+        {
+            int pivot = arr[hi];
+            int i = lo - 1;
+            for (int j = lo; j < hi; j++)
+            {
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    (arr[j], arr[i]) = (arr[i], arr[j]);
+                }
+            }
+
+            (arr[i + 1], arr[hi]) = (arr[hi], arr[i + 1]);
+
+            return i + 1;
         }
     }
 }
