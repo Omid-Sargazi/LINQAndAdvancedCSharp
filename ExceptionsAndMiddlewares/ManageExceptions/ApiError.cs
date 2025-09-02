@@ -61,4 +61,123 @@ namespace ExceptionsAndMiddlewares.ManageExceptions
             Errors = errors;
         }
     }
+
+    public class ExceptionHandlingMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+        {
+            _logger = logger;
+            _next = next;
+        }
+
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+
+                await HandleExceptionAsync(context, ex);
+            }
+        }
+
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        {
+            ApiError error;
+
+            switch (exception)
+            {
+                case NotFoundException nf:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status404NotFound,
+                        Code = ErrorCodes.NotFound,
+                        Message = nf.Message,
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path
+                    };
+                    break;
+                case UnauthorizedException:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status401Unauthorized,
+                        Code = ErrorCodes.Unauthorized,
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path,
+                    };
+                    break;
+
+                case ForbiddenException:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status403Forbidden,
+                        Code = ErrorCodes.Forbidden,
+                        Message = "Forbidden",
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path
+                    };
+                    break;
+
+                case ConflictException cex:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status409Conflict,
+                        Code = ErrorCodes.Conflict,
+                        Message = cex.Message,
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path
+                    };
+                    break;
+
+                case BusinessRuleException bre:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status422UnprocessableEntity,
+                        Code = ErrorCodes.BusinessRule,
+                        Message = bre.Message,
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path
+                    };
+                    break;
+
+                case ValidationException vex:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Code = ErrorCodes.ValidationFailed,
+                        Message = vex.Message,
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path,
+                        Meta = new Dictionary<string, object>
+                        {
+                            ["errors"] = vex.Errors
+                        }
+                    };
+                    break;
+
+                default:
+                    error = new ApiError
+                    {
+                        Status = StatusCodes.Status500InternalServerError,
+                        Code = ErrorCodes.Unhandled,
+                        Message = "An unexpected error occurred.",
+                        TraceId = context.TraceIdentifier,
+                        Path = context.Request.Path
+                    };
+                    _logger.LogError(exception, "Unhandled exception occurred");
+                    break;
+            }
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = error.Status;
+
+            await context.Response.WriteAsJsonAsync(error);
+        }
+    }
 }
