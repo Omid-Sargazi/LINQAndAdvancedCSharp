@@ -34,8 +34,31 @@ namespace AlgorithemInCSharp.Sorting2
             if (largest != i)
             {
                 (arr[i], arr[largest]) = (arr[largest], arr[i]);
-                Heapify(arr, largest,n);
+                Heapify(arr, largest, n);
             }
+        }
+    }
+
+    public class SortArrays
+    {
+        public static void Bubble(int[] arr)
+        {
+            for (int i = arr.Length - 1; i >= 0; i--)
+            {
+                bool swapped = false;
+                for (int j = 0; j < i; j++)
+                {
+                    if (arr[j] > arr[j + 1])
+                    {
+                        (arr[j], arr[j + 1]) = (arr[j + 1], arr[j]);
+                        swapped = true;
+                    }
+                }
+
+                if (!swapped) break;
+            }
+
+            Console.WriteLine($"Bubble Sort:{string.Join(",",arr)}");
         }
     }
 }

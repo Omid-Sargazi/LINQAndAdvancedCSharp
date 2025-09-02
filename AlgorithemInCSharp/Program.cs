@@ -19,4 +19,5 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // QuickSort.Run(arr3,0,arr3.Length-1);    
 // Tree.Run(arr5);
 // HeapifySorting.Run(arr3);
-SortingHeapify.Run(arr4);
+// SortingHeapify.Run(arr4);
+SortArrays.Bubble(arr4);
