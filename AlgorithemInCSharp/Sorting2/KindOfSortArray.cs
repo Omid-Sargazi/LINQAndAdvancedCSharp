@@ -45,7 +45,20 @@ namespace AlgorithemInCSharp.Sorting2
 
         public static void InsertionSorting(int[] arr)
         {
+            int n = arr.Length;
+            for (int i = 1; i < n; i++)
+            {
+                int j = i - 1;
+                int current = arr[i];
+                while (j >= 0 && arr[j] > current)
+                {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
 
+                arr[j + 1] = current;
+            }
+            Console.WriteLine($"Insertion sorting: {string.Join(",",arr)}");
         }
 
         public static void MergeSorting(int[] arr)

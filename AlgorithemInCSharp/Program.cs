@@ -29,4 +29,4 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // HeapExample.Run(arr3);
 // HeapArraySorting.Run(arr3);
 // KindOfSortArray.BubleSorting(arr3);
-KindOfSortArray.SelectionSorting(arr3);
+KindOfSortArray.InsertionSorting(arr3);
