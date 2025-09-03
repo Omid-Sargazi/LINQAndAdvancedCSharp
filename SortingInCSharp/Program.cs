@@ -7,4 +7,6 @@ Reflection.Run();
 
 int[] arr = new int[] { 10, 20, 30, 70, -70, -10, 1, 2 };
 // BubbleSorting.Run(arr);
-SelectioSort.Run(arr);
+// SelectioSort.Run(arr);
+int[] arr1 = new int[] { 1, 2, 3 };
+HeapSorting.Run(arr);
