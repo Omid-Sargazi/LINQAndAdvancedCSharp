@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Runtime.ExceptionServices;
 
 namespace AlgorithemInCSharp.Sorting2
 {
@@ -23,7 +24,7 @@ namespace AlgorithemInCSharp.Sorting2
                 }
             }
 
-            Console.WriteLine($"Bubble sorting: {string.Join(",",arr)}");
+            Console.WriteLine($"Bubble sorting: {string.Join(",", arr)}");
         }
 
         public static void SelectionSorting(int[] arr)
@@ -42,7 +43,7 @@ namespace AlgorithemInCSharp.Sorting2
                 (arr[i], arr[minIndex]) = (arr[minIndex], arr[i]);
             }
 
-            Console.WriteLine($"Selection sorting: {string.Join(",",arr)}");
+            Console.WriteLine($"Selection sorting: {string.Join(",", arr)}");
         }
 
         public static void InsertionSorting(int[] arr)
@@ -60,7 +61,7 @@ namespace AlgorithemInCSharp.Sorting2
 
                 arr[j + 1] = current;
             }
-            Console.WriteLine($"Insertion sorting: {string.Join(",",arr)}");
+            Console.WriteLine($"Insertion sorting: {string.Join(",", arr)}");
         }
 
         public static int[] MergeSorting(int[] arr)
@@ -78,7 +79,7 @@ namespace AlgorithemInCSharp.Sorting2
             // Console.WriteLine($"Insertion sorting: {string.Join(",", right)}");
 
 
-             MergeSorting(left);
+            MergeSorting(left);
             MergeSorting(right);
             var result = Merge(arr, left, right);
 
@@ -129,9 +130,35 @@ namespace AlgorithemInCSharp.Sorting2
 
         }
 
-        public static void QuickSorting(int[] arr)
+        public static void QuickSorting(int[] arr, int lo, int hi)
         {
+            if (lo < hi)
+            {
+                var pi = Partition(arr, lo, hi);
+                QuickSorting(arr, lo, pi - 1);
+                QuickSorting(arr, pi + 1, hi);
+            }
+            if (lo == 0 && hi == arr.Length - 1)
+            {
+                Console.WriteLine($"Quick sorting : {string.Join(", ",arr)}");
+            }
+        }
 
+        private static int Partition(int[] arr, int lo, int hi)
+        {
+            int pivot = arr[hi];
+            int i = lo - 1;
+            for (int j = lo; j < hi; j++)
+            {
+                if (arr[j] < pivot)
+                {
+                    i++;
+                    (arr[j], arr[i]) = (arr[i], arr[j]);
+                }
+            }
+
+            (arr[hi], arr[i + 1]) = (arr[i + 1], arr[hi]);
+            return i + 1;
         }
 
 
