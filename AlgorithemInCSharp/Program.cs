@@ -28,4 +28,5 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // SortArrays.QickSorting(arr4,0,arr4.Length-1);
 // HeapExample.Run(arr3);
 // HeapArraySorting.Run(arr3);
-KindOfSortArray.BubleSorting(arr3);
+// KindOfSortArray.BubleSorting(arr3);
+KindOfSortArray.SelectionSorting(arr3);
