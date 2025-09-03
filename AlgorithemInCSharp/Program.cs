@@ -29,4 +29,8 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // HeapExample.Run(arr3);
 // HeapArraySorting.Run(arr3);
 // KindOfSortArray.BubleSorting(arr3);
-KindOfSortArray.InsertionSorting(arr3);
+// KindOfSortArray.InsertionSorting(arr3);
+int[] arr = {5, 2, 8, 1, 9, 3};
+var result = KindOfSortArray.MergeSorting(arr);
+
+Console.WriteLine($"{string.Join(",",result)}");
