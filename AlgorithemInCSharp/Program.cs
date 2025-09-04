@@ -34,4 +34,5 @@ int[] arr = {5, 2, 8, 1, 9, 3};
 var result = KindOfSortArray.MergeSorting(arr);
 
 // Console.WriteLine($"{string.Join(",",result)}");
-KindOfSortArray.QuickSorting(arr,0,arr.Length-1);
+// KindOfSortArray.QuickSorting(arr,0,arr.Length-1);
+
