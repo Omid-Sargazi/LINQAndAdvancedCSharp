@@ -40,6 +40,47 @@ namespace SortingInCSharp
             return heap[0];
         }
 
+        public int ExtractMax()
+        {
+            if (IsEmpty) throw new InvalidOperationException("PriorityQueue is empty");
+            int max = heap[0];
+            int lastIndex = heap.Count - 1;
+
+            heap[0] = heap[lastIndex];
+            heap.RemoveAt(lastIndex);
+            if (!IsEmpty)
+            {
+                SiftDown(0);
+            }
+
+            return max;
+        }
+
+        private void SiftDown(int index)
+        {
+            int current = index;
+            int n = heap.Count;
+
+            while (true)
+            {
+                int left = 2 * current + 1;
+                int right = 2 * current + 2;
+                int largest = current;
+
+                if (left < n && heap[left] > heap[current])
+                    largest = left;
+
+                if (right < n && heap[right] > heap[largest])
+                    largest = right;
+
+                if (largest == right)
+                    break;
+
+                Swap(current, largest);
+                current = largest;
+            }
+        }
+
         private void Swap(int i, int j)
         {
             (heap[i], heap[j]) = (heap[j], heap[i]);
