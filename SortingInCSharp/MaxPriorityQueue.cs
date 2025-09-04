@@ -34,6 +34,12 @@ namespace SortingInCSharp
             }
         }
 
+        private int PeekMax()
+        {
+            if (IsEmpty) throw new InvalidOperationException("PriorityQueue is empty");
+            return heap[0];
+        }
+
         private void Swap(int i, int j)
         {
             (heap[i], heap[j]) = (heap[j], heap[i]);
