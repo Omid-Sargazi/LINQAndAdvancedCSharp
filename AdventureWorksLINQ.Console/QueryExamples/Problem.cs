@@ -1,5 +1,6 @@
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using Xunit.Sdk;
 
 namespace AdventureWorksLINQ.Console.QueryExamples
@@ -172,6 +173,27 @@ namespace AdventureWorksLINQ.Console.QueryExamples
                 }
             ).AsNoTracking()
             .Take(100).ToList();
+
+
+            var orders = db.SalesOrderHeaders.Take(10).ToList();
+            foreach (var order in orders)
+            {
+                order.SalesOrderDetails = db.SalesOrderDetails
+                .Where(d => d.SalesOrderId == order.SalesOrderId).ToList();//N+1 Query
+            }
+
+            var optimizedReport = db.SalesOrderHeaders
+            .Take(10)
+            .GroupJoin(db.SalesOrderDetails,
+                o => o.SalesOrderId,
+                d => d.SalesOrderId,
+                (order, detail) => new
+                {
+                    Order = order,
+                    DetailCount = detail.Count(),
+                    TotalQuantity = detail.Sum(d => d.OrderQty)
+                }
+            ).AsNoTracking().ToList();
         }
     }
 }
