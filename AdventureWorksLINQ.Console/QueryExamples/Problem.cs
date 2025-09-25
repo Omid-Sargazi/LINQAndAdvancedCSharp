@@ -146,6 +146,10 @@ namespace AdventureWorksLINQ.Console.QueryExamples
             .Select(p => new { p.ProductId, p.Name, p.ModifiedDate })
             .Skip(0).Take(10)
             .AsNoTracking().ToList();
+
+            var hasProducts = db.Products.Count() > 0;
+
+            var hasProductsOptimized = db.Products.Any();
         }
     }
 }
