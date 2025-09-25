@@ -81,6 +81,28 @@ namespace AdventureWorksLINQ.Console.QueryExamples
             System.Console.WriteLine("Generated SQL:");
             System.Console.WriteLine(sql);
         }
-        
+
+    }
+
+    public class Problem2
+    {
+        private static AdventureWorks2019Context db = new AdventureWorks2019Context();
+        public static void Run()
+        {
+            var q = from h in db.SalesOrderHeaders
+                    join d in db.SalesOrderDetails
+            on h.SalesOrderId equals d.SalesOrderId into g
+                    from d in g.DefaultIfEmpty()
+                    select new
+                    {
+                        h.SalesOrderId,
+                        h.OrderDate,
+                        DetailId = (int?)d.SalesOrderDetailId,
+                        ProductId = (int?)d.ProductId,
+                        d.OrderQty,
+                        d.LineTotal
+
+                    };
+        }
     }
 }
