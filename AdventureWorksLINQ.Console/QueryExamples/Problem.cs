@@ -150,6 +150,28 @@ namespace AdventureWorksLINQ.Console.QueryExamples
             var hasProducts = db.Products.Count() > 0;
 
             var hasProductsOptimized = db.Products.Any();
+
+
+            var badJoin = db.SalesOrderHeaders
+            .Join(db.Customers,
+                o => o.CustomerId,
+                c => c.CustomerId,
+                (o, c) => new { Order = o, Customer = c }
+            ).ToList();
+
+            var goodJoin = db.SalesOrderHeaders
+            .Join(db.Customers,
+                o => o.CustomerId,
+                c => c.CustomerId,
+                (o, c) => new
+                {
+                    o.SalesOrderId,
+                    o.OrderDate,
+                    o.TotalDue,
+                    CustomerName = c.Person.FirstName
+                }
+            ).AsNoTracking()
+            .Take(100).ToList();
         }
     }
 }
