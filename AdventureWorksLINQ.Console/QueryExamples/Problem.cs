@@ -194,6 +194,22 @@ namespace AdventureWorksLINQ.Console.QueryExamples
                     TotalQuantity = detail.Sum(d => d.OrderQty)
                 }
             ).AsNoTracking().ToList();
+
+
+            var optimizedMonthlyReport = db.SalesOrderHeaders
+            .Where(o => o.OrderDate.Year == 2014)
+            .GroupBy(o => new { o.OrderDate.Year, o.OrderDate.Month })
+            .Select(g => new
+            {
+                Year = g.Key.Year,
+                Month = g.Key.Month,
+                TotalState = g.Sum(o => o.TotalDue),
+                orderCount = g.Count()
+            })
+            .OrderBy(x => x.Year).ThenBy(x => x.Month)
+            .AsNoTracking()
+            .ToList();
+ 
         }
     }
 }
