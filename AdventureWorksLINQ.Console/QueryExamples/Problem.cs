@@ -103,6 +103,49 @@ namespace AdventureWorksLINQ.Console.QueryExamples
                         d.LineTotal
 
                     };
+
+            var qq = db.SalesOrderHeaders
+        .AsNoTracking()
+        .Select(h => new
+        {
+            h.SalesOrderId,
+            h.OrderDate,
+            h.CustomerId,
+            h.TotalDue,
+
+            Details = h.SalesOrderDetails.Select(d => new
+            {
+                d.SalesOrderDetailId,
+                d.ProductId,
+                d.OrderQty,
+                d.LineTotal
+            }).ToList(),
+
+        });
+        }
+
+
+        public static void RunQuery()
+        {
+            var badQuery = db.Products.ToList();//Bad Query.
+            var flteredBad = badQuery.Where(p => p.ListPrice > 500).ToList();//Bad Filter
+
+            var goodQuery = db.Products
+            .Where(p => p.ListPrice > 500)
+            .Select(p => new { p.ProductId, p.Name, p.ListPrice })
+            .AsNoTracking()
+            .ToList();
+
+            var badpaging = db.Products.ToList()
+            .OrderByDescending(p => p.ModifiedDate)
+            .Skip(0).Take(10);
+
+
+            var goodPaging = db.Products
+            .OrderByDescending(p => p.ModifiedDate)
+            .Select(p => new { p.ProductId, p.Name, p.ModifiedDate })
+            .Skip(0).Take(10)
+            .AsNoTracking().ToList();
         }
     }
 }
