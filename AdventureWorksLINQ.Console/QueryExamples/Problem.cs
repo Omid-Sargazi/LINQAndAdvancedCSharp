@@ -1,0 +1,86 @@
+using AdventureWorksLINQ.Console.Models;
+using Microsoft.EntityFrameworkCore;
+using Xunit.Sdk;
+
+namespace AdventureWorksLINQ.Console.QueryExamples
+{
+    public class Problem
+    {
+        private static AdventureWorks2019Context db = new AdventureWorks2019Context();
+        public static void Run()
+        {
+            var q = from h in db.SalesOrderHeaders
+                    join d in db.SalesOrderDetails on h.SalesOrderId equals d.SalesOrderId
+                    join p in db.Products on d.ProductId equals p.ProductId
+                    select new
+                    {
+                        h.SalesOrderId,
+                        h.OrderDate,
+                        d.SalesOrderDetailId,
+                        Product = p.Name,
+                        d.OrderQty,
+                        d.UnitPrice,
+                        d.LineTotal
+                    };
+
+            var list = q.AsNoTracking().Take(10).ToList();
+
+            foreach (var order in list)
+            {
+                System.Console.WriteLine($"OrderID: {order.SalesOrderId}, Date: {order.OrderDate}, Product: {order.Product}, Qty: {order.OrderQty}, LineTotal: {order.LineTotal}");
+            }
+
+            var q2 = db.SalesOrderHeaders
+            .Join(db.SalesOrderDetails,
+                h => h.SalesOrderId,
+                d => d.SalesOrderId,
+                (h, d) => new { Header = h, Detail = d }
+            )
+            .Join(db.Products,
+                temp => temp.Detail.ProductId,
+                p => p.ProductId,
+                (temp, p) => new
+                {
+                    temp.Header.SalesOrderId,
+                    temp.Header.OrderDate,
+                    temp.Detail.SalesOrderDetailId,
+                    Product = p.Name,
+                    temp.Detail.OrderQty,
+                    temp.Detail.UnitPrice,
+                    temp.Detail.LineTotal
+                }
+            );
+
+            var list2 = q.AsNoTracking().Take(10).ToList();
+
+            var qqq = db.SalesOrderHeaders
+            .AsNoTracking()
+            .Where(h => h.OrderDate.Year == 2014 && h.OnlineOrderFlag == true)
+            .Join(db.SalesOrderDetails,
+                h => h.SalesOrderId,
+                d => d.SalesOrderId,
+                (h, d) => new { h.SalesOrderId, h.OrderDate, d.ProductId, d.OrderQty, d.UnitPrice, d.LineTotal }
+            )
+            .Join(db.Products,
+                temp => temp.ProductId,
+                p => p.ProductId,
+                (temp, p) => new
+                {
+                    temp.SalesOrderId,
+                    temp.OrderDate,
+                    ProductName = p.Name,
+                    temp.OrderQty,
+                    temp.UnitPrice,
+                    temp.LineTotal
+                }
+            ).OrderByDescending(x => x.LineTotal)
+            .Take(10);
+
+            var sql = qqq.ToQueryString();
+            var list3 = q.ToList();
+            System.Console.WriteLine("Generated SQL:");
+            System.Console.WriteLine(sql);
+        }
+        
+    }
+}
