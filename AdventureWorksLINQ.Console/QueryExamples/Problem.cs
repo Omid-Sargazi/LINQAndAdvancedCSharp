@@ -209,7 +209,22 @@ namespace AdventureWorksLINQ.Console.QueryExamples
             .OrderBy(x => x.Year).ThenBy(x => x.Month)
             .AsNoTracking()
             .ToList();
- 
+
+
+            System.Console.WriteLine("open.IsGenericTypeDefinition");
+
+            var open = typeof(Box<>);
+            System.Console.WriteLine(open.IsGenericTypeDefinition);
+
+        }
+    }
+
+    public class Box<T>
+    {
+        public static void Run()
+        {
+            
+
         }
     }
 }
