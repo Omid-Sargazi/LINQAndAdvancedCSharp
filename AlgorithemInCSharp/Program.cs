@@ -38,7 +38,11 @@ int[] arr6 = new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
 var result = Problem.MaxSubArray(arr6);
 Console.WriteLine(result);
 
-Console.WriteLine($"{Problem.MaxTwoNum(10,10)}");
+Console.WriteLine($"{Problem.MaxTwoNum(10, 10)}");
+
+int[] arr7 = new int[] { 1, 2,3,-1,2 };
+
+Console.WriteLine($"{LeetCodeProblem.MaxProSubArray(arr7)}");
 
 // Console.WriteLine($"{string.Join(",",result)}");
 // KindOfSortArray.QuickSorting(arr,0,arr.Length-1);
