@@ -163,14 +163,86 @@ namespace AlgorithemInCSharp.LeetcodeExample
                     start = tempStart;
                     end = i;
                 }
-
-                
-
             }
-                maxSum = currentMaxSum;
-                int[] subArray = new int[end - start + 1];
-                Array.Copy(nums, start, subArray, 0, subArray.Length);
-                return subArray;
+            maxSum = currentMaxSum;
+            int[] subArray = new int[end - start + 1];
+            Array.Copy(nums, start, subArray, 0, subArray.Length);
+            return subArray;
         }
+    }
+
+    public class LeetCodeProblemss
+    {
+        public static int[] TwoSum(int[] nums, int target)
+        {
+            Dictionary<int, int> seen = new Dictionary<int, int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int needed = target - nums[i];
+
+                if (seen.ContainsKey(needed))
+                {
+                    return new int[] { seen[needed], i };
+                }
+                if (!seen.ContainsKey(needed))
+                {
+                    seen.Add(nums[i], i);
+                }
+            }
+
+            return new int[0];
+        }
+
+        public static int[] TwoSum2(int[] nums, int target)
+        {
+            var seen = new Dictionary<int, int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int needed = target - nums[i];
+
+                if (seen.TryGetValue(needed, out int index))
+                {
+                    return new int[] { index, i };
+                }
+
+                seen[nums[i]] = i;
+            }
+
+            return new int[0];
+        }
+
+        public static int[] TwoSum3(int[] nums, int target)
+        {
+            var pairs = nums.Select((v, i) => (valv:v, idx:i)).ToArray();
+
+            Console.WriteLine($"{string.Join(",", pairs)}");
+
+            Array.Sort(pairs, (a, b) => a.CompareTo(b));
+            Console.WriteLine($"{string.Join(",",pairs)}");
+
+            int l = 0, r = nums.Length-1;
+
+            while (l < r)
+            {
+                int sum = pairs[l].valv + pairs[r].valv;
+                if (sum == target)
+                {
+                    return new int[] { pairs[l].idx, pairs[r].idx };
+                }
+                else if (sum < target)
+                {
+                    l++;
+                }
+                else
+                {
+                    r--;
+                }
+            }
+            return new int[] { 0 };
+        }
+
+
     }
 }

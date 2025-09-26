@@ -48,7 +48,10 @@ Console.WriteLine($"{LeetCodeProblems.MaxSubArray(arr7)}");
 int x;
 
 var res1 = LeetCodeProblems.MaxSubArrayWithIndices(arr7, out x);
-Console.WriteLine($"{x}==>SubArray is:  {string.Join(",",res1)}");
+Console.WriteLine($"{x}==>SubArray is:  {string.Join(",", res1)}");
+
+Console.WriteLine("===================");
+LeetCodeProblemss.TwoSum3(arr6, 8);
 
 // Console.WriteLine($"{string.Join(",",result)}");
 // KindOfSortArray.QuickSorting(arr,0,arr.Length-1);
