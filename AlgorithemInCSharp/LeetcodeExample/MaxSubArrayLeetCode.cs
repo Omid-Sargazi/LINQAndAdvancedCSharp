@@ -70,4 +70,40 @@ namespace AlgorithemInCSharp.LeetcodeExample
         }
 
     }
+
+    public class LeetCodeProblems
+    {
+        public static int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+
+            int maxSum = nums[0];
+            int maxCurrent = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                int num = nums[i];
+                maxCurrent = MaxTwoNum(num, maxCurrent+num);
+                maxSum = MaxTwoNum(maxSum, maxCurrent);
+            }
+
+            return maxSum;
+        }
+
+        private static int MaxTwoNum(int num1, int num2)
+        {
+            if (num1 > num2)
+                return num1;
+            else
+                return num2;
+        }
+
+        private static int MinTwoNum(int num1, int num2)
+        {
+            if (num1 > num2)
+                return num2;
+            else
+                return num1;
+        }
+    }
 }
