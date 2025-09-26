@@ -35,8 +35,10 @@ int[] arr = {5, 2, 8, 1, 9, 3};
 // var result = KindOfSortArray.MergeSorting(arr);
 
 int[] arr6 = new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
-var result = Problem.MaximumSubarray(arr);
+var result = Problem.MaxSubArray(arr6);
 Console.WriteLine(result);
+
+Console.WriteLine($"{Problem.MaxTwoNum(10,10)}");
 
 // Console.WriteLine($"{string.Join(",",result)}");
 // KindOfSortArray.QuickSorting(arr,0,arr.Length-1);

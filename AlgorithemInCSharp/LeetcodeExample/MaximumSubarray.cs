@@ -37,5 +37,60 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
 
         }
+
+        public static int MaxProSubArray2(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+
+            int maxProduct = nums[0];
+            int currentMax = nums[0];
+            int currentMin = nums[0];
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int num = nums[i];
+
+                if (num < 0)
+                {
+                    int temp = currentMax;
+                    currentMax = currentMin;
+                    currentMin = temp;
+                }
+
+                currentMax = Math.Max(num, currentMax * num);
+                currentMin = Math.Min(num, currentMin * num);
+
+                maxProduct = Math.Max(maxProduct, currentMax);
+            }
+
+            return maxProduct;
+        }
+
+        public static int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+
+            int currentSum = nums[0];
+            int maxSum = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                currentSum = MaxTwoNum(nums[i], nums[i] + currentSum);
+
+                maxSum = MaxTwoNum(maxSum, currentSum);
+            }
+
+            return maxSum;
+        }
+
+        public static int MaxTwoNum(int a, int b)
+        {
+            if (a > b)
+            {
+                return a;
+            }
+            else
+                return b;
+        }
     }
 }
