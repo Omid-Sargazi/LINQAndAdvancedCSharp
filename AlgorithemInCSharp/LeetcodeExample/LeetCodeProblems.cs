@@ -45,5 +45,37 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
             return new int[0];
         }
+
+
+        public static int MaximumSubarray(int[] nums)
+        {
+            int maxCurrent = nums[0];
+            int maxSum = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                maxCurrent = MaxTwoNum(maxCurrent, nums[i]+maxCurrent);
+                maxSum = MaxTwoNum(maxSum, maxCurrent);
+            }
+
+            return maxSum;
+        }
+
+        private static int MaxTwoNum(int a, int b)
+        {
+            if (a < b)
+            {
+                return b;
+            }
+            return a;
+        }
+        private static int MinTwoNum(int a, int b)
+        {
+            if (a > b)
+            {
+                return b;
+            }
+            return a;
+        }
     }
 }
