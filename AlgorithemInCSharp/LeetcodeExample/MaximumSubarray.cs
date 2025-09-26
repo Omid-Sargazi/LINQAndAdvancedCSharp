@@ -16,5 +16,26 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
             return maxSum;
         }
+
+        public static int MaxProSubArray(int[] nums)
+        {
+            int minSofar = 0;
+            int maxSofar = 0;
+            int result = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int current = nums[i];
+                int temMax = Math.Max(current, Math.Max(maxSofar * current, minSofar * current));
+
+                minSofar = Math.Max(current, Math.Min(maxSofar * current, minSofar * current));
+
+                result = Math.Max(result, maxSofar);
+            }
+
+            return result;
+
+
+        }
     }
 }
