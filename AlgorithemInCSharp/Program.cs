@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using AlgorithemInCSharp.LeetcodeExample;
 using AlgorithemInCSharp.Sorting;
 using AlgorithemInCSharp.Sorting2;
 
@@ -31,7 +32,11 @@ int[] arr5 = new int[] { 1, 2, 3 };
 // KindOfSortArray.BubleSorting(arr3);
 // KindOfSortArray.InsertionSorting(arr3);
 int[] arr = {5, 2, 8, 1, 9, 3};
-var result = KindOfSortArray.MergeSorting(arr);
+// var result = KindOfSortArray.MergeSorting(arr);
+
+int[] arr6 = new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+var result = Problem.MaximumSubarray(arr);
+Console.WriteLine(result);
 
 // Console.WriteLine($"{string.Join(",",result)}");
 // KindOfSortArray.QuickSorting(arr,0,arr.Length-1);
