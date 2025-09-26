@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace AlgorithemInCSharp.LeetcodeExample
 {
     public class SolvingLeetCode
@@ -133,6 +135,47 @@ namespace AlgorithemInCSharp.LeetcodeExample
             int[] subArray = new int[end - start + 1];
             Array.Copy(nums, start, subArray, 0, subArray.Length);
             return subArray;
+        }
+
+        public static int BestTimeBuySellStock(int[] prices)
+        {
+            if (prices == null || prices.Length < 2) return 0;
+
+            int minPrice = prices[0];
+            int maxProfit = 0;
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (prices[i] < minPrice)
+                {
+                    minPrice = prices[i];
+                }
+                else
+                {
+                    int profit = prices[i] - minPrice;
+                    if (profit > maxProfit)
+                    {
+                        maxProfit = profit;
+                    }
+                }
+            }
+
+            return maxProfit;
+        }
+
+        public int MaxProfit_Kadane(int[] prices)
+        {
+            int maxEndingHere = 0;
+            int maxSofar = 0;
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                int diff = prices[i] - prices[i - 1];
+                maxEndingHere = MaxTwoNum(maxEndingHere, diff + maxEndingHere);
+                maxSofar = MaxTwoNum(maxSofar, maxEndingHere);
+            }
+
+            return maxSofar;
         }
     }
 }
