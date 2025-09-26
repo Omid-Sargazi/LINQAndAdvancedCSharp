@@ -54,7 +54,7 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
             for (int i = 1; i < nums.Length; i++)
             {
-                maxCurrent = MaxTwoNum(maxCurrent, nums[i]+maxCurrent);
+                maxCurrent = MaxTwoNum(maxCurrent, nums[i] + maxCurrent);
                 maxSum = MaxTwoNum(maxSum, maxCurrent);
             }
 
@@ -76,6 +76,63 @@ namespace AlgorithemInCSharp.LeetcodeExample
                 return b;
             }
             return a;
+        }
+
+
+        public static int MaximumProductSubarray(int[] nums)
+        {
+            if (nums == null || nums.Length == 0) return 0;
+            int maxSofar = nums[0];
+            int minSofar = nums[0];
+            int result = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                int num = nums[i];
+
+                if (num < 0)
+                {
+                    (minSofar, maxSofar) = (maxSofar, minSofar);
+                }
+
+                maxSofar = MaxTwoNum(maxSofar, maxSofar * num);
+                minSofar = MinTwoNum(minSofar, minSofar * num);
+
+                result = MaxTwoNum(result, maxSofar);
+            }
+
+            return result;
+        }
+
+        public static int[] MaxSubArrayWithIndices(int[] nums, out int value)
+        {
+            int maxCurrent = nums[0];
+            int maxSum = nums[0];
+            int start = 0, end = 0, tempStart = 0;
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] > nums[i] + maxCurrent)
+                {
+                    maxCurrent = nums[i];
+                    tempStart = i;
+                }
+                else
+                {
+                    maxCurrent += nums[i];
+                }
+                if (maxCurrent > maxSum)
+                {
+                    maxSum = maxCurrent;
+                    start = tempStart;
+                    end = i;
+                }
+
+            }
+            value = maxSum;
+            int[] subArray = new int[end - start + 1];
+            Array.Copy(nums, start, subArray, 0, subArray.Length);
+            return subArray;
         }
     }
 }
