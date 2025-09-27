@@ -53,6 +53,26 @@ Console.WriteLine($"{x}==>SubArray is:  {string.Join(",", res1)}");
 Console.WriteLine("===================");
 LeetCodeProblemss.TwoSum3(arr6, 8);
 
+int score = 85;
+string grade = score switch
+{
+    >= 90 => "A",
+    >= 80 => "B",
+    >= 70 => "C",
+    _ => "F"
+
+};
+
+DayOfWeek day = DayOfWeek.Monday;
+
+string type = day switch
+{
+    DayOfWeek.Saturday or DayOfWeek.Sunday => "Weekend",
+    _ => "Weekday",
+};
+
+DelegatProblem.Run();
+
 // Console.WriteLine($"{string.Join(",",result)}");
 // KindOfSortArray.QuickSorting(arr,0,arr.Length-1);
 

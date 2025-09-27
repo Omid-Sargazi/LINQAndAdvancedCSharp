@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Formats.Tar;
 using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithemInCSharp.LeetcodeExample
 {
@@ -303,5 +304,24 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
             return maxProfit;
         }
+    }
+
+    public delegate int Mydelegate(int a, int b);
+
+    public class DelegatProblem
+    {
+           static Mydelegate d2 = Mul;
+            static Mydelegate d1 = Add;
+        public static void Run()
+        {
+            int a = 10;
+            int b = 10;
+            int res = d1(a, b);
+            Console.WriteLine(res);
+        }
+
+
+        public static int Add(int a, int b) => a + b;
+        public static int Mul(int a, int b) => a * b;
     }
 }
