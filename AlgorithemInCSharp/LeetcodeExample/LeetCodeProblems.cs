@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Formats.Tar;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Markup;
 
 namespace AlgorithemInCSharp.LeetcodeExample
 {
@@ -310,18 +311,49 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
     public class DelegatProblem
     {
-           static Mydelegate d2 = Mul;
-            static Mydelegate d1 = Add;
+        static Func<int, int, int> d11 = Add;
+        static Func<int, int, int> d22 = Mul;
+        static Mydelegate d2 = Mul;
+        static Mydelegate d1 = Add;
         public static void Run()
         {
             int a = 10;
             int b = 10;
             int res = d1(a, b);
             Console.WriteLine(res);
+
+            Console.WriteLine(d11(a, b));
+            Console.WriteLine(d22(a, b));
         }
 
 
         public static int Add(int a, int b) => a + b;
         public static int Mul(int a, int b) => a * b;
+
+
+        public static void DefaultDelegate()
+        {
+            Mydelegate d = delegate (int a, int b) { return a * b; };
+            Mydelegate d1 = (x, y) => x * y;
+            Predicate<int> isEven = n => n % 2 == 0;
+
+            Action notify = () => Console.WriteLine("Hello");
+            notify += () => Console.WriteLine("Omid");
+            notify += () => Console.WriteLine("From");
+        }
+    }
+
+
+    public class SpanAndMemory
+    {
+        public static void Run()
+        {
+            int[] nums = { 1, 2, 3, 4 };
+            Span<int> span = nums.AsSpan();
+
+            
+
+            Console.WriteLine($"{string.Join(",", span.ToArray())}");
+        }
     }
 }

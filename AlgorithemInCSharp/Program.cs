@@ -71,6 +71,8 @@ string type = day switch
     _ => "Weekday",
 };
 
+
+
 DelegatProblem.Run();
 
 // Console.WriteLine($"{string.Join(",",result)}");
