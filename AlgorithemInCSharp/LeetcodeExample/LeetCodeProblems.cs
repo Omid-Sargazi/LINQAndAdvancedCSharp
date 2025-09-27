@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Formats.Tar;
 
 namespace AlgorithemInCSharp.LeetcodeExample
 {
@@ -177,5 +179,55 @@ namespace AlgorithemInCSharp.LeetcodeExample
 
             return maxSofar;
         }
+    }
+
+    public class SolvingProblems
+    {
+        public static int[] TwoSum(int[] nums, int target)
+        {
+            var seen = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int completed = target - nums[i];
+                if (seen.TryGetValue(completed, out int value))
+                {
+                    return new int[] { i, value };
+                }
+
+                seen[nums[i]] = i;
+            }
+
+            return new int[] { 0 };
+        }
+
+        public static int[] TwoSum2(int[] nums, int target)
+        {
+            var pairs = nums.Select((v, i) => (val: v, idx: i)).ToArray();
+
+            Array.Sort(pairs, (a, b) => a.CompareTo(b));
+
+            int l = 0;
+            int r = nums.Length - 1;
+            while (l < r)
+            {
+                int sum = pairs[l].val + pairs[r].val;
+                if (sum == target)
+                {
+                    return new int[] { pairs[l].idx, pairs[r].idx };
+                }
+                else if (sum < target)
+                {
+                    l++;
+                }
+                else
+                {
+                    r++;
+                }
+            }
+
+            return new int[] { 0 };
+        }
+
+        
     }
 }
