@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Formats.Asn1;
 using System.Globalization;
 using System.Reflection.Metadata;
@@ -148,8 +149,59 @@ namespace LinqExamples.LeetCodeProblems
                 answer[i] = prefix[i] * suffix[i];
             }
 
+
+
             return answer;
 
         }
+
+        public static void RunType()
+        {
+            var p1 = new Person("omid", 42);
+            var p2 = new Person("omid", 42);
+            var p4 = p2 with { Age = 41 };
+            var p3 = new Person("Saeed", 40);
+
+            Console.WriteLine(p1 == p2);
+            Console.WriteLine($"p1: {p1}");
+            Console.WriteLine($"P4: {p4}");
+        }
     }
+    public record Person(string Name, int Age);
+
+
+    public static class LinqMethods
+    {
+        public static IEnumerable<T> Where<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+        {
+            if (source == null) throw new ArgumentNullException();
+            if (predicate == null) throw new ArgumentNullException();
+
+            foreach (T item in source)
+            {
+                if (predicate(item))
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        public static IEnumerable<TResult> Select<T, TResult>(this IEnumerable<T> source, Func<T, TResult> seelctor)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (seelctor == null) throw new ArgumentNullException();
+
+            foreach (T item in source)
+            {
+                yield return seelctor(item);
+            }
+        }
+
+
+    }
+        
 }
