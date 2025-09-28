@@ -48,5 +48,29 @@ namespace LinqExamples.LeetCodeProblems
 
             return new int[] { 0 };
         }
+
+        public static int BestTimeBuySellStock(int[] prices)
+        {
+            int minPrice = prices[0];
+            int Maxprofit = 0;
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (minPrice > prices[i])
+                {
+                    minPrice = prices[i];
+                }
+                else
+                {
+                    int profit = prices[i] - minPrice;
+                    if (profit > Maxprofit)
+                    {
+                        Maxprofit = profit;
+                    }
+                }
+            }
+
+            return Maxprofit;
+        }
     }
 }
