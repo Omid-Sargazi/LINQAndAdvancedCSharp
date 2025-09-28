@@ -20,5 +20,33 @@ namespace LinqExamples.LeetCodeProblems
 
             return new int[] { 0 };
         }
+
+        public static int[] TwoSum2(int[] arr, int target)
+        {
+            var pairs = arr.Select((a, b) => (val: a, idx: b)).ToArray();
+            Array.Sort(pairs, (a, b) => a.CompareTo(b));
+
+            int left = 0;
+            int right = arr.Length - 1;
+
+            while (left < right)
+            {
+                int sum = arr[left] + arr[right];
+                if (sum == target)
+                {
+                    return new int[] { left, right };
+                }
+                else if (sum < target)
+                {
+                    left++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+
+            return new int[] { 0 };
+        }
     }
 }
