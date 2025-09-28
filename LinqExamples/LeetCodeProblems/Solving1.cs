@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 namespace LinqExamples.LeetCodeProblems
 {
     public class TwoSumProblem
@@ -71,6 +73,53 @@ namespace LinqExamples.LeetCodeProblems
             }
 
             return Maxprofit;
+        }
+
+        public static bool ContainsDuplicate(int[] arr)
+        {
+            Dictionary<int, int> seen = [];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (seen.TryGetValue(arr[i], out int value))
+                {
+                    return true;
+                }
+                seen[arr[i]] = i;
+            }
+
+            return false;
+        }
+
+        public static bool ContainsDuplicate2(int[] arr)
+        {
+            HashSet<int> seen = [];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (!seen.Contains(arr[i]))
+                {
+                    seen.Add(arr[i]);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool ContainsDuplicate3(int[] arr)
+        {
+            HashSet<int> seen = [];
+            foreach (var item in arr)
+            {
+                if (!seen.Add(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
