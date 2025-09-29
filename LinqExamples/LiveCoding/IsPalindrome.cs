@@ -97,4 +97,31 @@ namespace LinqExamples.LiveCoding
             return result;
         }
     }
+
+    public class Sorting
+    {
+        public static void Bubble(int[] arr)
+        {
+            for (int start = arr.Length - 1; start >= 0; start--)
+            {
+                bool swapped = false;
+                for (int i = 0; i < start; i++)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        (arr[i], arr[i + 1]) = (arr[i + 1], arr[i]);
+                        swapped = true;
+                    }
+                }
+                if (swapped == false)
+                {
+                    break;
+                }
+            }
+
+            Console.WriteLine($"{string.Join(",", arr)}");
+        }
+    }
+
+    ح
 }
