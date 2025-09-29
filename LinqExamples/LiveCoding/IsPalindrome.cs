@@ -21,5 +21,19 @@ namespace LinqExamples.LiveCoding
 
             return true;
         }
+
+        public static char FirstRepeatingChar(string str)
+        {
+            var seen = new HashSet<char>();
+            foreach (var c in str)
+            {
+                if (seen.Contains(c))
+                    return c;
+                seen.Add(c);
+            }
+
+            return '\0';
+
+        }
     }
 }
