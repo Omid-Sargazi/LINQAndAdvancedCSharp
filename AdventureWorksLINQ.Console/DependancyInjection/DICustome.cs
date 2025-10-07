@@ -1,5 +1,9 @@
 namespace AdventureWorksLINQ.Console.DependancyInjection
 {
+    public interface ISomeService
+    {
+        public void SomeService();
+    }
     public interface IOrder1
     {
         public void A();
@@ -8,6 +12,11 @@ namespace AdventureWorksLINQ.Console.DependancyInjection
 
     public class Order1 : IOrder1
     {
+        private readonly ISomeService _service;
+        public Order1(ISomeService service)
+        {
+            _service = service;
+        }
         public void A()
         {
             System.Console.WriteLine("I'm A class");
@@ -59,6 +68,33 @@ namespace AdventureWorksLINQ.Console.DependancyInjection
             _order1.B();
             _order2.C();
             _order2.D();
+        }
+    }
+
+
+    public class DIContainer
+    {
+        private Dictionary<Type, Type> pairs = new Dictionary<Type, Type>();
+        public void Register<TInterface, TImplemantation>()
+        {
+            Type typeInterface = typeof(TInterface);
+            Type typeImplementation = typeof(TImplemantation);
+            if (!pairs.ContainsKey(typeInterface))
+            {
+                pairs[typeInterface] = typeImplementation;
+           }
+        }
+
+        public T Resolve<T>()
+        {
+            Type interfaceType = typeof(T);
+            if (!pairs.ContainsKey(interfaceType))
+            {
+                throw new InvalidOperationException($"Type {interfaceType.Name} is not registered.");
+            }
+
+            Type implementationType = pairs[interfaceType];
+            return (T)Activator.CreateInstance(implementationType);
         }
     }
 }
