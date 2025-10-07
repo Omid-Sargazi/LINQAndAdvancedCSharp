@@ -27,7 +27,7 @@ namespace AdventureWorksLINQ.Console.Reflection
     public class AClass : AInterface
     {
         private readonly ISomeTask _someTask;
-        public AClass(){}
+        public AClass() { }
         public AClass(ISomeTask someTask)
         {
             _someTask = someTask;
@@ -130,7 +130,50 @@ namespace AdventureWorksLINQ.Console.Reflection
 
             Master2 master = new Master2(d1, d2);
             master.DoTask();
+            //=======================================
+            var method = typeof(Example2).GetMethod("TestMethod");
+            var parametes = method.GetParameters();
+
+            foreach (var param in parametes)
+            {
+                System.Console.WriteLine($"{param.ParameterType.Name}");
+                System.Console.WriteLine($"{param.ParameterType.IsInterface}");
+                System.Console.WriteLine($"{param.Name}");
+            }
+            //=======================================
 
         }
     }
+
+    public interface IServiceA
+    {
+
+    }
+
+    public interface IServiceB { }
+
+    public class ServiceA : IServiceA
+    {
+
+    }
+
+    public class ServiceB : IServiceB
+    {
+
+        public ServiceB(IServiceA serviceA)
+        {
+
+        }
+    }
+
+
+    public class Example2
+    {
+        public void TestMethod(IServiceA serviceA, IServiceB serviceB, string name, int age)
+        {
+
+        }
+    }
+    
+
 }
