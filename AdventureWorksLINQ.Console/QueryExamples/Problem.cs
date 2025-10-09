@@ -1,7 +1,7 @@
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
-using Xunit.Sdk;
+
 
 namespace AdventureWorksLINQ.Console.QueryExamples
 {

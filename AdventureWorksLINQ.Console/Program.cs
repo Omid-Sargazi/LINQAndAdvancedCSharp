@@ -1,8 +1,12 @@
-﻿using AdventureWorksLINQ.Console.EFCore;
+﻿using AdventureWorksLINQ.Console.DependancyInjection;
+using AdventureWorksLINQ.Console.EFCore;
 using AdventureWorksLINQ.Console.EFCore.EFCorePerformanceTuning;
 using AdventureWorksLINQ.Console.Generics;
+using AdventureWorksLINQ.Console.IqueryableProblem;
 using AdventureWorksLINQ.Console.Product;
+using AdventureWorksLINQ.Console.QueryExample;
 using AdventureWorksLINQ.Console.QueryExamples;
+using AdventureWorksLINQ.Console.Reflection;
 using Microsoft.EntityFrameworkCore;
 
 public class Program
@@ -53,8 +57,19 @@ public class Program
         // SqlBook.Run();
 
         // Problem.Run();
-        DependencyInjection.Run();
+        // DependencyInjection.Run();
+
+
+        // Queries.Run();
+
+        // DIClient.Run();
+
+        // DIClient2.Run();
 
         // Box<int>.Run(); 
+
+        System.Console.WriteLine("Helloooooo");
+
+        Iqueryable1.Run();
     }
 }
