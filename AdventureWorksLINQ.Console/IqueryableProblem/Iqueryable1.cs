@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 
 namespace AdventureWorksLINQ.Console.IqueryableProblem
 {
@@ -79,7 +80,7 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
 
 
         }
-        
+
 
         public static void MaximumProductSubarray(int[] arr)
         {
@@ -95,13 +96,48 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             }
 
             int right = 1;
-            for(int end=n-1;end>=0;end--)
+            for (int end = n - 1; end >= 0; end--)
             {
                 res[end] = right * res[end];
                 right = right * arr[end];
             }
 
-            System.Console.Write($"{string.Join(",",res)}");
+            System.Console.Write($"{string.Join(",", res)}");
+        }
+        
+
+        public static void Query1()
+        {
+            var query = db.People.Where(p => p.FirstName == "Admin");
+
+            var query2 = db.People.Where(p => p.FirstName.StartsWith("A")).Select(p => p.LastName.StartsWith("B"));
+
+            var query3 = db.People.Where(p => p.FirstName.StartsWith("A"))
+            .Select(p => p.Customers).ToList();
+
+            var highlyPaidEmployees = db.Employees.Where(e => e.Gender == "Man");
+
+            var redProducts = db.Products.Where(p => p.Color == "Red").ToList();
+
+
+            // foreach(var i in query3)
+            // {
+            //     foreach(var ii in i)
+            //     {
+
+            //     }
+            // }
+
+            var order2014 = db.SalesOrderHeaders.Where(o => o.OrderDate.Year == 214).Select(o => o.CustomerId == 1).ToList();
+
+            //  foreach(var i in order2014)
+            // {
+            //     System.Console.WriteLine(i);
+            // }
+
+            var productsByPriceDesc = db.Products.OrderByDescending(p => p.ListPrice);
+
+
         }
     }
 }
