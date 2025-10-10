@@ -174,6 +174,30 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             .Where(edh => edh.EndDate == null)
             .GroupBy(edh => edh.Department.Name)
             .Select(g => new { g.Key, EmployeeCount = g.Count() }).ToList();
+
+
+            var productsWithCategory = db.Products
+            .Join(db.ProductSubcategories,
+                p => p.ProductSubcategoryId,
+                ps => ps.ProductCategoryId,
+                (p, ps) => new { productname = p.Name, subCategory = ps.Name }
+            ).Select(s => s.subCategory).ToList();
+
+            var ordersWithCustomer = db.SalesOrderHeaders
+            .Join(db.Customers,
+            o => o.CustomerId,
+            c => c.CustomerId,
+            (o, c) => new { OrderId = o.SalesOrderId, Customername = c.Person.FirstName + " " + c.Person.LastName }
+            );
+
+
+            var productsWithVendor = db.Products
+            .Join(db.ProductVendors,
+            p => p.ProductId,
+            pv => pv.ProductId,
+            (p, pv) => new { ProductName = p.Name, VendorName = pv.Product }
+            );
+            
             
 
 
