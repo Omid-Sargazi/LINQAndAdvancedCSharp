@@ -7,7 +7,7 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
 {
     public class Iqueryable1
     {
-            private static AdventureWorks2019Context db = new AdventureWorks2019Context();
+        private static AdventureWorks2019Context db = new AdventureWorks2019Context();
 
         public static void Run()
         {
@@ -55,7 +55,7 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             System.Console.WriteLine("=== SQL(Product/Name) ===");
             System.Console.WriteLine(q1.ToString());
 
-             var items1 = q1.Select(p => new { p.ProductId, p.Name }).ToList();
+            var items1 = q1.Select(p => new { p.ProductId, p.Name }).ToList();
             System.Console.WriteLine("=== Results ===");
             foreach (var it in items1) System.Console.WriteLine($"{it.ProductId} - {it.Name}");
 
@@ -104,7 +104,7 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
 
             System.Console.Write($"{string.Join(",", res)}");
         }
-        
+
 
         public static void Query1()
         {
@@ -130,14 +130,61 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
 
             var order2014 = db.SalesOrderHeaders.Where(o => o.OrderDate.Year == 214).Select(o => o.CustomerId == 1).ToList();
 
+            var customersByName = db.People.OrderBy(c => c.LastName).ThenBy(c => c.FirstName);
+
             //  foreach(var i in order2014)
             // {
             //     System.Console.WriteLine(i);
             // }
 
             var productsByPriceDesc = db.Products.OrderByDescending(p => p.ListPrice);
+            // var employeesByHireDate = db.Employees.ToList().OrderBy(e => e.HireDate).ToList();
+
+            // var ordersByTotalDue = db.SalesOrderHeaders.ToList().OrderByDescending(s => s.TotalDue).Select(s => s.CustomerId == 1).ToList();
+
+            var productByColor = db.Products
+            .GroupBy(p => p.Color)
+            .Select(g => new { g.Key, Count = g.Count() });
+
+            IQueryable<ColorGroup> productByColor2 = db.Products
+            .GroupBy(p => p.Color)
+            .Select(g => new ColorGroup { Color = g.Key, Count = g.Count() });
+
+            // foreach (var i in productByColor2)
+            // {
+            //     System.Console.WriteLine(i.Color + " " + i.Count);
+            // }
+
+            var avgPriceBySubcategory = db.Products
+            .Where(p => p.ProductSubcategoryId != null)
+            .GroupBy(p => p.ProductSubcategoryId)
+            .Select(g => new { g.Key, orderCount = g.Count() });
+
+            // foreach (var i in avgPriceBySubcategory)
+            // {
+            //     System.Console.WriteLine(i.Key + " " + i.orderCount);
+            // }
+
+            var ordersByYear = db.SalesOrderHeaders
+            .GroupBy(soh => soh.OrderDate.Year)
+            .Select(g => new { g.Key, orderCount = g.Count() });
+
+
+            var employeesByDepartment = db.EmployeeDepartmentHistories
+            .Where(edh => edh.EndDate == null)
+            .GroupBy(edh => edh.Department.Name)
+            .Select(g => new { g.Key, EmployeeCount = g.Count() }).ToList();
+            
+
+
 
 
         }
+    }
+
+    public class ColorGroup
+    {
+        public string Color { get; set; }
+        public int Count { get; set; }
     }
 }
