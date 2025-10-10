@@ -249,6 +249,7 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             .Where(p => p.ListPrice > 0)
             .Average(p => p.ListPrice);
 
+
             var expensiveProducts = db.Products
             .Where(p => p.ListPrice > averagePrice)
             .Select(p => new
@@ -258,6 +259,23 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
                 p.ListPrice,
                 AveragePrice = averagePrice
             });
+
+            var popularProducts = db.SalesOrderDetails
+            .GroupBy(p => p.ProductId)
+            .Where(g => g.Count() > 100)
+            .Select(p => new { ProductId = p.Key, SalesCount = p.Count() })
+            .Join(db.Products,
+            g => g.ProductId,
+
+            p => p.ProductId,
+            (p, g) => new
+            {
+                p.ProductId,
+                g.Name,
+                g.ListPrice,
+            p.SalesCount
+            }
+            );
 
 
 
