@@ -2,7 +2,9 @@ using System.Globalization;
 using System.Linq.Expressions;
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.OpenApi.Extensions;
+using Moq;
 using StackExchange.Redis;
 
 namespace AdventureWorksLINQ.Console.IqueryableProblem
@@ -240,6 +242,24 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             .Select(soh => new { soh.SalesOrderId, soh.OrderDate, soh.TotalDue }).Take(5);
 
 
+            var q6 = db.Products.AsNoTracking()
+            .Where(p => p.ListPrice > 0 && p.ProductSubcategoryId != null);
+
+            var averagePrices = db.Products
+            .Where(p => p.ListPrice > 0)
+            .Average(p => p.ListPrice);
+
+            var expensiveProducts = db.Products
+            .Where(p => p.ListPrice > averagePrice)
+            .Select(p => new
+            {
+                p.ProductId,
+                p.Name,
+                p.ListPrice,
+                AveragePrice = averagePrice
+            });
+
+
 
 
 
@@ -325,9 +345,6 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
 
         }
 
-        public static void ContainerMostWater(int[] arr)
-        {
-            
-        }
+        
     }
 }
