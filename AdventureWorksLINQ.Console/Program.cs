@@ -72,9 +72,16 @@ public class Program
 
         // Iqueryable1.Run();
         var arr1 = new int[] { 1, 2, 3, 4};
+        var arr2 = new int[] { 2,7,11,15};
+        var arr3 = new int[] { 1, 1, 1, 1, 2, 2, 3, 3, 4,5 };
+        var arr4 = new int[] { 1,1, 2, 3,4,5 };
+
+        LeetCode1.RemoveDuplicatesSortedArray(arr4);
         // Iqueryable1.MaximumProductSubarray(arr1);
 
         // Iqueryable1.Query1();
-        Iqueryable1.LeetCode1(arr1);
+        // Iqueryable1.LeetCode1(arr1);
+
+
     }
 }

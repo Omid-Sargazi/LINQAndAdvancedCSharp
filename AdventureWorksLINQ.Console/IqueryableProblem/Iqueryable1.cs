@@ -1,7 +1,9 @@
+using System.Globalization;
 using System.Linq.Expressions;
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Extensions;
+using StackExchange.Redis;
 
 namespace AdventureWorksLINQ.Console.IqueryableProblem
 {
@@ -271,5 +273,61 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
     {
         public string Color { get; set; }
         public int Count { get; set; }
+    }
+
+    public class LeetCode1
+    {
+        public static int[] Problem1(int[] arr, int target)
+        {
+            if (arr == null || arr.Length < 2)
+            {
+                throw new ArgumentException("Input array must not be null and must have at least 2 elements.");
+            }
+            int left = 0;
+            int right = arr.Length - 1;
+            while (left < right)
+            {
+                int sum = arr[left] + arr[right];
+                if (sum == target)
+                {
+                    return new int[] { left, right };
+                }
+                else if (sum < target)
+                {
+                    left++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+
+            return new int[] { };
+        }
+
+        public static void RemoveDuplicatesSortedArray(int[] arr)
+        {
+            int p = 0;
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] != arr[i - 1])
+                {
+                    p++;
+                    arr[p] = arr[i];
+                }
+            }
+
+            for (int i = 0; i <= p; i++)
+            {
+                System.Console.WriteLine($"{string.Join(",", arr[i])}");
+            }
+
+
+        }
+
+        public static void ContainerMostWater(int[] arr)
+        {
+            
+        }
     }
 }
