@@ -197,8 +197,19 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             pv => pv.ProductId,
             (p, pv) => new { ProductName = p.Name, VendorName = pv.Product }
             );
-            
-            
+
+            var totalProducts = db.Products.ToList().Count();
+
+            var averagePrice = db.Products.Average(p => p.ListPrice);
+
+            var uniqueCustomers = db.SalesOrderHeaders.Select(soh => soh.CustomerId).Distinct().Count();
+
+            var q1 = db.Products.AsNoTracking()
+            .Where(p => p.Name.StartsWith("A"))
+            .OrderBy(p => p.Name)
+            .Select(p => new { p.Name, p.ProductId })
+            .Take(5).ToList();
+
 
 
 
