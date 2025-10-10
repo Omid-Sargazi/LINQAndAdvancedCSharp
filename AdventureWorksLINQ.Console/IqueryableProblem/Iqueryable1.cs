@@ -229,14 +229,41 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
                 PersonId = p.BusinessEntityId,
                 FirstName = p.FirstName,
                 LastName = p.LastName,
-            PersonType=p.PersonType
+                PersonType = p.PersonType
             }
             );
 
+            var q5 = db.SalesOrderHeaders
+            .Where(soh => soh.DueDate.Year == 2013 && soh.TotalDue > 1000)
+            .Select(soh => new { soh.SalesOrderId, soh.OrderDate, soh.TotalDue }).Take(5);
 
 
 
 
+
+        }
+
+        public static void LeetCode1(int[] arr)
+        {
+            int n = arr.Length;
+            int[] res = new int[n];
+
+            int left = 1;
+            res[0] = 1;
+            for (int i = 1; i < n; i++)
+            {
+                res[i] = left * arr[i - 1];
+                left = res[i];
+            }
+
+            int right = 1;
+            for(int j=n-1;j>=0;j--)
+            {
+                res[j] = right * res[j];
+                right = arr[j] * right; 
+            }
+
+            System.Console.WriteLine($"{string.Join(",",res)}");
         }
     }
 

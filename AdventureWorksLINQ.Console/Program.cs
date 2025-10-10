@@ -71,9 +71,10 @@ public class Program
         // System.Console.WriteLine("Helloooooo");
 
         // Iqueryable1.Run();
-        // var arr1 = new int[] { 1, 2, 3, 4};
+        var arr1 = new int[] { 1, 2, 3, 4};
         // Iqueryable1.MaximumProductSubarray(arr1);
 
-        Iqueryable1.Query1();
+        // Iqueryable1.Query1();
+        Iqueryable1.LeetCode1(arr1);
     }
 }
