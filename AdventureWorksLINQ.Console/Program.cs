@@ -68,8 +68,10 @@ public class Program
 
         // Box<int>.Run(); 
 
-        System.Console.WriteLine("Helloooooo");
+        // System.Console.WriteLine("Helloooooo");
 
-        Iqueryable1.Run();
+        // Iqueryable1.Run();
+        var arr1 = new int[] { 1, 2, 3, 4};
+        Iqueryable1.MaximumProductSubarray(arr1);
     }
 }

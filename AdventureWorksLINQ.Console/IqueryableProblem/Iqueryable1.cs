@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +15,8 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             bool desc = false;
             Execute(page, pageSize, false);
         }
-        
-        private static void Execute(int page, int pageSize,bool desc)
+
+        private static void Execute(int page, int pageSize, bool desc)
         {
             if (page < 1) page = 1;
 
@@ -36,13 +37,71 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
 
             var items = pagedQuery.Select(p => new { p.ProductId, p.Name }).ToList();
             System.Console.WriteLine($"=== Page {page} / Size {pageSize} | Total {totalCount} ===");
-            foreach(var it in items)
+            foreach (var it in items)
             {
                 System.Console.WriteLine($"{it.ProductId}--{it.Name}");
             }
 
 
-            
+            var q1 = Executee(
+                source: db.Products.AsNoTracking(),
+                keySelector: (AdventureWorksLINQ.Console.Models.Product p) => p.Name,
+                descending: desc,
+                page: page,
+                pageSize: pageSize
+            );
+
+            System.Console.WriteLine("=== SQL(Product/Name) ===");
+            System.Console.WriteLine(q1.ToString());
+
+             var items1 = q1.Select(p => new { p.ProductId, p.Name }).ToList();
+            System.Console.WriteLine("=== Results ===");
+            foreach (var it in items1) System.Console.WriteLine($"{it.ProductId} - {it.Name}");
+
+
+
+
+        }
+
+        private static IQueryable<T> Executee<T, TKey>(IQueryable<T> source, Expression<Func<T, TKey>> keySelector, int page, int pageSize, bool descending)
+        {
+            if (page < 1) page = 1;
+
+            if (pageSize <= 0) pageSize = 10;
+            if (pageSize >= 100) pageSize = 100;
+
+            var ordered = descending ? source.OrderByDescending(keySelector) :
+            source.OrderBy(keySelector);
+
+            var paged = ordered.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return paged;
+
+
+        }
+        
+
+        public static void MaximumProductSubarray(int[] arr)
+        {
+            int n = arr.Length;
+            int[] res = new int[n];
+
+            int left = 1;
+            res[0] = 1;
+            for (int i = 1; i < n; i++)
+            {
+                left = left * arr[i - 1];
+                res[i] = left;
+            }
+
+            int right = 1;
+            for(int end=n-1;end>=0;end--)
+            {
+                res[end] = right * res[end];
+                right = right * arr[end];
+            }
+
+            System.Console.Write($"{string.Join(",",res)}");
         }
     }
 }
