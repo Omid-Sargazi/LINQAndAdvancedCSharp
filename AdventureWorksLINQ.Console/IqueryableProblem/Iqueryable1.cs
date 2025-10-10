@@ -210,6 +210,29 @@ namespace AdventureWorksLINQ.Console.IqueryableProblem
             .Select(p => new { p.Name, p.ProductId })
             .Take(5).ToList();
 
+            var q2 = db.Products.AsNoTracking()
+            .Where(p => p.DiscontinuedDate == null).Count();
+
+            var q3 = db.Products
+            .AsNoTracking()
+            .Where(p => p.ProductSubcategoryId != null && p.ListPrice > 0)
+            .OrderBy(p => p.ListPrice)
+            .Select(p => new { p.ProductId, p.Name, p.ListPrice, p.ProductSubcategoryId }).Take(10);
+
+            var q4 = db.People.AsNoTracking()
+            .Join(db.Customers,
+            p => p.BusinessEntityId,
+            c => c.PersonId,
+            (p, c) => new
+            {
+                CustomerId = c.CustomerId,
+                PersonId = p.BusinessEntityId,
+                FirstName = p.FirstName,
+                LastName = p.LastName,
+            PersonType=p.PersonType
+            }
+            );
+
 
 
 
