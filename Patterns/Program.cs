@@ -17,6 +17,7 @@ app.UseHttpsRedirection();
 
 // اجرای کد مدیاتور قبل از app.Run()
 // ClientMediator.Run();
-TypeProblem.TestMakeGeneric();
+// TypeProblem.TestMakeGeneric();
+ClientCalculator.TestSimpleInvoke();
 
 app.Run();

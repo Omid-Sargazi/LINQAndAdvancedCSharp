@@ -86,8 +86,32 @@ namespace Patterns.Mediator
             Type nullableType = typeof(Nullable<>);
             Type specificNullable = nullableType.MakeGenericType(typeof(int));
             var myNullable = Activator.CreateInstance(specificNullable);
-           
+
         }
     }
+
+    public class Calculator
+    {
+        public int Add(int a, int b) => a + b;
+        public string Great(string name) => $"Hello {name}";
+    }
+
+    public class ClientCalculator
+    {
+        public static void TestSimpleInvoke()
+        {
+            var calType = typeof(Calculator);
+            var calculatorInstance = Activator.CreateInstance(calType);
+
+            var addmethod = calType.GetMethod("Add");
+            var res1 = addmethod.Invoke(calculatorInstance, new object[] { 5, 3 });
+            Console.WriteLine($"5+3= {res1}");
+
+            var greetMethod = calType.GetMethod("Great");
+            var res2 = greetMethod.Invoke(calculatorInstance, new object[] { "Omid" });
+            Console.WriteLine($"{res2}");
+        }
+    }
+
 
 }
