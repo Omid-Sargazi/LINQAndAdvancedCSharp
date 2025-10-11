@@ -18,6 +18,8 @@ app.UseHttpsRedirection();
 // اجرای کد مدیاتور قبل از app.Run()
 // ClientMediator.Run();
 // TypeProblem.TestMakeGeneric();
-ClientCalculator.TestSimpleInvoke();
+// ClientCalculator.TestSimpleInvoke();
+var arr = new int[] { 1, 2, 3, 4 };
+LeetcodeProblem.MaximumProductSubarray(arr);
 
 app.Run();
