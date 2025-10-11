@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithemInCSharp", "Algor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionsAndMiddlewares", "ExceptionsAndMiddlewares\ExceptionsAndMiddlewares.csproj", "{C99D6282-A7E7-4397-8868-0D12C7AF0B26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patterns", "Patterns\Patterns.csproj", "{AB056A2D-473E-4EBC-9FEA-97E18F04DE3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +132,10 @@ Global
 		{C99D6282-A7E7-4397-8868-0D12C7AF0B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C99D6282-A7E7-4397-8868-0D12C7AF0B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C99D6282-A7E7-4397-8868-0D12C7AF0B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB056A2D-473E-4EBC-9FEA-97E18F04DE3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB056A2D-473E-4EBC-9FEA-97E18F04DE3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB056A2D-473E-4EBC-9FEA-97E18F04DE3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB056A2D-473E-4EBC-9FEA-97E18F04DE3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
