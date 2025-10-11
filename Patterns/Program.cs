@@ -16,6 +16,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // اجرای کد مدیاتور قبل از app.Run()
-ClientMediator.Run();
+// ClientMediator.Run();
+TypeProblem.TestMakeGeneric();
 
 app.Run();

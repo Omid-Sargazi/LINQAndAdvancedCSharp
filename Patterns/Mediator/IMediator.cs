@@ -52,11 +52,41 @@ namespace Patterns.Mediator
         public static void Run()
         {
             var mediator = new Mediator();
-            var command = new CreateUserCommand { Name = "omid",Age=42 };
+            var command = new CreateUserCommand { Name = "omid", Age = 42 };
 
             var result = mediator.Send(command);
 
             Console.WriteLine($"Operation result:{result}");
+        }
+    }
+
+
+    public class TypeProblem
+    {
+        public static void TestMakeGeneric()
+        {
+            Type listType = typeof(List<>);
+            Type strinListType = listType.MakeGenericType(typeof(string));
+
+            Console.WriteLine($"List type:{listType}");
+            Console.WriteLine($"List<string> type:{strinListType}");
+
+            var strinList = Activator.CreateInstance(strinListType);
+            Console.WriteLine($"Instance created: {strinList.GetType()}");
+
+
+            Type dicType = typeof(Dictionary<,>);
+
+            Type specificDict = dicType.MakeGenericType(typeof(string), typeof(int));
+
+            var myDic = Activator.CreateInstance(specificDict);
+            var addMethod = specificDict.GetMethod("Add");
+            addMethod.Invoke(myDic, new object[] { "Omid", 1 });
+
+            Type nullableType = typeof(Nullable<>);
+            Type specificNullable = nullableType.MakeGenericType(typeof(int));
+            var myNullable = Activator.CreateInstance(specificNullable);
+           
         }
     }
 
