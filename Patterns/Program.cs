@@ -6,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddOpenApi();
 
+builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<API1>();
+builder.Services.AddHttpClient<API2>();
+
+builder.Services.AddScoped<ExecuteTwoSyncMethod>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,8 +29,10 @@ app.UseHttpsRedirection();
 var arr = new int[] { 1, 2, 3, 4 };
 // LeetcodeProblem.MaximumProductSubarray(arr);
 
-var res = await ExecuteTwoSyncMethod.Run();
-app.MapGet("/", () => res);
+app.MapGet("/", async (ExecuteTwoSyncMethod executor) =>
+{
+    return await executor.Run();
+});
 
 app.MapGet("/next", () => "Hello Omid");
 
