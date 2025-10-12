@@ -107,5 +107,25 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
             var stringList = Activator.CreateInstance(stringListType);
             Console.WriteLine($"instance created {stringList.GetType()}");
         }
+
+        public static void FindTypesInAssembly()
+        {
+            var handlerType = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => t.Name.EndsWith("Handle")).ToList();
+
+            foreach(var type in handlerType)
+            {
+                try
+                {
+                    Console.WriteLine($"Found handler:{type.Name}");
+                }
+                catch (System.Exception ex)
+                {
+
+                    Console.WriteLine($"{ex.Message}");
+                }
+            }
+        }
     }
 }

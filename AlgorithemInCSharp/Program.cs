@@ -5,4 +5,4 @@ using AlgorithemInCSharp.Reflections;
 
 // ClientMediator.Run();
 
-TestMakeGeneruc.MakeGeneric();
+TestMakeGeneruc.FindTypesInAssembly();
