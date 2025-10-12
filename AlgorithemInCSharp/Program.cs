@@ -1,8 +1,11 @@
-﻿using AlgorithemInCSharp.Patterns.BehavioralDesignPattern;
+﻿using AlgorithemInCSharp.Patterns;
+using AlgorithemInCSharp.Patterns.BehavioralDesignPattern;
 using AlgorithemInCSharp.Reflections;
 
 // Example.Run();
 
 // ClientMediator.Run();
 
-TestMakeGeneruc.TestAssignableFrom();
+// TestMakeGeneruc.TestAssignableFrom();
+
+CommandClient.Run();
