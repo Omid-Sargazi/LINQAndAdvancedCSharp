@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Reflection;
 
 namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
@@ -137,8 +138,28 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
             var result1 = addMethod.Invoke(calculatorInstance, new object[] { 5, 3 });
 
             var greetingMethod = calculatorType.GetMethod("Greet");
-            var result2 = greetingMethod.Invoke(calculatorInstance, new object[] { "Omid" }); 
+            var result2 = greetingMethod.Invoke(calculatorInstance, new object[] { "Omid" });
         }
+
+        public static void TestAssignableFrom()
+        {
+            var animalType = typeof(IAnimal);
+
+            var allType = Assembly.GetExecutingAssembly().GetTypes();
+
+            foreach(var type in allType)
+            {
+                if(animalType.IsAssignableFrom(type) && !type.IsInterface)
+                {
+                    Console.WriteLine($"{type.Name} is an animal..");
+
+                    var animal = Activator.CreateInstance(type);
+                    Console.WriteLine($"Created {animal.GetType().Name}");
+                }
+            }
+        }
+        
+        
     }
 
     public class Calculator
@@ -146,6 +167,11 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
         public int Add(int a, int b) => a + b;
         public string Greet(string name) => $"Hello:{name}";
     }
+
+    public interface IAnimal { }
+    public class Dog : IAnimal { }
+    public class Cat : IAnimal { }
+    public class Car{}
 
 
 }
