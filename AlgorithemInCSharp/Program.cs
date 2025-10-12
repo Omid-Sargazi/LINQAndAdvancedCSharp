@@ -1,3 +1,6 @@
-﻿using AlgorithemInCSharp.Reflections;
+﻿using AlgorithemInCSharp.Patterns.BehavioralDesignPattern;
+using AlgorithemInCSharp.Reflections;
 
-Example.Run();
+// Example.Run();
+
+ClientMediator.Run();
