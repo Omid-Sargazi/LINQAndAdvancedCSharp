@@ -8,4 +8,5 @@ using AlgorithemInCSharp.Reflections;
 
 // TestMakeGeneruc.TestAssignableFrom();
 
-CommandClient.Run();
+// CommandClient.Run();
+await NotificationClient.Run();

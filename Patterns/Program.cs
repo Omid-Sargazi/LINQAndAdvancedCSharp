@@ -1,4 +1,5 @@
 using Patterns.Mediator;
+using Patterns.SimpelApis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,12 @@ app.UseHttpsRedirection();
 // TypeProblem.TestMakeGeneric();
 // ClientCalculator.TestSimpleInvoke();
 var arr = new int[] { 1, 2, 3, 4 };
-LeetcodeProblem.MaximumProductSubarray(arr);
+// LeetcodeProblem.MaximumProductSubarray(arr);
+
+var res = await ExecuteTwoSyncMethod.Run();
+app.MapGet("/", () => res);
+
+app.MapGet("/next", () => "Hello Omid");
+
 
 app.Run();
