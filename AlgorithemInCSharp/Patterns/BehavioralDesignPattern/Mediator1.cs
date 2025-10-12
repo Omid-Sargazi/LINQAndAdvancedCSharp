@@ -114,7 +114,7 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
             .GetTypes()
             .Where(t => t.Name.EndsWith("Handle")).ToList();
 
-            foreach(var type in handlerType)
+            foreach (var type in handlerType)
             {
                 try
                 {
@@ -127,5 +127,25 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
                 }
             }
         }
+
+        public static void TestSimpleInvoke()
+        {
+            var calculatorType = typeof(Calculator);
+            var calculatorInstance = Activator.CreateInstance(calculatorType);
+
+            var addMethod = calculatorType.GetMethod("Add");
+            var result1 = addMethod.Invoke(calculatorInstance, new object[] { 5, 3 });
+
+            var greetingMethod = calculatorType.GetMethod("Greet");
+            var result2 = greetingMethod.Invoke(calculatorInstance, new object[] { "Omid" }); 
+        }
     }
+
+    public class Calculator
+    {
+        public int Add(int a, int b) => a + b;
+        public string Greet(string name) => $"Hello:{name}";
+    }
+
+
 }
