@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+using Patterns.CompineAPIProject;
 using Patterns.Mediator;
 using Patterns.SimpelApis;
 
@@ -9,6 +11,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<API1>();
 builder.Services.AddHttpClient<API2>();
+builder.Services.AddHttpClient<FirstApi>();
+builder.Services.AddHttpClient<SecondApi>();
 
 builder.Services.AddScoped<ExecuteTwoSyncMethod>();
 
@@ -27,6 +31,8 @@ app.UseHttpsRedirection();
 // TypeProblem.TestMakeGeneric();
 // ClientCalculator.TestSimpleInvoke();
 var arr = new int[] { 1, 2, 3, 4 };
+
+// app.MapGet("/combine", () => ins.Run());
 // LeetcodeProblem.MaximumProductSubarray(arr);
 
 app.MapGet("/", async (ExecuteTwoSyncMethod executor) =>
