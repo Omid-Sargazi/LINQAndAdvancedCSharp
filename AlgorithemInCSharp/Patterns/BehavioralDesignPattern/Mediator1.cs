@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
 {
@@ -147,9 +148,9 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
 
             var allType = Assembly.GetExecutingAssembly().GetTypes();
 
-            foreach(var type in allType)
+            foreach (var type in allType)
             {
-                if(animalType.IsAssignableFrom(type) && !type.IsInterface)
+                if (animalType.IsAssignableFrom(type) && !type.IsInterface)
                 {
                     Console.WriteLine($"{type.Name} is an animal..");
 
@@ -157,6 +158,13 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
                     Console.WriteLine($"Created {animal.GetType().Name}");
                 }
             }
+        }
+        
+        public static void TestSimpleMediator()
+        {
+            var mediator = new SimpleMediator();
+            var command = new SayHelloCommand { Name = "omid" };
+            mediator.Send(command);
         }
         
         
@@ -171,7 +179,44 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
     public interface IAnimal { }
     public class Dog : IAnimal { }
     public class Cat : IAnimal { }
-    public class Car{}
+    public class Car { }
 
+    public interface ICommand { }
+    public class SayHelloCommand : ICommand
+    {
+        public string Name { get; set; }
+    }
 
+    public interface ICommandhandler<T> where T : ICommand
+    {
+        void Handle(T command);
+    }
+
+    public class SayHelloHandler : ICommandhandler<SayHelloCommand>
+    {
+        public void Handle(SayHelloCommand command)
+        {
+            Console.WriteLine($"Hello{command.Name}");
+        }
+    }
+
+    public class SimpleMediator
+    {
+        public void Send<T>(T command)where T: ICommand
+        {
+            var commandType = command.GetType();
+            var handlerType = typeof(ICommandhandler<>).MakeGenericType(commandType);
+
+            var handler = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .FirstOrDefault(t => handlerType.IsAssignableFrom(t));
+
+            if(handler!=null)
+            {
+                var handlerInstance = Activator.CreateInstance(handler);
+                var handlerMethod = handlerType.GetMethod("Handle");
+                handlerMethod.Invoke(handlerInstance, new object[] { command});
+            }
+        }
+    }
 }
