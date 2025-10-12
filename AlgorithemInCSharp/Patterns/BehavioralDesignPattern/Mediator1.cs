@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
 {
     public class User
@@ -65,4 +67,45 @@ namespace AlgorithemInCSharp.Patterns.BehavioralDesignPattern
         }
     }
 
+    public interface IRequest<TResult>
+    {
+
+    }
+
+    public interface IRequestHandler<TRequest, TResult>
+    {
+        TResult Handle(TRequest request);
+    }
+
+    public class Mediator
+    {
+        public TResult Send<TResult>(IRequest<TResult> request)
+        {
+            var requestType = request.GetType();
+            var handlerType = typeof(IRequestHandler<,>).MakeGenericType(requestType, typeof(TResult));
+
+            var handler = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .FirstOrDefault(t => handlerType.IsAssignableFrom(t));
+
+            var handlerInsatnce = Activator.CreateInstance(handler);
+
+            var result = handler.GetMethod("Handle").Invoke(handlerInsatnce, new object[] { request });
+
+            return (TResult)result;
+        }
+    }
+
+    public class TestMakeGeneruc
+    {
+        public static void MakeGeneric()
+        {
+            Type listType = typeof(List<>);
+            Type stringListType = listType.MakeGenericType(typeof(string));
+            Console.WriteLine(stringListType);
+
+            var stringList = Activator.CreateInstance(stringListType);
+            Console.WriteLine($"instance created {stringList.GetType()}");
+        }
+    }
 }

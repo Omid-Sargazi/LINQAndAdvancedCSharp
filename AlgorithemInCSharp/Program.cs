@@ -3,4 +3,6 @@ using AlgorithemInCSharp.Reflections;
 
 // Example.Run();
 
-ClientMediator.Run();
+// ClientMediator.Run();
+
+TestMakeGeneruc.MakeGeneric();
