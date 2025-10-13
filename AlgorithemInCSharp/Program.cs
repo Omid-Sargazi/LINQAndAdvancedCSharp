@@ -12,4 +12,7 @@ using AlgorithemInCSharp.Reflections;
 // CommandClient.Run();
 // await NotificationClient.Run();
 // LSubstringWithoutRepeatingCharacters.Run("Omidss");
-ClientLits.Run();
+// ClientLits.Run();
+Deconstructt d1 = new Deconstructt("Omid", 42);
+var (name, age) = d1;
+Console.WriteLine(name + age);

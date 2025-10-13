@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithemInCSharp.LeetcodeExample
 {
@@ -115,5 +116,18 @@ namespace AlgorithemInCSharp.LeetcodeExample
             l1.Prinf();
 
         }
+    }
+
+    public class Deconstructt
+    {
+        private string Name;
+        private int Age;
+        public Deconstructt(string name, int age)
+        {
+            Name = name;
+            Age = age;
+        }
+        
+        public void Deconstruct(out string Name, out int Age) => (Name, Age) = (this.Name, this.Age);
     }
 }
