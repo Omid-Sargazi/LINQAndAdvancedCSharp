@@ -1,4 +1,5 @@
-﻿using AlgorithemInCSharp.Patterns;
+﻿using AlgorithemInCSharp.LeetcodeExample;
+using AlgorithemInCSharp.Patterns;
 using AlgorithemInCSharp.Patterns.BehavioralDesignPattern;
 using AlgorithemInCSharp.Reflections;
 
@@ -9,4 +10,6 @@ using AlgorithemInCSharp.Reflections;
 // TestMakeGeneruc.TestAssignableFrom();
 
 // CommandClient.Run();
-await NotificationClient.Run();
+// await NotificationClient.Run();
+// LSubstringWithoutRepeatingCharacters.Run("Omidss");
+ClientLits.Run();
