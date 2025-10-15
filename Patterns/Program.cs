@@ -1,5 +1,6 @@
 using System.Reflection.Metadata.Ecma335;
 using Patterns.CompineAPIProject;
+using Patterns.JWTExample;
 using Patterns.Mediator;
 using Patterns.SimpelApis;
 
@@ -16,6 +17,17 @@ builder.Services.AddHttpClient<SecondApi>();
 
 builder.Services.AddScoped<ExecuteTwoSyncMethod>();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5000); // HTTP
+    options.ListenLocalhost(5001, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
+
+JWTExample.Run();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 // اجرای کد مدیاتور قبل از app.Run()
 // ClientMediator.Run();
@@ -39,6 +51,8 @@ app.MapGet("/", async (ExecuteTwoSyncMethod executor) =>
 {
     return await executor.Run();
 });
+
+
 
 app.MapGet("/next", () => "Hello Omid");
 

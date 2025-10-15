@@ -88,16 +88,22 @@ namespace Patterns.BehaviralPattern
 
     public class ClientTax
     {
-        protected readonly  ITaxStartegy _taxStartegy;
+        protected readonly ITaxStartegy _taxStartegy;
         public ClientTax(ITaxStartegy taxStartegy)
         {
             _taxStartegy = taxStartegy;
         }
         public decimal CalTax(decimal price)
         {
+
+            var list = new int[] { 1, 2, 3, 4 };
+            IQueryable<int> ints = list.AsQueryable();
+            IQueryable<int> ints1 = list.AsQueryable().Where(i => i > 2);
             var res = _taxStartegy.Calculate(price);
             return res;
-            
+
         }
     }
+
+    
 }
