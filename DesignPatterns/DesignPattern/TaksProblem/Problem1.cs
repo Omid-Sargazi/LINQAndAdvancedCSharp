@@ -42,10 +42,10 @@ namespace DesignPattern.TaksProblem
     public class TaskQueue
     {
         private List<ITasks> _tasks = new List<ITasks>();
-        
+
         public TaskQueue()
         {
-            
+
         }
 
         public void Enqueue(ITasks task)
@@ -62,13 +62,30 @@ namespace DesignPattern.TaksProblem
             _tasks.Remove(highestPriorityTask);
             return highestPriorityTask;
         }
-        
+
         public ITasks Peek()
         {
             if (_tasks.Count == 0)
                 return null;
 
             return _tasks.OrderByDescending(t => t.Priority).First();
+        }
+    }
+
+
+    public class ClientPriority
+    {
+        public static void Run()
+        {
+            var queue = new TaskQueue();
+            queue.Enqueue(new Task1());
+            queue.Enqueue(new Task2());
+
+            var nextTask = queue.Peek();
+            var executeTask = queue.Dequeue();
+            executeTask = queue.Dequeue();
+            Console.WriteLine($"Dequeued task with priority: {executeTask.Priority}");
+
         }
     }
 }
