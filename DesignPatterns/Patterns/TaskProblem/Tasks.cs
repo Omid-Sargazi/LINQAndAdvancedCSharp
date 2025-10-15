@@ -58,6 +58,17 @@ namespace Patterns.TaskProblem
                 await task.ExecuteAsync();
             }
         }
+
+        public async Task RunOnPriorityAsync()
+        {
+            var resCritical = _tasks.FirstOrDefault(t => t.Priority == TaskPriority.Critical);
+            var res = _tasks.OrderByDescending(t => t.Priority);
+            
+            foreach(var task in res)
+            {
+                await task.ExecuteAsync();
+            }
+        }
     }
 
     public class ClientTask
@@ -65,11 +76,14 @@ namespace Patterns.TaskProblem
         public static async Task Run()
         {
             TaskQueue task = new TaskQueue();
+            task.AddTask(new Tasks(TaskPriority.High));
             task.AddTask(new Tasks(TaskPriority.Critical));
             task.AddTask(new Tasks(TaskPriority.Normal));
+            task.AddTask(new Tasks(TaskPriority.Critical));
             task.AddTask(new Tasks(TaskPriority.High));
 
-            await task.RunAllAsync();
+            // await task.RunAllAsync();
+            await task.RunOnPriorityAsync();
         }
     }
 }
