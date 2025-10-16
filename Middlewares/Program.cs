@@ -11,11 +11,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IMediatore, Mediator>();
+
+
+builder.Services.AddTransient<IRequestHandler<UserComamnd, bool>, UserCommandHandler>();
+builder.Services.AddTransient<IRequestHandler<UserQuery, User>, UserQueryHandler>();
+
+
+
 var app = builder.Build();
 
-app.MapGet("/reflection", () =>
+app.MapGet("/reflection", (IMediatore mediatore) =>
 {
-    ClientMediator.Run();
+    var result = mediatore.Send<UserComamnd, bool>(new UserComamnd { Id = 1 });
+    var query = mediatore.Send<UserQuery, User>(new UserQuery { Id = 10 });
+    return new
+    {
+        CommandResult = result,
+        QueryResult = query
+    };
 });
 
 // Configure the HTTP request pipeline.
@@ -38,6 +52,7 @@ app.Use(async (context, next) =>
     Console.WriteLine("use 1");
     await next();
     Console.WriteLine("use 2");
+
 });
 
 app.UseLoggingMiddleware();

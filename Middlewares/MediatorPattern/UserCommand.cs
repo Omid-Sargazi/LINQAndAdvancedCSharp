@@ -46,21 +46,38 @@ namespace Middlewares.MediatorPattern
         }
     }
 
-    public class Mediator
+   
+
+    public class Mediator : IMediatore
     {
-        private Dictionary<Type, object> _handlers = new Dictionary<Type, object>();
+        // private Dictionary<Type, object> _handlers = new Dictionary<Type, object>();
+        private readonly IServiceProvider _serviceProvider;
         
-        public Mediator()
+        // public Mediator(IServiceProvider serviceProvider)
+        // {
+        //     _serviceProvider = serviceProvider;
+        //     _handlers[typeof(UserComamnd)] = new UserCommandHandler();
+        //     _handlers[typeof(UserQuery)] = new UserQueryHandler();
+        // }
+        // public TResult Send<TRequest,TResult>(TRequest request) where TRequest:IRequest<TResult>
+        // {
+        //     var handler = (IRequestHandler<TRequest, TResult>)_handlers[typeof(TRequest)];
+        //     return handler.Handle(request);
+        // }
+
+        public TResult Send<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>
         {
-            _handlers[typeof(UserComamnd)] = new UserCommandHandler();
-            _handlers[typeof(UserQuery)] = new UserQueryHandler();
-        }
-        public TResult Send<TRequest,TResult>(TRequest request) where TRequest:IRequest<TResult>
-        {
-            var handler = (IRequestHandler<TRequest, TResult>)_handlers[typeof(TRequest)];
+            var handler = _serviceProvider.GetService<IRequestHandler<TRequest, TResult>>();
+
+            if (handler == null)
+            {
+                throw new InvalidOperationException($"No Handlerd registered for{typeof(TRequest).Name}");
+            }
             return handler.Handle(request);
         }
     }
+
+ 
 
     public class ClientMediator
     {
@@ -70,9 +87,14 @@ namespace Middlewares.MediatorPattern
 
             var result = mediator.Send<UserComamnd, bool>(new UserComamnd { Id = 1 });
 
-            Console.WriteLine(result+"  User Created;");
+            Console.WriteLine(result + "  User Created;");
             var queryResult = mediator.Send<UserQuery, User>(new UserQuery { Id = 40 });
             Console.WriteLine($"Fetched User:{queryResult.Name},{queryResult.Age},{queryResult.Id}");
         }
+    }
+    
+     public interface IMediatore
+    {
+        TResult Send<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>;
     }
 }
