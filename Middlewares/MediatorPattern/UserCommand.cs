@@ -14,24 +14,17 @@ namespace Middlewares.MediatorPattern
 
     }
 
-    public interface IQuery<TQuery>
+    public class UserQuery : IRequest<User>
     {
-
-    }
-    
-    public interface IQueryHandler<TResult, TQuery> where TQuery : IQuery<TQuery>
-    {
-        TResult Handle(TQuery query);
+        public int Id { get; set; }
     }
 
-    public class UserQuery
+    public class UserQueryHandler : IRequestHandler<UserQuery, User>
     {
-
-    }
-
-    public class UserQueryHandler
-    {
-        
+        public User Handle(UserQuery request)
+        {
+            return new User { Name = "Saeed", Age = 39, Id = 4 };
+        }
     }
 
     public interface IRequestHandler<TRequest,TResult> where TRequest : IRequest<TResult>
@@ -60,6 +53,7 @@ namespace Middlewares.MediatorPattern
         public Mediator()
         {
             _handlers[typeof(UserComamnd)] = new UserCommandHandler();
+            _handlers[typeof(UserQuery)] = new UserQueryHandler();
         }
         public TResult Send<TRequest,TResult>(TRequest request) where TRequest:IRequest<TResult>
         {
@@ -75,7 +69,10 @@ namespace Middlewares.MediatorPattern
             var mediator = new Mediator();
 
             var result = mediator.Send<UserComamnd, bool>(new UserComamnd { Id = 1 });
+
             Console.WriteLine(result+"  User Created;");
+            var queryResult = mediator.Send<UserQuery, User>(new UserQuery { Id = 40 });
+            Console.WriteLine($"Fetched User:{queryResult.Name},{queryResult.Age},{queryResult.Id}");
         }
     }
 }
