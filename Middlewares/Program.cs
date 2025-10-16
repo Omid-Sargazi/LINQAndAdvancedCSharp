@@ -1,3 +1,4 @@
+using System.Reflection;
 using Middlewares.MediatorPattern;
 using Middlewares.Middleware1;
 
@@ -14,8 +15,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMediatore, Mediator>();
 
 
-builder.Services.AddTransient<IRequestHandler<UserComamnd, bool>, UserCommandHandler>();
-builder.Services.AddTransient<IRequestHandler<UserQuery, User>, UserQueryHandler>();
+// builder.Services.AddTransient<IRequestHandler<UserComamnd, bool>, UserCommandHandler>();
+// builder.Services.AddTransient<IRequestHandler<UserQuery, User>, UserQueryHandler>();
+
+builder.Services.AddRequestHandler(Assembly.GetExecutingAssembly());
 
 
 
@@ -25,6 +28,7 @@ app.MapGet("/reflection", (IMediatore mediatore) =>
 {
     var result = mediatore.Send<UserComamnd, bool>(new UserComamnd { Id = 1 });
     var query = mediatore.Send<UserQuery, User>(new UserQuery { Id = 10 });
+    Console.WriteLine("I`m In Reflection");
     return new
     {
         CommandResult = result,

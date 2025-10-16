@@ -1,4 +1,6 @@
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Middlewares.MediatorPattern
 {
@@ -92,9 +94,31 @@ namespace Middlewares.MediatorPattern
             Console.WriteLine($"Fetched User:{queryResult.Name},{queryResult.Age},{queryResult.Id}");
         }
     }
-    
-     public interface IMediatore
+
+    public interface IMediatore
     {
         TResult Send<TRequest, TResult>(TRequest request) where TRequest : IRequest<TResult>;
+    }
+
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddRequestHandler(this IServiceCollection services,Assembly assembly)
+        {
+            var types = assembly.GetTypes();
+
+            foreach (var type in types)
+            {
+                var handlerInterfaces = type.GetInterfaces()
+                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequestHandler<,>));
+
+                foreach (var handlerInterface in handlerInterfaces)
+                {
+                    services.AddTransient(handlerInterface, type);
+                    Console.WriteLine($"Registered: {type.Name} as {handlerInterface}");
+                }
+            }
+
+            return services;
+        }
     }
 }
