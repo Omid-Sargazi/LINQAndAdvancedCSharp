@@ -1,6 +1,7 @@
 using System.Reflection;
 using Middlewares.MediatorPattern;
 using Middlewares.Middleware1;
+using Middlewares.ReflectionProblem;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddSingleton<IMediatore, Mediator>();
 
 builder.Services.AddRequestHandler(Assembly.GetExecutingAssembly());
 
+builder.Services.AddRepositories(Assembly.GetExecutingAssembly());
+
 
 
 var app = builder.Build();
@@ -27,12 +30,12 @@ var app = builder.Build();
 app.MapGet("/reflection", (IMediatore mediatore) =>
 {
     var result = mediatore.Send<UserComamnd, bool>(new UserComamnd { Id = 1 });
-    var query = mediatore.Send<UserQuery, User>(new UserQuery { Id = 10 });
+    // var query = mediatore.Send<UserQuery, User>(new UserQuery { Id = 10 });
     Console.WriteLine("I`m In Reflection");
     return new
     {
         CommandResult = result,
-        QueryResult = query
+        // QueryResult = query
     };
 });
 
