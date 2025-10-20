@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Reflection1.Problems2
 {
     public interface A
@@ -37,10 +39,37 @@ namespace Reflection1.Problems2
         public static void Run(object obj)
         {
             var type = obj.GetType();
+
+            if (!type.IsClass)
+            {
+                Console.WriteLine("Only class types are allowed!");
+                return;
+            }
+
+
             Type[] interfeces = type.GetInterfaces();
-            foreach(var i in interfeces)
+            Console.WriteLine($"Interfaces implemented by {type.Name}:");
+
+            foreach (var i in interfeces)
             {
                 Console.WriteLine(i);
+            }
+            if (interfeces.Length == 0)
+            {
+                return;
+            }
+
+            var targetInterface = interfeces.First();
+            Console.WriteLine($"\nFinding all classes that implement {targetInterface.Name}...\n");
+
+            var assembly = Assembly.GetExecutingAssembly();
+
+            var implementations = assembly.GetTypes()
+            .Where(t => targetInterface.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToList();
+
+            foreach(var impl in implementations)
+            {
+                Console.WriteLine($"{impl}");
             }
         }
     }
