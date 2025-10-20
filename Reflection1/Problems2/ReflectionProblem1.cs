@@ -67,10 +67,37 @@ namespace Reflection1.Problems2
             var implementations = assembly.GetTypes()
             .Where(t => targetInterface.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToList();
 
-            foreach(var impl in implementations)
+            foreach (var impl in implementations)
             {
                 Console.WriteLine($"{impl}");
             }
+        }
+    }
+
+    public class ClientReflection
+    {
+        public static void Run(object obj)
+        {
+            Type type = obj.GetType();
+            Console.WriteLine($"Is class? {type.IsClass}");
+
+            var interfaces = type.GetInterfaces();
+            var assembly = Assembly.GetExecutingAssembly();
+
+            foreach (var i in interfaces)
+            {
+                Console.WriteLine($"\nInterface: {i.Name}");
+                var interfaceType = i;
+
+                var implementations = assembly.GetTypes()
+                .Where(t => interfaceType.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToList();
+
+                foreach(var impl in implementations)
+                {
+                    Console.WriteLine($"  -> {impl.Name}");
+                }
+            }
+
         }
     }
 }

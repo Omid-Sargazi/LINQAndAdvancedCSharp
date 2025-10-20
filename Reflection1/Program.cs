@@ -15,4 +15,5 @@ Console.WriteLine("Hello, World!");
 // Console.WriteLine(res);
 
 BB b = new BB();
-ReflectionProblem1.Run(b);
+// ReflectionProblem1.Run(b);
+ClientReflection.Run(b);
