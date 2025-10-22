@@ -71,22 +71,40 @@ namespace MiddlewareProblem.Problems
         {
 
                 Stopwatch timer = new Stopwatch();
+                timer.Start();
             try
             {
-                timer.Start();
-                await Task.Delay(1000);
+                await Task.Delay(200);
                 await _next(context);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
+                context.Response.StatusCode = 500;
+                context.Response.ContentType = "appliction/json";
 
-                throw new Exception("There is an error");
+                var errorResponse = new
+                {
+                    success = false,
+                    error = ex.Message,
+                    path = context.Request.Path,
+                    method = context.Request.Method
+                };
+
+                var json = JsonSerializer.Serialize(errorResponse);
+                await context.Response.WriteAsync(json);
+
+                throw new Exception("There is an error",ex);
             }
 
             finally
             {
                 timer.Stop();
                 Console.WriteLine($"Elapsed: {timer.ElapsedMilliseconds} ms");
+
+                Console.WriteLine($"Request[{context.Request.Method}{context.Request.Path} took {timer.ElapsedMilliseconds}ms]");
+
+
+                context.Response.Headers["X-Elapsed-Time"] = $"{timer.ElapsedMilliseconds}";
             }
 
 
