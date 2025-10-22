@@ -25,3 +25,6 @@ Console.WriteLine($"Mul: {res},Add: {val}");
 Console.WriteLine("Program");
 // var res = p1.Calculator(2, 3);
 // p1.Run();
+
+Problems2 p2 = new Problems2();
+p2.Run(100);
