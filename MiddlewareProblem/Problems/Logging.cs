@@ -103,8 +103,8 @@ namespace MiddlewareProblem.Problems
 
                 Console.WriteLine($"Request[{context.Request.Method}{context.Request.Path} took {timer.ElapsedMilliseconds}ms]");
 
-
-                context.Response.Headers["X-Elapsed-Time"] = $"{timer.ElapsedMilliseconds}";
+                if(!context.Response.HasStarted)
+                    context.Response.Headers["X-Elapsed-Time"] = $"{timer.ElapsedMilliseconds}";
             }
 
 
