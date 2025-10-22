@@ -62,9 +62,11 @@ namespace MiddlewareProblem.Problems
     public class RequestTimingMiddleware2
     {
         private readonly RequestDelegate _next;
-        public RequestTimingMiddleware2(RequestDelegate next)
+        private readonly ILogger<RequestTimingMiddleware2> _logger;
+        public RequestTimingMiddleware2(RequestDelegate next,ILogger<RequestTimingMiddleware2> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -74,37 +76,32 @@ namespace MiddlewareProblem.Problems
                 timer.Start();
             try
             {
+                _logger.LogInformation("Incomming Request{Method},{Path}", context.Request.Method, context.Request.Path);
                 await Task.Delay(200);
                 await _next(context);
+                timer.Stop();
+
+                _logger.LogInformation("Completed {Method}{Path} with {Status Code} in Elapse ms", context.Request.Method, context.Request.Path,
+
+                context.Response.StatusCode,timer.ElapsedMilliseconds
+                );
             }
             catch (Exception ex)
             {
-                context.Response.StatusCode = 500;
+
+
+
+
+                _logger.LogError("Execution on {Method},{Path} aftre {Elapsed} ms", context.Request.Method, context.Request.Path, timer.ElapsedMilliseconds);
+                 context.Response.StatusCode = 500;
                 context.Response.ContentType = "appliction/json";
 
-                var errorResponse = new
-                {
-                    success = false,
-                    error = ex.Message,
-                    path = context.Request.Path,
-                    method = context.Request.Method
-                };
-
-                var json = JsonSerializer.Serialize(errorResponse);
-                await context.Response.WriteAsync(json);
-
-                throw new Exception("There is an error",ex);
+                 await context.Response.WriteAsync($"{{\"error\":\"{ex.Message}\"}}");
             }
 
             finally
             {
-                timer.Stop();
-                Console.WriteLine($"Elapsed: {timer.ElapsedMilliseconds} ms");
-
-                Console.WriteLine($"Request[{context.Request.Method}{context.Request.Path} took {timer.ElapsedMilliseconds}ms]");
-
-                if(!context.Response.HasStarted)
-                    context.Response.Headers["X-Elapsed-Time"] = $"{timer.ElapsedMilliseconds}";
+                Console.WriteLine("Finnalllllly");
             }
 
 
