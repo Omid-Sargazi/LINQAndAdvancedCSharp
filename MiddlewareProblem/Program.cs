@@ -16,7 +16,12 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 
-app.UseMiddleware<Logging>();
+// app.UseMiddleware<Logging>();
+
+
+// app.UseMiddleware<RequestTimingMiddleware>();
+app.UseMiddleware<RequestTimingMiddleware2>();
+app.MapControllers();
 
 app.Run();
 
