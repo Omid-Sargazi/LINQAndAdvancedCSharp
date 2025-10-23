@@ -60,3 +60,5 @@ using LinqExamples.DelegateProblems;
 
 // ClientDelegate1.Run();
 FuncClient.Execute();
+ClientTemp clientTemp = new ClientTemp();
+clientTemp.Run(52);

@@ -49,4 +49,58 @@ namespace LinqExamples.DelegateProblems
 
         }
     }
+
+    public class ActionDelegate
+    {
+        public void Execute(int a, int b, Action<int, int> action)
+        {
+            action(a, b);
+        }
+    }
+
+    public class ActionClient
+    {
+        public static void Run(int a, int b)
+        {
+            ActionDelegate actionDelegate = new ActionDelegate();
+            actionDelegate.Execute(3, 4, (x, y) => Console.WriteLine($"{x}"));
+        }
+    }
+
+    public delegate void TempEvent(int temp);
+    public class TemAlert
+    {
+        private int _temp;
+        public event TempEvent _handler;
+
+        public void Execute(int temp)
+        {
+            _temp = temp;
+            if (_temp > 35)
+            {
+                _handler?.Invoke(temp);
+            }
+
+            else
+            {
+                Console.WriteLine("Temp is less than 35");
+            }
+        }
+    }
+
+    public class ClientTemp
+    {
+        public  void Run(int temp)
+        {
+            TemAlert temAlert = new TemAlert();
+            temAlert._handler += TempConsole;
+            temAlert._handler += TemScreen;
+            temAlert.Execute(temp);
+            temAlert.Execute(temp);
+
+        }
+
+        public void TempConsole(int temp) => Console.WriteLine($"Temp showed in console: {temp}");
+        public void TemScreen(int temp) => Console.WriteLine($"Temp showed in Screen: {temp}");
+    }
 }
