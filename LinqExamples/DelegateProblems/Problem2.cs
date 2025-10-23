@@ -53,9 +53,27 @@ namespace LinqExamples.DelegateProblems
 
     public class Problem5
     {
-        public void Execute(int a, int b, Action<int,int> action)
+        public void Execute(int a, int b, Action<int, int> action)
         {
             action(a, b);
+        }
+    }
+
+    public delegate void TemperatureChangedHandler(int newTemperature);
+    public class Thermometer
+    {
+        public event TemperatureChangedHandler OnTemperatureTooHigh;
+
+        private int _temp;
+
+        public void SetTemp(int temp)
+        {
+            _temp = temp;
+
+            if(_temp>30)
+            {
+                OnTemperatureTooHigh?.Invoke(_temp);
+            }
         }
     }
 }

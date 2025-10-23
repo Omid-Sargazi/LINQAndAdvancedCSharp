@@ -37,4 +37,17 @@ p4.Execute(3, 4, (x, y) => x + y);
 
 Problem5 p5 = new Problem5();
 p5.Execute(5, 3, (x, y) => Console.WriteLine($"Sum{x+y}"));
-p5.Execute(5, 3, (x, y) => Console.WriteLine($"Mul{x*y}"));
+p5.Execute(5, 3, (x, y) => Console.WriteLine($"Mul{x * y}"));
+
+
+void AlertConsole(int temp) => Console.WriteLine($"Alert temp{temp}");
+void AlerLog(int temp) => Console.WriteLine($"[Log] High temp:{temp}");
+
+
+
+Thermometer t1 = new Thermometer();
+t1.OnTemperatureTooHigh += AlertConsole;
+t1.OnTemperatureTooHigh += AlerLog;
+
+t1.SetTemp(35);
+t1.SetTemp(29);
