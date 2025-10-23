@@ -16,4 +16,26 @@ namespace LinqExamples.DelegateProblems
 
         }
     }
+
+    public class Problem3
+    {
+        public delegate int Cal(int a, int b);
+        public void Run()
+        {
+            Cal cal = Add;
+
+            PassDelegate(cal);
+        }
+
+        public void PassDelegate(Cal cal)
+        {
+            var res = cal(3, 5);
+            Console.WriteLine(res);
+        }
+        
+        public int Add(int a, int b)
+        {
+            return a + b;
+        }
+    }
 }

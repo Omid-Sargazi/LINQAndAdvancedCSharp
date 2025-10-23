@@ -28,3 +28,6 @@ Console.WriteLine("Program");
 
 Problems2 p2 = new Problems2();
 p2.Run(100);
+
+Problem3 p3 = new Problem3();
+p3.PassDelegate(p3.Add);
