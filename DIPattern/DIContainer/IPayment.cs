@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.DataProtection;
+
 namespace DIPattern.DIContainer
 {
     public interface IPayment
@@ -42,6 +44,28 @@ namespace DIPattern.DIContainer
         public void Execute()
         {
             _payment.Pay(_amount);
+        }
+    }
+
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddPaymentServices(this IServiceCollection services)
+        {
+            return services.AddTransient<IPayment, CryptoPayment>();
+
+        }
+    }
+
+    public class RunClient
+    {
+        public static void Run()
+        {
+            var services = new ServiceCollection();
+            services.AddPaymentServices();
+
+            var provider = services.BuildServiceProvider();
+
+            var client = ActivatorUtilities.CreateInstance<Client>(provider, 100m);
         }
     }
 }
