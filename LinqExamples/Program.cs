@@ -51,3 +51,7 @@ t1.OnTemperatureTooHigh += AlerLog;
 
 t1.SetTemp(35);
 t1.SetTemp(29);
+
+Console.WriteLine("=============//=============");
+ClientTemrmometer client = new ClientTemrmometer();
+client.Run(40);

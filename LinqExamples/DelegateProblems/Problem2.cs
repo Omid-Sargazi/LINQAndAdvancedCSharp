@@ -70,10 +70,45 @@ namespace LinqExamples.DelegateProblems
         {
             _temp = temp;
 
-            if(_temp>30)
+            if (_temp > 30)
             {
                 OnTemperatureTooHigh?.Invoke(_temp);
             }
         }
+    }
+
+
+    public delegate void TempChangeHandler(int temp);
+    public class Thermometer2
+    {
+        private int _temp;
+        public event TempChangeHandler _onTempTooHigh;
+
+        public void Execute(int temp)
+        {
+            _temp = temp;
+
+            if (_temp > 32)
+            {
+                _onTempTooHigh?.Invoke(temp);
+            }
+        }
+    }
+
+    public class ClientTemrmometer
+    {
+        public  void Run(int temp)
+        {
+            Thermometer2 thermometer2 = new Thermometer2();
+            thermometer2._onTempTooHigh += ConsoleShow;
+            thermometer2._onTempTooHigh += ShowScreen;
+
+            thermometer2.Execute(temp);
+            thermometer2.Execute(temp-20);
+
+        }
+
+        public  void ConsoleShow(int temp) => Console.WriteLine($"The temp is greater than {temp}");
+        public  void ShowScreen(int temp) => Console.WriteLine($"[log] in the screen The temp is greater than {temp}");
     }
 }
