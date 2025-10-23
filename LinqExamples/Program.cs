@@ -58,4 +58,5 @@
 
 using LinqExamples.DelegateProblems;
 
-ClientDelegate1.Run();
+// ClientDelegate1.Run();
+FuncClient.Execute();

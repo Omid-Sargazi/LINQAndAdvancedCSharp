@@ -25,4 +25,28 @@ namespace LinqExamples.DelegateProblems
             delegateProblem1.Execute(3, 5);
         }
     }
+
+
+
+    public class FuncDelegate
+    {
+        public int Execute(int a, int b, Func<int, int, int> operations)
+        {
+            return operations(a, b);
+        }
+    }
+
+    public class FuncClient
+    {
+        public static void Execute()
+        {
+            FuncDelegate funcDelegate = new FuncDelegate();
+            var res = funcDelegate.Execute(3, 4, (x, y) => x + y);
+            Console.WriteLine($"Func Result: {res}");
+
+            res = funcDelegate.Execute(4, 5, (x, y) => x * y);
+            Console.WriteLine($"Func Result: {res}");
+
+        }
+    }
 }
