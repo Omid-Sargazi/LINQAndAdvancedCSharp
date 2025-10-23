@@ -14,6 +14,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// RunClient.Run();
 RunClient.Run();
 
 app.UseHttpsRedirection();

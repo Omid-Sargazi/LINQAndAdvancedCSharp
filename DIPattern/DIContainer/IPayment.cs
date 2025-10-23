@@ -19,7 +19,7 @@ namespace DIPattern.DIContainer
     {
         public void Pay(decimal amount)
         {
-            Console.WriteLine($"Paymented by Card");
+            Console.WriteLine($"Paymented by Card{amount}");
 
         }
     }
@@ -28,7 +28,7 @@ namespace DIPattern.DIContainer
     {
         public void Pay(decimal amount)
         {
-            Console.WriteLine($"💰 Paid {amount} by Bitcoin");
+            Console.WriteLine($"💰 Paid {amount} by Bitcoin {amount}");
         }
     }
 
@@ -36,10 +36,10 @@ namespace DIPattern.DIContainer
     {
         private readonly IPayment _payment;
         private decimal _amount;
-        public Client(IPayment payment, decimal amount)
+        public Client(IPayment payment)
         {
             _payment = payment;
-            _amount = amount;
+            _amount = 50;
         }
         public void Execute()
         {
@@ -47,25 +47,33 @@ namespace DIPattern.DIContainer
         }
     }
 
-    public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddPaymentServices(this IServiceCollection services)
-        {
-            return services.AddTransient<IPayment, CryptoPayment>();
+    // public static class ServiceCollectionExtensions
+    // {
+    //     public static IServiceCollection AddPaymentServices(this IServiceCollection services)
+    //     {
+    //         return services.AddTransient<IPayment, CryptoPayment>();
 
-        }
-    }
+    //     }
+    // }
 
     public class RunClient
     {
-        public static void Run()
+        public static void Run(decimal amount=100)
         {
             var services = new ServiceCollection();
-            services.AddPaymentServices();
+
+            services.AddTransient<IPayment, PayPalPayment>();
+            // services.AddTransient<IPayment, CardPayment>();
+            services.AddTransient<Client>();
+            // services.AddPaymentServices();
 
             var provider = services.BuildServiceProvider();
+            var client = provider.GetRequiredService<Client>();
+            client.Execute();
 
-            var client = ActivatorUtilities.CreateInstance<Client>(provider, 100m);
+            // var client = ActivatorUtilities.CreateInstance<Client>(provider, 100m);
+
+
         }
     }
 }
