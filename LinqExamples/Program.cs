@@ -34,3 +34,7 @@ p3.PassDelegate(p3.Add);
 
 Problem4 p4 = new Problem4();
 p4.Execute(3, 4, (x, y) => x + y);
+
+Problem5 p5 = new Problem5();
+p5.Execute(5, 3, (x, y) => Console.WriteLine($"Sum{x+y}"));
+p5.Execute(5, 3, (x, y) => Console.WriteLine($"Mul{x*y}"));

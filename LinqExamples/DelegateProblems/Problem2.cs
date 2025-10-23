@@ -43,11 +43,19 @@ namespace LinqExamples.DelegateProblems
     {
         public delegate int Cal(int a, int b);
 
-        public void Execute(int a, int b, Func<int,int,int> operation)
+        public void Execute(int a, int b, Func<int, int, int> operation)
         {
             Console.WriteLine(operation(a, b));
         }
 
         public int Add(int a, int b) => a + b;
+    }
+
+    public class Problem5
+    {
+        public void Execute(int a, int b, Action<int,int> action)
+        {
+            action(a, b);
+        }
     }
 }
