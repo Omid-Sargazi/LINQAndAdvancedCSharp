@@ -31,3 +31,6 @@ p2.Run(100);
 
 Problem3 p3 = new Problem3();
 p3.PassDelegate(p3.Add);
+
+Problem4 p4 = new Problem4();
+p4.Execute(3, 4, (x, y) => x + y);

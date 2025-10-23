@@ -32,10 +32,22 @@ namespace LinqExamples.DelegateProblems
             var res = cal(3, 5);
             Console.WriteLine(res);
         }
-        
+
         public int Add(int a, int b)
         {
             return a + b;
         }
+    }
+
+    public class Problem4
+    {
+        public delegate int Cal(int a, int b);
+
+        public void Execute(int a, int b, Func<int,int,int> operation)
+        {
+            Console.WriteLine(operation(a, b));
+        }
+
+        public int Add(int a, int b) => a + b;
     }
 }
