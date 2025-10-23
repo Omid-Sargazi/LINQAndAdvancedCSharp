@@ -22,14 +22,26 @@ namespace DIPattern.DIContainer
         }
     }
 
+    public class CryptoPayment : IPayment
+    {
+        public void Pay(decimal amount)
+        {
+            Console.WriteLine($"💰 Paid {amount} by Bitcoin");
+        }
+    }
+
     public class Client
     {
-        public static void Execute()
+        private readonly IPayment _payment;
+        private decimal _amount;
+        public Client(IPayment payment, decimal amount)
         {
-            IPayment payment = new PayPalPayment();
-            payment.Pay(32);
-            payment = new CardPayment();
-            payment.Pay(40);
+            _payment = payment;
+            _amount = amount;
+        }
+        public void Execute()
+        {
+            _payment.Pay(_amount);
         }
     }
 }
