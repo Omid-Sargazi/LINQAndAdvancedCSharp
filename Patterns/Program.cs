@@ -2,6 +2,7 @@ using System.Reflection.Metadata.Ecma335;
 using Patterns.CompineAPIProject;
 using Patterns.JWTExample;
 using Patterns.Mediator;
+using Patterns.PaymentNotification;
 using Patterns.SimpelApis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +56,15 @@ app.MapGet("/", async (ExecuteTwoSyncMethod executor) =>
 
 
 app.MapGet("/next", () => "Hello Omid");
+
+INotification email = new Email();
+INotification sms = new SMS();
+INotification loging = new Logging();
+PaymentService paymentService = new PaymentService(email,sms,loging);
+
+paymentService.AllNotify("Message");
+paymentService.AllNotify("Message");
+paymentService.AllNotify("Message");
 
 
 app.Run();
