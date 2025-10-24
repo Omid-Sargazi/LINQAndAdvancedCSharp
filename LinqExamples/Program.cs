@@ -57,8 +57,12 @@
 // client.Run(40);
 
 using LinqExamples.DelegateProblems;
+using LinqExamples.ReadAsyncParalel;
 
 // ClientDelegate1.Run();
-FuncClient.Execute();
-ClientTemp clientTemp = new ClientTemp();
-clientTemp.Run(52);
+// FuncClient.Execute();
+// ClientTemp clientTemp = new ClientTemp();
+// clientTemp.Run(52);
+
+CreateFiles createFiles = new CreateFiles();
+createFiles.WriteFile();
