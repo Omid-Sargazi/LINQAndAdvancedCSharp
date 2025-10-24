@@ -36,30 +36,51 @@ namespace LinqExamples.ReadAsyncParalel
     {
         private readonly string _filePath;
         private readonly string _fileName;
+        private readonly SemaphoreSlim _semaphore;
 
-        public ReadAsyncFile(string filePath, string fileName)
+        public ReadAsyncFile(string filePath, string fileName,SemaphoreSlim semaphore)
         {
             _fileName = fileName;
             _filePath = filePath;
+            _semaphore = semaphore;
         }
         public async Task<string> Execute()
         {
             string filePath = Path.Combine(_filePath, _fileName);
 
-            return await File.ReadAllTextAsync(filePath);
+
+            try
+            {
+                await _semaphore.WaitAsync();
+                return await File.ReadAllTextAsync(filePath);
+
+            }
+            catch (System.Exception)
+            {
+
+                return string.Empty; // Return a default value in case of an exception
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+            
+
         }
     }
 
     public class ClientParallelAsync
     {
         private readonly List<Task<string>> _tasks = new List<Task<string>>();
+        SemaphoreSlim semaphore = new SemaphoreSlim(20);
+
         public async Task Run()
         {
             string directoryPath = "Files";
 
             for (int i = 0; i < 500; i++)
             {
-                var res = new ReadAsyncFile(directoryPath, $"file{i}.txt");
+                var res = new ReadAsyncFile(directoryPath, $"file{i}.txt",semaphore);
                 _tasks.Add(res.Execute());
             }
 

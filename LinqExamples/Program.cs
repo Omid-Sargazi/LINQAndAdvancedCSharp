@@ -64,5 +64,8 @@ using LinqExamples.ReadAsyncParalel;
 // ClientTemp clientTemp = new ClientTemp();
 // clientTemp.Run(52);
 
-CreateFiles createFiles = new CreateFiles();
-createFiles.WriteFile();
+// CreateFiles createFiles = new CreateFiles();
+// createFiles.WriteFile();
+
+ClientParallelAsync clientParallelAsync = new ClientParallelAsync();
+await clientParallelAsync.Run();
