@@ -57,14 +57,14 @@ namespace LinqExamples.Problem1
     public class CEOHandler : IHandler
     {
         private IHandler _handler;
-       
+
         public void HandleRequest(UserRequest request)
         {
             if (request.Title == "CEO")
-    {
+            {
                 Console.WriteLine("CEO handled the request.");
                 return;
-    }
+            }
 
             Console.WriteLine("No handler could process the request.");
         }
@@ -73,6 +73,39 @@ namespace LinqExamples.Problem1
         {
             _handler = nextHandler;
             return _handler;
+        }
+    }
+
+
+    public interface IGHandler<T>
+    {
+        void HandlerRequest(T request);
+        IGHandler<T> SetNext(IGHandler<T> handler);
+    }
+
+    public class AdminGHandler : IGHandler<UserRequest>
+    {
+        public void HandlerRequest(UserRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGHandler<UserRequest> SetNext(IGHandler<UserRequest> handler)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class LogHandler : IGHandler<UserRequest>
+    {
+        public void HandlerRequest(UserRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IGHandler<UserRequest> SetNext(IGHandler<UserRequest> handler)
+        {
+            throw new NotImplementedException();
         }
     }
 }
