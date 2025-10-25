@@ -29,11 +29,13 @@ public class Queries
         {
             System.Console.WriteLine(order.Customer.Person.FirstName);
         }
-        
+
         // foreach (var p in enumerablePeople)
         //     {
 
         //         System.Console.WriteLine(p.LastName);
         //     }
     }
+    
+   
 }

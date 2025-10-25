@@ -57,6 +57,7 @@
 // client.Run(40);
 
 using LinqExamples.DelegateProblems;
+using LinqExamples.Problem1;
 using LinqExamples.ReadAsyncParalel;
 
 // ClientDelegate1.Run();
@@ -67,5 +68,22 @@ using LinqExamples.ReadAsyncParalel;
 // CreateFiles createFiles = new CreateFiles();
 // createFiles.WriteFile();
 
-ClientParallelAsync clientParallelAsync = new ClientParallelAsync();
-await clientParallelAsync.Run();
+// ClientParallelAsync clientParallelAsync = new ClientParallelAsync();
+// await clientParallelAsync.Run();
+
+var admin = new AdminHandler();
+var manager = new ManagerHandler();
+var ceo = new CEOHandler();
+admin.SetNext(manager).SetNext(ceo);
+
+var req1 = new UserRequest { Title = "Manager", Context = "Some context" };
+var req2 = new UserRequest { Title = "Admin", Context = "Another content" };
+var req3 = new UserRequest { Title = "CEO", Context = "Important context" };
+var req4 = new UserRequest { Title = "Admin", Context = "Unrecognized context" };
+var req5 = new UserRequest { Title = "Guest", Context = "Some context" };
+
+admin.HandleRequest(req1);
+admin.HandleRequest(req2);
+admin.HandleRequest(req3);
+admin.HandleRequest(req4);
+admin.HandleRequest(req5);
