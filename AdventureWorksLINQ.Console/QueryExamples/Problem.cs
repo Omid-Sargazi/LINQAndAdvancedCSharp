@@ -221,7 +221,7 @@ namespace AdventureWorksLINQ.Console.QueryExamples
 
     public class Problem6
     {
-        
+
         public static void Run()
         {
 
@@ -229,8 +229,27 @@ namespace AdventureWorksLINQ.Console.QueryExamples
 
             var queryableProducts = repo.GetProductsQueryable()
             .Where(p => p.ListPrice > 1000);
+
+            var enumerableProducts = repo.GetProductsEnumerable()
+            .Where(p => p.ListPrice > 1000);
+
+            System.Console.WriteLine("Before foreach for IQueryable...");
+
+            foreach (var p in queryableProducts.Take(3))
+
+                System.Console.WriteLine($"DB Product: {p.Name} - {p.ListPrice}");
+            System.Console.WriteLine("\nBefore foreach for IEnumerable...");
+
+            foreach (var p in enumerableProducts.Take(3))
+            {
+                System.Console.WriteLine($"Memory Product: {p.Name} - {p.ListPrice}");
+            }
         }
+
+
     }
+        
+    
 
     public class Repository
     {
