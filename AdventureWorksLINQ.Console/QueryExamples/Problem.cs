@@ -213,18 +213,42 @@ namespace AdventureWorksLINQ.Console.QueryExamples
 
             System.Console.WriteLine("open.IsGenericTypeDefinition");
 
-            var open = typeof(Box<>);
-            System.Console.WriteLine(open.IsGenericTypeDefinition);
+            
+           
 
         }
     }
 
-    public class Box<T>
+    public class Problem6
     {
+        
         public static void Run()
         {
-            
 
+            var repo = new Repository();
+
+            var queryableProducts = repo.GetProductsQueryable()
+            .Where(p => p.ListPrice > 1000);
+        }
+    }
+
+    public class Repository
+    {
+        private readonly AdventureWorks2019Context _db;
+
+        public Repository()
+        {
+            _db = new AdventureWorks2019Context();
+        }
+
+        public IQueryable<AdventureWorksLINQ.Console.Models.Product> GetProductsQueryable()
+        {
+            return _db.Products;
+        }
+
+        public IEnumerable<AdventureWorksLINQ.Console.Models.Product> GetProductsEnumerable()
+        {
+            return _db.Products.ToList();
         }
     }
 }
