@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using Reflection1.BehaviralPattern;
 using Reflection1.Problems;
 using Reflection1.Problems2;
 
@@ -14,6 +15,9 @@ Console.WriteLine("Hello, World!");
 // var res = SimpleJsonSerializer.ToJson(u1);
 // Console.WriteLine(res);
 
-BB b = new BB();
-// ReflectionProblem1.Run(b);
-ClientReflection.Run(b);
+// BB b = new BB();
+// // ReflectionProblem1.Run(b);
+// ClientReflection.Run(b);
+
+HandleLeave.Run();
+
