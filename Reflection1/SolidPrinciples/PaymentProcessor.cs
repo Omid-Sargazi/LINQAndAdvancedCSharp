@@ -31,17 +31,23 @@ namespace Reflection1.SolidPrinciples
 
     public class GoodPaymentProcessor
     {
-        private readonly PaymentService _paymentService;
-        private readonly ReportService _reportService;
-        public GoodPaymentProcessor()
-        {
-            _paymentService = new PaymentService();
-            _reportService = new ReportService();
-        }
+        // private readonly PaymentService _paymentService;
+        // private readonly ReportService _reportService;
+        // public GoodPaymentProcessor()
+        // {
+        //     _paymentService = new PaymentService();
+        //     _reportService = new ReportService();
+        // }
 
-        public void Process()
-        {
+        // public void Process()
+        // {
             
+        // }
+
+
+        public void Process(IPaymnet paymnet)
+        {
+            paymnet.Pay();
         }
     }
 
@@ -67,4 +73,27 @@ namespace Reflection1.SolidPrinciples
     {
         public void Save() => Console.WriteLine("Saving Payment to DB...");
     }
+
+    public interface IPaymnet
+    {
+        void Pay();
+    }
+
+    public class CreditCardPayment : IPaymnet
+    {
+        
+             public void Pay() => Console.WriteLine("Processing credit card payment...");
+        
+    }
+
+    public class PayPalPayment : IPaymnet
+    {
+        public void Pay() => Console.WriteLine("Processing PayPal payment...");
+    }
+
+    public class CryptoPayment : IPaymnet
+    {
+        public void Pay() => Console.WriteLine("Processing Crypto payment...");
+    }
+
 }
