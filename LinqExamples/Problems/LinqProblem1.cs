@@ -33,6 +33,13 @@ namespace LinqExamples.Problems
             Console.WriteLine($"{string.Join(", ", res3)}");
 
 
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            var sumOdds = numbers.Where(n => n % 2 != 0).Count();
+            var sumOdds2 = numbers.Where(n => n % 2 != 0).Sum();
+            Console.WriteLine($"{string.Join(", ", sumOdds2)}");
+
+
+
         }
     }
 }
