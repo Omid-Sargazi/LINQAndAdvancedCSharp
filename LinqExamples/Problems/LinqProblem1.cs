@@ -52,6 +52,13 @@ namespace LinqExamples.Problems
 
             var res4 = students2.Where(s => s.Grade > 85).Select(s => s.Name.ToUpper());
 
+            string[] words = { "apple", "cat", "banana", "elephant", "dog", "zebra" };
+
+            var res5 = words.Select(w => w.Length).OrderBy(w => w);
+            var res6 = words.OrderBy(w => w.Length).ThenBy(w => w);
+            Console.WriteLine($"{string.Join(", ", res6)}");
+
+
 
 
         }
