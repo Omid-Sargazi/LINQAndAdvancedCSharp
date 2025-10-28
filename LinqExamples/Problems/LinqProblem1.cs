@@ -61,8 +61,21 @@ namespace LinqExamples.Problems
             int[] numbers3 = { -5, 2, 0, -8, 3, -1, 0, 7, -2, 4 };
 
             var res7 = numbers3.GroupBy(n => n > 0 ? "Positive" : n < 0 ? "negative" : "Zero").
-Select(g => new { Type = g.Key, Count = g.Count() });
+                Select(g => new { Type = g.Key, Count = g.Count() });
             Console.WriteLine($"{string.Join(", ", res7)}");
+
+            string[] sentences =
+            {
+                "Hello world",
+                "LINQ is awesome",
+                "Hello LINQ",
+                "C# programming"
+            };
+
+            var res8 = sentences.SelectMany(w => w.Split(','))
+            .Select(w => w.Trim()).Distinct();
+            var res9 = sentences.Select(s => s.Split(' '))
+            .Aggregate((a, b) => a.Union(b).ToArray());
 
 
 
