@@ -39,6 +39,20 @@ namespace LinqExamples.Problems
             Console.WriteLine($"{string.Join(", ", sumOdds2)}");
 
 
+            var students2 = new[]
+
+            {
+                new{Name="omid",Grade=100},
+                new{Name="saeed",Grade=70},
+                new{Name="vahid",Grade=60},
+                new{Name="milad",Grade=40},
+                new{Name="saleh",Grade=85},
+                new{Name="sami",Grade=80},
+            };
+
+            var res4 = students2.Where(s => s.Grade > 85).Select(s => s.Name.ToUpper());
+
+
 
         }
     }
