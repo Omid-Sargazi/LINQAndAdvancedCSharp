@@ -15,7 +15,23 @@ namespace LinqExamples.Problems
             };
 
             var res2 = students.Where(s => s.StartsWith("A")).OrderBy(s => s);
-            Console.WriteLine($"{string.Join(", " , res2)}");
+
+
+            var products = new[]
+
+            {
+                new{Name="Laptop",Price=2500},
+                new{Name="Mouse",Price=3500},
+                new{Name="Mouse",Price=3500},
+                new{Name="Keyboard",Price=300},
+                new{Name="Monitor",Price=2500},
+                new{Name="Headphones",Price=3100},
+                new{Name="Mouse2",Price=123},
+            };
+
+            var res3 = products.Where(p => p.Price > 1000).OrderByDescending(p => p.Name).Select(p => new { Name = p.Name, Price = p.Price });
+            Console.WriteLine($"{string.Join(", ", res3)}");
+
 
         }
     }
