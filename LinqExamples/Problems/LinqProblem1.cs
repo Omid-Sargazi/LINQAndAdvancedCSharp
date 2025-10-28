@@ -56,7 +56,14 @@ namespace LinqExamples.Problems
 
             var res5 = words.Select(w => w.Length).OrderBy(w => w);
             var res6 = words.OrderBy(w => w.Length).ThenBy(w => w);
-            Console.WriteLine($"{string.Join(", ", res6)}");
+            // Console.WriteLine($"{string.Join(", ", res6)}");
+
+            int[] numbers3 = { -5, 2, 0, -8, 3, -1, 0, 7, -2, 4 };
+
+            var res7 = numbers3.GroupBy(n => n > 0 ? "Positive" : n < 0 ? "negative" : "Zero").
+Select(g => new { Type = g.Key, Count = g.Count() });
+            Console.WriteLine($"{string.Join(", ", res7)}");
+
 
 
 
