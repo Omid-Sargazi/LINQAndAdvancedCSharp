@@ -136,7 +136,7 @@ o => o.CustomerId,
 
             ).SelectMany(x => x.Orders.DefaultIfEmpty(new { Id = 0, CustomerId = 0, Amount = 0m }),
             (x, o) => new { CustomerName = x.Customer.Name, OrderId = o.Id, o.Amount });
-            
+
             Console.WriteLine("Left join");
             Console.WriteLine($"{string.Join(", ", leftJoin)}");
 
@@ -147,15 +147,54 @@ o => o.CustomerId,
                             select new { CustomerName = c.Name, OrderId = o == null ? 0 : o.Id, Amount = o == null ? 0m : o.Amount };
 
 
+            var students3 = new List<Student>
+            {
+            new Student{Id=1,Name="Bob"},
+            new Student{Id=2,Name="Mik"},
+            new Student{Id=3,Name="Gorg"},
+            };
 
+            var enrollments = new List<Enrollment>
+            {
+                new Enrollment{CourseName="PHP",StudentId=1},
+                new Enrollment{CourseName="C#",StudentId=2},
+                new Enrollment{CourseName="C++",StudentId=3},
+                new Enrollment{CourseName="C",StudentId=2},
+                new Enrollment{CourseName="JAVA",StudentId=2},
+                new Enrollment{CourseName="Golang",StudentId=1},
+            };
+
+            var leftJoin3 = students3.GroupJoin(enrollments,
+             s => s.Id,
+
+ e => e.StudentId,
+ (s, es) => new { Student = s, Enrollements = es }
+
+            ).SelectMany(x => x.Enrollements.DefaultIfEmpty(new Enrollment { CourseName = "Not Course" }),
+
+             (a, b) => new { a.Student.Name, Course = b.CourseName }
+            ).ToList();
             
-
-
-
-
 
 
 
         }
     }
+
+
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+
+    public class Enrollment
+    {
+        public int StudentId { get; set; }
+        public string CourseName { get; set; }
+    }
+
+
+
 }
