@@ -210,6 +210,21 @@ o => o.CustomerId,
             .FirstOrDefault();
             Console.WriteLine($"{string.Join(", ", res19)}");
 
+            DateTime[] dates =
+            {
+                new DateTime(2024, 1, 1),  // دوشنبه
+                new DateTime(2024, 1, 5),  // جمعه
+                new DateTime(2024, 1, 6),  // شنبه
+                new DateTime(2024, 1, 7),  // یکشنبه
+                new DateTime(2024, 1, 12), // جمعه
+                new DateTime(2024, 1, 13)  // شنبه
+            };
+
+            var res20 = dates.Where(d => d.DayOfWeek == DayOfWeek.Friday || d.DayOfWeek == DayOfWeek.Saturday)
+            .OrderBy(d => d);
+            Console.WriteLine($"{string.Join(", ", res20)}");
+
+
 
 
 
