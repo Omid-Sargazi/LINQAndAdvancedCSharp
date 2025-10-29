@@ -174,7 +174,28 @@ o => o.CustomerId,
 
              (a, b) => new { a.Student.Name, Course = b.CourseName }
             ).ToList();
+
+
+            var products2 = new[]
+            {
+                new { Name = "Laptop", Category = "Electronics", Price = 1000 },
+                new { Name = "Mouse", Category = "Electronics", Price = 50 },
+                new { Name = "Shirt", Category = "Clothing", Price = 30 },
+                new { Name = "Pants", Category = "Clothing", Price = 40 },
+                new { Name = "Phone", Category = "Electronics", Price = 800 },
+                new { Name = "Shoes", Category = "Clothing", Price = 60 }
+            };
+
+            var res16 = products2.GroupBy(g => g.Category).Select(g => new
+            {
+                Category = g.Key,
+                Avg = g.Average(x => x.Price)
+            }).OrderByDescending(p => p.Avg);
+
             
+
+
+
 
 
 
