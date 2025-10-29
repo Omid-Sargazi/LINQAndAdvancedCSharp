@@ -192,7 +192,11 @@ o => o.CustomerId,
                 Avg = g.Average(x => x.Price)
             }).OrderByDescending(p => p.Avg);
 
-            
+            int[] numbers5 = { 10, 5, 8, 20, 15, 25, 18 };
+
+            var res18 = numbers5.OrderByDescending(x => x).Distinct().Skip(1).FirstOrDefault();
+
+
 
 
 
