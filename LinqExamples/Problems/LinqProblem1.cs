@@ -94,6 +94,11 @@ namespace LinqExamples.Problems
             int[] list2 = { 2, 3, 5, 8, 10 };
 
             var res11 = list1.Intersect(list2).OrderByDescending(l => l);
+            var res12 = list1.Join(list2,
+            n1 => n1,
+            n2 => n2,
+            (n1,n2)=>n1
+            ).OrderBy(n=>n);
 
 
 
