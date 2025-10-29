@@ -87,4 +87,33 @@
 -- (1, 1, GETDATE(), DATEADD(DAY, 7, GETDATE())),
 -- (2, 3, GETDATE(), DATEADD(DAY, 10, GETDATE()));
 
-SELECT m.FullName, bc.CopyNumber,b.BorrowDate,b.DueDate FROM Borrow as b JOIN Member as m on b.MemberId = m.Id JOIN BookCopy as bc on bc.Id = b.BookCopyId 
+-- SELECT m.FullName, bc.CopyNumber,b.BorrowDate,b.DueDate FROM Borrow as b JOIN Member as m on b.MemberId = m.Id JOIN BookCopy as bc on bc.Id = b.BookCopyId 
+
+
+-- INSERT INTO Member (FullName, Email, Phone) VALUES
+-- ('Ali Mohamadi', 'ali@example.com', '09131234567'),
+-- ('Zahra karami', 'zahra@example.com', '09361234567'),
+-- ('mohammad rezaee', 'mohammad@example.com', '09151234567'),
+-- ('fateme Hosseini', 'fatemeh@example.com', '09371234567');
+-- INSERT INTO Book (Title, Author, ISBN, PublishYear, CategoryId) VALUES
+-- ('Introduction to Algorithms', 'Thomas Cormen', '978-0262033848', 2009, 1),
+-- ('The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 1925, 5),
+-- ('Database Systems', 'Raghu Ramakrishnan', '978-0072465631', 2002, 1);
+
+-- INSERT INTO BookCopy (BookId, CopyNumber, ShelfLocation, Status) VALUES
+-- (4, 1, 'D1', 'Available'),
+-- (5, 1, 'E1', 'Available'),
+-- (5, 2, 'E2', 'Borrowed'),
+-- (6, 1, 'F1', 'Available'),
+-- (6, 2, 'F2', 'Lost');
+
+-- اضافه کردن امانت‌های بیشتر با تاریخ‌های مختلف
+-- INSERT INTO Borrow (MemberId, BookCopyId, BorrowDate, DueDate, ReturnDate, FineAmount) VALUES
+-- (1, 2, DATEADD(DAY, -20, GETDATE()), DATEADD(DAY, -13, GETDATE()), DATEADD(DAY, -10, GETDATE()), 15000),
+-- (3, 4, DATEADD(DAY, -5, GETDATE()), DATEADD(DAY, 2, GETDATE()), NULL, 0),
+-- (4, 5, DATEADD(DAY, -15, GETDATE()), DATEADD(DAY, -8, GETDATE()), NULL, 21000);
+
+-- -- اضافه کردن تراکنش‌های جریمه
+-- INSERT INTO FineTransaction (BorrowId, MemberId, FineAmount, PaidAmount, TaxAmount, PaymentDate, PaymentMethod) VALUES
+-- (3, 1, 15000, 15000, 1500, DATEADD(DAY, -9, GETDATE()), 'Online'),
+-- (6, 4, 21000, 10000, 1000, GETDATE(), 'Cash');
