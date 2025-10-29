@@ -77,6 +77,25 @@ namespace LinqExamples.Problems
             var res9 = sentences.Select(s => s.Split(' '))
             .Aggregate((a, b) => a.Union(b).ToArray());
 
+            var people = new[]
+{
+                new { Name = "Ali", Age = 25 },
+                new { Name = "Sara", Age = 30 },
+                new { Name = "Reza", Age = 25 },
+                new { Name = "Fatemeh", Age = 35 },
+                new { Name = "Mohammad", Age = 30 },
+                new { Name = "Zahra", Age = 25 }
+            };
+
+            var res10 = people.GroupBy(p => p.Age).Select(p => new { Age = p.Key, Count = p.Count() });
+            Console.WriteLine($"{string.Join(", ", res10)}");
+
+            int[] list1 = { 1, 3, 5, 7, 9 };
+            int[] list2 = { 2, 3, 5, 8, 10 };
+
+            var res11 = list1.Intersect(list2).OrderByDescending(l => l);
+
+
 
 
 
