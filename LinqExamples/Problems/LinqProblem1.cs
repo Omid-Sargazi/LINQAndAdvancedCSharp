@@ -97,8 +97,36 @@ namespace LinqExamples.Problems
             var res12 = list1.Join(list2,
             n1 => n1,
             n2 => n2,
-            (n1,n2)=>n1
-            ).OrderBy(n=>n);
+            (n1, n2) => n1
+            ).OrderBy(n => n);
+
+            var customers = new[]
+
+            {
+                new {Id=1,Name="Bob"},
+                new {Id=2,Name="Mik"},
+                new {Id=3,Name="Sara"},
+                new {Id=4,Name="Jira"},
+            };
+
+            var orders = new[]
+
+            {
+                new{Id=101,CustomerId=1,Amount=250m},
+                new{Id=102,CustomerId=3,Amount=250m},
+                new{Id=103,CustomerId=2,Amount=250m},
+                new{Id=104,CustomerId=2,Amount=250m},
+                new{Id=104,CustomerId=5,Amount=250m},
+            };
+
+            var res13 = customers.Join(orders,
+
+                c => c.Id,
+                o => o.CustomerId,
+                (c, o) => new { CustomerName = c.Name, OrderId = o.Id, o.Amount }
+            );
+
+            Console.WriteLine($"{string.Join(", ", res13)}");
 
 
 
