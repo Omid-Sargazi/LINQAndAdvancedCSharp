@@ -197,6 +197,20 @@ o => o.CustomerId,
             var res18 = numbers5.OrderByDescending(x => x).Distinct().Skip(1).FirstOrDefault();
 
 
+            string[] senetnces2 =
+            {
+                "LINQ is powerful",
+                "C# programming language",
+                "Entity Framework is an ORM",
+                "ASP.NET Core is a web framework"
+            };
+
+            var res19 = senetnces2.SelectMany(s => s.Split(','))
+            .OrderByDescending(word => word.Length)
+            .FirstOrDefault();
+            Console.WriteLine($"{string.Join(", ", res19)}");
+
+
 
 
 
