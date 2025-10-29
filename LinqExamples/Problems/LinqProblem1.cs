@@ -128,6 +128,29 @@ namespace LinqExamples.Problems
 
             Console.WriteLine($"{string.Join(", ", res13)}");
 
+            var leftJoin = customers.GroupJoin(orders,
+                c => c.Id,
+
+o => o.CustomerId,
+(c, ords) => new { Customer = c, Orders = ords }
+
+            ).SelectMany(x => x.Orders.DefaultIfEmpty(new { Id = 0, CustomerId = 0, Amount = 0m }),
+            (x, o) => new { CustomerName = x.Customer.Name, OrderId = o.Id, o.Amount });
+            
+            Console.WriteLine("Left join");
+            Console.WriteLine($"{string.Join(", ", leftJoin)}");
+
+
+            var leftJoin2 = from c in customers
+                            join o in orders on c.Id equals o.CustomerId into ords
+                            from o in ords.DefaultIfEmpty()
+                            select new { CustomerName = c.Name, OrderId = o == null ? 0 : o.Id, Amount = o == null ? 0m : o.Amount };
+
+
+
+            
+
+
 
 
 
