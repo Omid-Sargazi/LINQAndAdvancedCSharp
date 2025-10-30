@@ -267,10 +267,20 @@ o => o.CustomerId,
             Console.WriteLine("Positive and negative transaction");
 
             var res25 = transactions.GroupBy(t => t.Amount > 0 ? "Posotive" : "Negative").OrderByDescending(t => t.Key);
-            foreach(var group in res25)
+            foreach (var group in res25)
             {
-                Console.WriteLine($"{group.Key},{group.Sum(g=>g.Amount)}");
+                Console.WriteLine($"{group.Key},{group.Sum(g => g.Amount)}");
             }
+
+            int[] numbers7 = { 1, 2, 3, 2, 4, 1, 5, 3, 6, 2, 7, 1, 8, 3, 9 };
+            // var res27 = numbers7.Distinct();
+            var res27 = numbers7.GroupBy(n => n).Where(g => g.Count() > 1).OrderByDescending(g => g.Count()).ThenBy(g => g.Key);
+            var res26 = numbers7.GroupBy(n => n);
+            foreach(var group in res26)
+            {
+                Console.WriteLine($"{group.Key},Values:[{string.Join(",",group)}]");
+            }
+            Console.WriteLine($"{string.Join(",",res26)}");
 
 
 
