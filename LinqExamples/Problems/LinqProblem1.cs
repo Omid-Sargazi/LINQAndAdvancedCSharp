@@ -224,6 +224,23 @@ o => o.CustomerId,
             .OrderBy(d => d);
             Console.WriteLine($"{string.Join(", ", res20)}");
 
+            var students4 = new[]
+            {
+                new { Name = "Ali", Grade = 18 },
+                new { Name = "Sara", Grade = 16 },
+                new { Name = "Reza", Grade = 19 },
+                new { Name = "Fatemeh", Grade = 15 },
+                new { Name = "Mohammad", Grade = 17 },
+                new { Name = "Zahra", Grade = 20 }
+            };
+            double averageGrade = students4.Average(s => s.Grade);
+
+            var countOfStudents = students4.Count();
+            var sumOfGrades = students4.Sum(s => s.Grade);
+            var midOfGrades = sumOfGrades / countOfStudents;
+            var res21 = students4.Where(s => s.Grade > midOfGrades);
+            var res22 = students4.Where(s => s.Grade > averageGrade).OrderByDescending(g=>g);
+
 
 
 

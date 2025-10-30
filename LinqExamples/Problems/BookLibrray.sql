@@ -42,5 +42,18 @@
 -- ('Greek History', 12),       -- فرزند Ancient History
 -- ('Poetry', 15),              -- فرزند Persian Literature
 -- ('Fiction', 15);
-SELECT c1.Name as Level1,c2.Name as Level2 , c3.Name as Level3 from Category c1 LEFT JOIN Category as c2 on c1.Id = c2.ParentId LEFT JOIN Category c3 on c2.Id = c3.ParentId  WHERE c1.ParentId is Null ORDER BY
-c1.Name,c2.Name , c3.Name
+-- SELECT c1.Name as Level1,c2.Name as Level2 , c3.Name as Level3 from Category c1 LEFT JOIN Category as c2 on c1.Id = c2.ParentId LEFT JOIN Category c3 on c2.Id = c3.ParentId  WHERE c1.ParentId is Null ORDER BY
+-- c1.Name,c2.Name , c3.Name
+
+-- SELECT 
+--     Id,
+--     Name,
+--     ParentId
+-- FROM Category c
+-- WHERE NOT EXISTS (
+--     SELECT 1 
+--     FROM Category child 
+--     WHERE child.ParentId = c.Id
+-- );
+
+SELECT 2 from BookCopy
