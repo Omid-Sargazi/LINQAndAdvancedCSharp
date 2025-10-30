@@ -280,7 +280,26 @@ o => o.CustomerId,
             {
                 Console.WriteLine($"{group.Key},Values:[{string.Join(",",group)}]");
             }
-            Console.WriteLine($"{string.Join(",",res26)}");
+            Console.WriteLine($"{string.Join(",", res26)}");
+
+
+            var products1 = new[]
+            {
+                new { Name = "Laptop", Category = "Electronics", Price = 1000 },
+                new { Name = "Mouse", Category = "Electronics", Price = 50 },
+                new { Name = "Keyboard", Category = "Electronics", Price = 120 },
+                new { Name = "Shirt", Category = "Clothing", Price = 30 },
+                new { Name = "Pants", Category = "Clothing", Price = 45 },
+                new { Name = "Shoes", Category = "Clothing", Price = 80 },
+                new { Name = "Phone", Category = "Electronics", Price = 800 }
+            };
+
+
+            var res28 = products1.GroupBy(p => p.Category).Select(g => new
+            {
+                Category = g.Key,
+                Products = g.OrderByDescending(g => g.Price)
+            }).OrderBy(g => g.Category);
 
 
 
