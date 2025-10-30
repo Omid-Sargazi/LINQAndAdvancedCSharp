@@ -239,7 +239,16 @@ o => o.CustomerId,
             var sumOfGrades = students4.Sum(s => s.Grade);
             var midOfGrades = sumOfGrades / countOfStudents;
             var res21 = students4.Where(s => s.Grade > midOfGrades);
-            var res22 = students4.Where(s => s.Grade > averageGrade).OrderByDescending(g=>g);
+            var res22 = students4.Where(s => s.Grade > averageGrade).OrderByDescending(g => g);
+
+            int[] numbers6 = { 5, 2, 9, 8, 3, 6, 1, 4, 7, 10 };
+            var res24 = numbers.GroupBy(n => n % 2 == 0 ? "Even" : "Odd").OrderByDescending(g => g.Key);
+            Console.WriteLine($"Even and odd grouping");
+            foreach(var group in res24)
+            {
+                // Console.WriteLine($"{string.Join(",",res24)}"); 
+                 Console.WriteLine($"{group.Key}: {string.Join(",", group.OrderBy(x => x))}");
+            }
 
 
 
