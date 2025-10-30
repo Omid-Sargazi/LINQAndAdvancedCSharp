@@ -244,12 +244,14 @@ o => o.CustomerId,
             int[] numbers6 = { 5, 2, 9, 8, 3, 6, 1, 4, 7, 10 };
             var res24 = numbers.GroupBy(n => n % 2 == 0 ? "Even" : "Odd").OrderByDescending(g => g.Key);
             Console.WriteLine($"Even and odd grouping");
-            foreach(var group in res24)
+            foreach (var group in res24)
             {
                 // Console.WriteLine($"{string.Join(",",res24)}"); 
-                 Console.WriteLine($"{group.Key}: {string.Join(",", group.OrderBy(x => x))}");
+                Console.WriteLine($"{group.Key}: {string.Join(",", group.OrderBy(x => x))}");
             }
-
+            
+            string[] words2 = { "radar", "hello", "level", "world", "madam", "civic", "test" };
+            var res23 = words2.Where(w => w.Length > 0 && char.ToLower(w[0]) == char.ToLower(w[w.Length - 1])).OrderBy(w => w);
 
 
 
