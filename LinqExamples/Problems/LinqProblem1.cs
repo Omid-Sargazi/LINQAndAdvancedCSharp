@@ -253,6 +253,26 @@ o => o.CustomerId,
             string[] words2 = { "radar", "hello", "level", "world", "madam", "civic", "test" };
             var res23 = words2.Where(w => w.Length > 0 && char.ToLower(w[0]) == char.ToLower(w[w.Length - 1])).OrderBy(w => w);
 
+            var transactions = new[]
+
+            {
+                new { Description = "Salary", Amount = 2000 },
+                new { Description = "Rent", Amount = -800 },
+                new { Description = "Groceries", Amount = -150 },
+                new { Description = "Bonus", Amount = 500 },
+                new { Description = "Utilities", Amount = -120 },
+                new { Description = "Freelance", Amount = 300 }
+            };
+
+            Console.WriteLine("Positive and negative transaction");
+
+            var res25 = transactions.GroupBy(t => t.Amount > 0 ? "Posotive" : "Negative").OrderByDescending(t => t.Key);
+            foreach(var group in res25)
+            {
+                Console.WriteLine($"{group.Key},{group.Sum(g=>g.Amount)}");
+            }
+
+
 
 
 
