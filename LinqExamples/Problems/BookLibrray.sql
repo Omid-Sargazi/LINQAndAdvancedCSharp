@@ -1,0 +1,1 @@
+SELECT COUNT(*)  FROM dbo.Book as b JOIN dbo.BookCopy as bc on b.Id = bc.BookId where Status = 'Available' 
