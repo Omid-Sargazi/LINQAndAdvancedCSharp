@@ -320,8 +320,23 @@ o => o.CustomerId,
             .Where(word => word.Length > 1)
             .Distinct()
             .OrderByDescending(word => word);
-        
-                Console.WriteLine(string.Join(", ", longWords));
+
+            Console.WriteLine(string.Join(", ", longWords));
+
+
+            var people2 = new[]
+            {
+                new { Name = "Ali", Age = 25, City = "Tehran" },
+                new { Name = "Sara", Age = 30, City = "Mashhad" },
+                new { Name = "Reza", Age = 28, City = "Tehran" },
+                new { Name = "Fatemeh", Age = 35, City = "Isfahan" },
+                new { Name = "Mohammad", Age = 22, City = "Mashhad" },
+                new { Name = "Zahra", Age = 32, City = "Tehran" },
+                new { Name = "Hossein", Age = 29, City = "Isfahan" }
+            };
+
+
+            var res30 = people2.GroupBy(p => p.City).Select(g => new { City = g.Key, Aveg = g.Average(p => p.Age) }).OrderByDescending(p => p.Aveg);
 
         }
     }
