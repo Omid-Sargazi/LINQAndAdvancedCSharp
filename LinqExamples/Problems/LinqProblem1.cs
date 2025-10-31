@@ -304,15 +304,24 @@ o => o.CustomerId,
 
             int[] numbers4 = { 1, 2, 3, 4, 5, 9, 16, 17, 25, 36, 49, 50, 64, 81, 100 };
 
-            var res29 = numbers4.Where(n => Math.Sqrt(n) % 1 == 0).OrderBy(n => n); 
+            var res29 = numbers4.Where(n => Math.Sqrt(n) % 1 == 0).OrderBy(n => n);
 
+            string[] sentences2 =
+            {
+                "The quick brown fox jumps over the lazy dog",
+                "LINQ is a powerful tool for C# developers",
+                "Programming is fun and challenging"
+            };
 
-
-
-
-
-
-
+            Console.WriteLine($"sentences2----------------------");
+            var longWords = sentences2
+            .SelectMany(sentence => sentence.Split(' '))
+            .Select(word => word.Trim())
+            .Where(word => word.Length > 1)
+            .Distinct()
+            .OrderByDescending(word => word);
+        
+                Console.WriteLine(string.Join(", ", longWords));
 
         }
     }
