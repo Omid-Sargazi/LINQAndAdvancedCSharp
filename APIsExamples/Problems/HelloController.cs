@@ -17,7 +17,7 @@ namespace APIsExamples.Problems
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController:ControllerBase
+    public class ProductController : ControllerBase
     {
         private static readonly List<Product> _products = new()
         {
@@ -38,6 +38,43 @@ namespace APIsExamples.Problems
             }
 
             return Ok(product);
+        }
+    }
+
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductsTwoController : ControllerBase
+    {
+        private static readonly List<Product> _products = new()
+        {
+            new Product{Id=100,Name="Laptop",Price=1200m},
+            new Product{Id=101,Name="SmartWatch",Price=100m},
+            new Product{Id=102,Name="IPad",Price=1300m},
+            new Product{Id=103,Name="Lamp",Price=11m},
+            new Product{Id=104,Name="Mouse",Price=10m},
+        };
+
+
+        [HttpGet]
+        public IActionResult GetProducts([FromQuery] string? Name,[FromQuery] decimal? minPrice,[FromQuery] decimal?maxPrice)
+        {
+            IEnumerable<Product> filteredProducts = _products;
+
+            if (!string.IsNullOrEmpty(Name))
+            {
+                filteredProducts = filteredProducts.Where(p => p.Name.Contains(Name, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (minPrice.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.Price >= minPrice);
+            }
+            if (maxPrice.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.Price <= maxPrice);
+            }
+
+            return Ok(filteredProducts.ToList());
         }
     }
 
