@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginHost", "PluginProblem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplePlugin", "PluginProblem\SamplePlugin\SamplePlugin.csproj", "{38D090CA-6AD5-4F42-A2E7-B4C3C925D28B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIsExamples", "APIsExamples\APIsExamples.csproj", "{EDB7AC3C-B32A-484B-9D0B-3B3F6FE9FFCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,10 @@ Global
 		{38D090CA-6AD5-4F42-A2E7-B4C3C925D28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38D090CA-6AD5-4F42-A2E7-B4C3C925D28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38D090CA-6AD5-4F42-A2E7-B4C3C925D28B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB7AC3C-B32A-484B-9D0B-3B3F6FE9FFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB7AC3C-B32A-484B-9D0B-3B3F6FE9FFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB7AC3C-B32A-484B-9D0B-3B3F6FE9FFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB7AC3C-B32A-484B-9D0B-3B3F6FE9FFCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
