@@ -302,6 +302,11 @@ o => o.CustomerId,
             }).OrderBy(g => g.Category);
 
 
+            int[] numbers4 = { 1, 2, 3, 4, 5, 9, 16, 17, 25, 36, 49, 50, 64, 81, 100 };
+
+            var res29 = numbers4.Where(n => Math.Sqrt(n) % 1 == 0).OrderBy(n => n); 
+
+
 
 
 
