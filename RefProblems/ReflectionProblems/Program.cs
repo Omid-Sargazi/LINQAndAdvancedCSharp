@@ -5,4 +5,5 @@ using ReflectionProblems.Problems;
 Console.WriteLine("Hello, World!");
 // PluginExecute pluginExecute = new PluginExecute();
 // pluginExecute.Run();
-Problem2.Run();
+// Problem2.Run();
+ClassGetTypes.Run();
