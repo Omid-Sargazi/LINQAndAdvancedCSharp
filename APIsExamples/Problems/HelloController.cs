@@ -31,12 +31,14 @@ namespace APIsExamples.Problems
         [HttpGet("{id}")]
         public IActionResult GetProducts(int id)
         {
-            var product = _products.Where(p => p.Id == id);
+            var product = _products.FirstOrDefault(p => p.Id == id);
 
             if (product == null)
             {
                 return NotFound(new { message = $"Product with ID {id} not found" });
             }
+
+            Response.Headers["ETag"] = product.Version;
 
             return Ok(product);
         }
@@ -92,6 +94,35 @@ namespace APIsExamples.Problems
 
             return CreatedAtAction(nameof(GetProducts), new { Id = product.Id }, product);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateProduct(int id,[FromBody] Product updatedProduct, [FromHeader(Name ="If-Match")] string? ifMatchHeader)
+        {
+            var existingProduct = _products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct == null)
+            {
+                return NotFound(new { Message = "Product Not Found" });
+            }
+
+            if (string.IsNullOrEmpty(ifMatchHeader))
+            {
+                return BadRequest(new { Message = "If-Match header is required." });
+            }
+
+            if (existingProduct.Version != ifMatchHeader)
+            {
+                return Conflict(new
+                {
+                    message = "Product has been modified by another user. Please refresh and try again.",
+                    CurrentVersion = existingProduct.Version
+                });
+            }
+
+            existingProduct.Name = updatedProduct.Name;
+            existingProduct.Price = updatedProduct.Price;
+            existingProduct.Version = Guid.NewGuid().ToString();
+            return NoContent();
+        }
     }
 
 
@@ -101,8 +132,10 @@ namespace APIsExamples.Problems
         [Required(ErrorMessage = "Product Name is Required.")]
         [StringLength(100, ErrorMessage = "Product name cannot exceed 100 characters")]
         public string Name { get; set; } = string.Empty;
-        [Range(0.01,double.MaxValue,ErrorMessage ="Price must be greater than 0")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal Price { get; set; }
+
+        public string Version { get; set; } = Guid.NewGuid().ToString();
     }
 
     public class ProductDTO
