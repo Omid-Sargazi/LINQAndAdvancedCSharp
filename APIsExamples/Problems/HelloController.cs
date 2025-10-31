@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,7 +57,7 @@ namespace APIsExamples.Problems
 
 
         [HttpGet]
-        public IActionResult GetProducts([FromQuery] string? Name,[FromQuery] decimal? minPrice,[FromQuery] decimal?maxPrice)
+        public IActionResult GetProducts([FromQuery] string? Name, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice)
         {
             IEnumerable<Product> filteredProducts = _products;
 
@@ -76,13 +77,38 @@ namespace APIsExamples.Problems
 
             return Ok(filteredProducts.ToList());
         }
+
+        [HttpPost]
+        public IActionResult PostProduct([FromBody] Product product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            product.Id = _products.Any() ? _products.Max(p => p.Id) + 1 : 1;
+
+            _products.Add(product);
+
+            return CreatedAtAction(nameof(GetProducts), new { Id = product.Id }, product);
+        }
     }
 
 
     public class Product
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Product Name is Required.")]
+        [StringLength(100, ErrorMessage = "Product name cannot exceed 100 characters")]
         public string Name { get; set; } = string.Empty;
+        [Range(0.01,double.MaxValue,ErrorMessage ="Price must be greater than 0")]
+        public decimal Price { get; set; }
+    }
+
+    public class ProductDTO
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
         public decimal Price { get; set; }
     }
 }
