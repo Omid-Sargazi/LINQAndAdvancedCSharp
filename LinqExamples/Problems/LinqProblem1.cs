@@ -249,7 +249,7 @@ o => o.CustomerId,
                 // Console.WriteLine($"{string.Join(",",res24)}"); 
                 Console.WriteLine($"{group.Key}: {string.Join(",", group.OrderBy(x => x))}");
             }
-            
+
             string[] words2 = { "radar", "hello", "level", "world", "madam", "civic", "test" };
             var res23 = words2.Where(w => w.Length > 0 && char.ToLower(w[0]) == char.ToLower(w[w.Length - 1])).OrderBy(w => w);
 
@@ -276,9 +276,9 @@ o => o.CustomerId,
             // var res27 = numbers7.Distinct();
             var res27 = numbers7.GroupBy(n => n).Where(g => g.Count() > 1).OrderByDescending(g => g.Count()).ThenBy(g => g.Key);
             var res26 = numbers7.GroupBy(n => n);
-            foreach(var group in res26)
+            foreach (var group in res26)
             {
-                Console.WriteLine($"{group.Key},Values:[{string.Join(",",group)}]");
+                Console.WriteLine($"{group.Key},Values:[{string.Join(",", group)}]");
             }
             Console.WriteLine($"{string.Join(",", res26)}");
 
@@ -338,6 +338,29 @@ o => o.CustomerId,
 
             var res30 = people2.GroupBy(p => p.City).Select(g => new { City = g.Key, Aveg = g.Average(p => p.Age) }).OrderByDescending(p => p.Aveg);
 
+            int[] numbers8 = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+
+            var primeNumbers = numbers8.Where(IsPrime).OrderBy(n => n);
+            var nonPrimeNumbers = numbers8.Where(n => !IsPrime(n)).OrderBy(n => n);
+
+        }
+        
+        public static bool IsPrime(int number)
+        {
+            if (number < 2) return false;if (number == 2) return true;
+            if (number % 2 == 0)
+            { return false; }
+
+            
+            for(int i=3;i*i<number;i+=2)
+            {
+                if (number % i == 0)
+                {
+                    return false;
+                }
+                
+            }
+                return true;
         }
     }
 
