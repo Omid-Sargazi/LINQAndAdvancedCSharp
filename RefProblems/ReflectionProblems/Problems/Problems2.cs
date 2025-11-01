@@ -34,12 +34,33 @@ namespace ReflectionProblems.Problems
     {
         public static void Run()
         {
+
+            var data = new Dictionary<string, object>
+            {
+                {"Name","Saeed"},
+                {"Age",39 }
+            };
+
+
             Type personType = typeof(Person);
+            object personInsatnce2 = Activator.CreateInstance(personType);
+
+            foreach (var item in data)
+            {
+                PropertyInfo propertyInfo = personType.GetProperty(item.Key);
+                if (propertyInfo != null && propertyInfo.CanWrite)
+                {
+                    propertyInfo.SetValue(personInsatnce2, item.Value);
+                }
+            }
+
 
             object personInsatnce = Activator.CreateInstance(personType);
 
             PropertyInfo nameProperty = personType.GetProperty("Name");
             PropertyInfo ageProperty = personType.GetProperty("Age");
+
+            Console.WriteLine($"Name:{nameProperty.GetValue(personInsatnce2)},Age:{ageProperty.GetValue(personInsatnce2)}");
 
             nameProperty.SetValue(personInsatnce, "Omid");
             ageProperty.SetValue(personInsatnce, 43);

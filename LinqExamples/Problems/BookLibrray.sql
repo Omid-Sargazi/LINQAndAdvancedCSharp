@@ -56,4 +56,3 @@
 --     WHERE child.ParentId = c.Id
 -- );
 
-SELECT 2 from BookCopy
