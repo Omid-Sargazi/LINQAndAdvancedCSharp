@@ -10,10 +10,13 @@ namespace StandardProblems.Problems
             // var res = IsValidParentheses(s);
             // Console.WriteLine(res);
 
-            int[] arr1 = new int[] { 1, 2, 3, 4 };
-            int[] arr2 = new int[] { 10, 20, 30, 40 };
+            int[] arr1 = new int[] { 1, 2, 3, 4,4,4 };
+            int[] arr2 = new int[] { 10, 20, 30, 40,40,40 };
 
-            Console.WriteLine($"{string.Join(",",MergeTwoSortedArray(arr1, arr2))}");
+            // Console.WriteLine($"{string.Join(",",MergeTwoSortedArray(arr1, arr2))}");
+            Console.WriteLine($"{string.Join(",",MergeTowSortedArrayWithoutRepeating(arr1, arr2))}");
+
+
 
 
         }
@@ -85,11 +88,11 @@ namespace StandardProblems.Problems
             }
             return chars.Count == 0;
         }
-        
-        public static int[] MergeTwoSortedArray(int[] arr1,int[] arr2)
+
+        public static int[] MergeTwoSortedArray(int[] arr1, int[] arr2)
         {
-           
-            
+
+
             int n1 = arr1.Length;
             int n2 = arr2.Length;
 
@@ -98,7 +101,7 @@ namespace StandardProblems.Problems
             int p3 = 0;
 
             int n3 = n1 + n2;
-            int[] result = new int[n1+n2];
+            int[] result = new int[n1 + n2];
 
             while (p1 < n1 && p2 < n2)
             {
@@ -131,6 +134,45 @@ namespace StandardProblems.Problems
             }
 
             return result;
+        }
+
+        public static HashSet<int> MergeTowSortedArrayWithoutRepeating(int[] arr1, int[] arr2)
+        {
+            int n1 = arr1.Length;
+            int n2 = arr2.Length;
+            var seen = new HashSet<int>();
+
+            int p1 = 0;
+            int p2 = 0;
+
+            while (p1 < n1 && p2 < n2)
+            {
+                if (arr1[p1] < arr2[p2])
+                {
+                    seen.Add(arr1[p1]);
+                    p1++;
+                }
+                else
+                {
+                    seen.Add(arr2[p2]);
+                    p2++;
+                }
+
+            }
+
+            while (p1 < n1)
+            {
+                seen.Add(arr1[p1]);
+                p1++;
+            }
+
+            while (p2 < n2)
+            {
+                seen.Add(arr2[p2]);
+                p2++;
+            }
+
+            return seen;
         }
     }
 }
