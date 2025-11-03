@@ -51,7 +51,22 @@ namespace StandardProblems.LINQProblems
             // Console.WriteLine(IsAlphabetical("abc"));
 
             var res3 = words.Where(IsAlphabetical).OrderBy(o => o);
-            Console.WriteLine($"{string.Join(",",res3)}");
+            Console.WriteLine($"{string.Join(",", res3)}");
+
+
+            var products = new[]
+            {
+                new { Name = "Laptop", Price = 1200, Stock = 5 },
+                new { Name = "Mouse", Price = 50, Stock = 20 },
+                new { Name = "Keyboard", Price = 300, Stock = 8 },
+                new { Name = "Monitor", Price = 800, Stock = 3 },
+                new { Name = "Headphones", Price = 150, Stock = 15 },
+                new { Name = "Tablet", Price = 600, Stock = 12 },
+                new { Name = "Printer", Price = 400, Stock = 2 }
+            };
+
+            var res4 = products.Where(p => p.Price > 500 && p.Stock < 10)
+            .Select(p => new { Name = p.Name, Price = p.Price }).OrderByDescending(p=>p.Price);
 
 
         }
