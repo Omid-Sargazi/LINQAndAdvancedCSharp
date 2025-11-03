@@ -35,6 +35,22 @@ namespace StandardProblems.Problems2
             }
         }
 
+        public void Reverse()
+        {
+            if (_head == null) return;
+
+            Node current = _head;
+            Node prev = null;
+            while (current != null)
+            {
+                Node next = current.Next;
+                current.Next = prev;
+                prev = current;
+                current = next;
+            }
+            _head = prev;
+        }
+
 
         public void PrintList()
         {
@@ -60,6 +76,8 @@ namespace StandardProblems.Problems2
             listt.Add(12);
             listt.Add(13);
             listt.Add(17);
+            listt.PrintList();
+            listt.Reverse();
             listt.PrintList();
         }
     }
