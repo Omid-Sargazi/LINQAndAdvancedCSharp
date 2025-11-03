@@ -80,11 +80,5 @@ namespace StandardProblems.Problems2
             listt.Reverse();
             listt.PrintList();
         }
-
-        public static void MergeTwoLinkedList(LinkedListt list1, LinkedListt list2)
-        {
-            LinkedListt result = new LinkedListt();
-            result.Add
-        }
     }
 }
