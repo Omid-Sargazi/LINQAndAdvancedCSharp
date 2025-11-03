@@ -10,11 +10,13 @@ namespace StandardProblems.Problems
             // var res = IsValidParentheses(s);
             // Console.WriteLine(res);
 
-            int[] arr1 = new int[] { 1, 2, 3, 4,4,4 };
-            int[] arr2 = new int[] { 10, 20, 30, 40,40,40 };
+            int[] arr1 = new int[] { 1, 2, 3, 4, 4, 4 };
+            int[] arr2 = new int[] { 10, 20, 30, 40, 40, 40 };
 
             // Console.WriteLine($"{string.Join(",",MergeTwoSortedArray(arr1, arr2))}");
-            Console.WriteLine($"{string.Join(",",MergeTowSortedArrayWithoutRepeating(arr1, arr2))}");
+            // Console.WriteLine($"{string.Join(",", MergeTowSortedArrayWithoutRepeating(arr1, arr2))}");
+
+            CreateLinkedList();
 
 
 
@@ -173,6 +175,68 @@ namespace StandardProblems.Problems
             }
 
             return seen;
+        }
+
+
+        public static void CreateLinkedList()
+        {
+            LinkedList list = new LinkedList();
+            list.Add(1);
+            list.Add(2);
+            list.Add(3);
+            list.Add(4);
+            list.Add(5);
+            list.PrintList();
+        }
+       
+    }
+
+    public class Node
+    {
+        public int Data;
+        public Node Next;
+        
+        public Node(int data)
+        {
+            Data = data;
+            Next = null;
+        }
+    }
+
+    public class LinkedList
+    {
+        private Node _head;
+
+        public void Add(int value)
+        {
+            Node node = new Node(value);
+            if (_head == null)
+            {
+                _head = node;
+            }
+            else
+            {
+                Node current = _head;
+                while (current.Next != null)
+                {
+                    current = current.Next;
+                }
+                current.Next = node;
+            }
+        }
+
+        
+
+        public void PrintList()
+        {
+            Node current = _head;
+            while (current != null)
+            {
+                Console.Write(current.Data + "->");
+                current = current.Next;
+            }
+
+            Console.WriteLine("null");
         }
     }
 }
