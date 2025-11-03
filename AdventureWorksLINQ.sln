@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginContract", "RefProble
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreBasics", "EfCoreBasics\EfCoreBasics.csproj", "{2AE91C42-1748-4FF8-AEFD-B1152DC7B4B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandardProblems", "StandardProblems\StandardProblems.csproj", "{B728556D-902F-4EA3-A690-0EAA9855C0D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,6 +208,10 @@ Global
 		{2AE91C42-1748-4FF8-AEFD-B1152DC7B4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AE91C42-1748-4FF8-AEFD-B1152DC7B4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AE91C42-1748-4FF8-AEFD-B1152DC7B4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B728556D-902F-4EA3-A690-0EAA9855C0D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B728556D-902F-4EA3-A690-0EAA9855C0D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B728556D-902F-4EA3-A690-0EAA9855C0D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B728556D-902F-4EA3-A690-0EAA9855C0D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
