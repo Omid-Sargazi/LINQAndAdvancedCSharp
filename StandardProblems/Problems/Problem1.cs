@@ -188,6 +188,25 @@ namespace StandardProblems.Problems
             list.Add(5);
             list.PrintList();
         }
+
+        public static int MaxProfit(int[] prices)
+        {
+            int minSofar = prices[0];
+            int MaxProfit = 0;
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (minSofar < prices[i])
+                {
+                    minSofar = prices[i];
+                }
+                int profit = prices[i] - minSofar;
+
+                MaxProfit = Math.Max(MaxProfit,prices[i]-minSofar);
+            }
+
+            return MaxProfit;
+        }
        
     }
 
