@@ -45,9 +45,29 @@ namespace StandardProblems.LINQProblems
                 Names = g.Select(p => p.Name).OrderBy(n => n)
             }).OrderBy(g => g.AgeGroup);
 
+            string[] words = { "apple", "banana", "cat", "dog", "almost", "biopsy", "hello", "access", "cell", "door" };
+
+            // IsAlphabetical("omid");
+            // Console.WriteLine(IsAlphabetical("abc"));
+
+            var res3 = words.Where(IsAlphabetical).OrderBy(o => o);
+            Console.WriteLine($"{string.Join(",",res3)}");
 
 
+        }
 
+        public static bool IsAlphabetical(string word)
+        {
+            if (string.IsNullOrEmpty(word)) return false;
+
+            for (int i = 1; i < word.Length; i++)
+            {
+                Console.WriteLine(word[i]);
+                if (word[i] < word[i - 1])
+                    return false;
+            }
+
+            return true;
         }
     }
 }
