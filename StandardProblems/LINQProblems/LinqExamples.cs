@@ -103,6 +103,14 @@ namespace StandardProblems.LINQProblems
             var fullName = names.SelectMany(name => families, (name, family) => $"{name} {family}");
 
 
+            string[] colors = {"قرمز", "آبی", "سبز"};
+            string[] sizes = {"Small", "Medium", "Large"};
+            decimal[] prices = { 29.99m, 39.99m, 49.99m };
+
+            var productss = colors.SelectMany(c => sizes, (c, s) => new { Color = c, Size = s })
+            .SelectMany(combo => prices, (combo, price) => new { Combo = combo, Price = price });
+
+
 
         }
 
