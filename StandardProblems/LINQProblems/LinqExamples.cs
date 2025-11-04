@@ -123,6 +123,16 @@ namespace StandardProblems.LINQProblems
                 Grade = grade
             });
 
+            var students2 = new[]
+        {
+                new { Name = "Ali", Grades = new[] { 18, 17, 19, 16 } },
+                new { Name = "Sara", Grades = new[] { 15, 16, 14, 18 } },
+                new { Name = "Reza", Grades = new[] { 19, 18, 20, 17 } },
+                new { Name = "Fatemeh", Grades = new[] { 17, 16, 18, 15 } },
+                new { Name = "Mohammad", Grades = new[] { 20, 19, 18, 17 } }
+            };
+
+            var res8 = students2.Where(s => s.Grades.Average() > 17 && s.Grades.All(g => g > 15)).Select(s => new { Name = s.Name, Aveg = s.Grades.Average() }).OrderBy(s => s.Name);
 
 
         }
