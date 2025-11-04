@@ -22,7 +22,7 @@ namespace StandardProblems.Problems3
 
         public static bool Palindrome(string s)
         {
-            int left = 0;int right = s.Length - 1;
+            int left = 0; int right = s.Length - 1;
 
             while (left < right)
             {
@@ -36,6 +36,38 @@ namespace StandardProblems.Problems3
             }
 
             return true;
+        }
+
+        public static void RemoveDuplicateFromSortedArray(int[] arr)
+        {
+            int current = 0;
+
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] != arr[current])
+                {
+                    current++;
+                    arr[current] = arr[i];
+                }
+            }
+
+            Console.WriteLine($"{string.Join(",", arr.Take(current + 1))}");
+            Console.WriteLine($"{string.Join(",", arr)}");
+
+        }
+        
+        public static int MaximumSubarray(int[] arr)
+        {
+            int currentSum = arr[0];
+            int maxSum = arr[0];
+
+            for (int i = 1; i < arr.Length; i++)
+            {
+                currentSum = Math.Max(arr[i], currentSum + arr[i]);
+                maxSum = Math.Max(maxSum, currentSum);
+            }
+
+            return maxSum;
         }
     }
 }
