@@ -2,9 +2,14 @@
 using StandardProblems.LINQProblems;
 using StandardProblems.Problems;
 using StandardProblems.Problems2;
+using StandardProblems.Problems3;
 
 Console.WriteLine("Hello, World!");
 // Problem1.Run();
 // ClientList.Run();
 
-LinqExamples.Run();
+// LinqExamples.Run();
+
+var nums = new int[] { 7, 6, 4, 3, 1 };
+var nums2 = new int[] { 7,1,5,3,6,4 };
+Console.WriteLine(LeetCodes01.MaxProfit(nums2));
