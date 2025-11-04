@@ -54,6 +54,22 @@ namespace StandardProblems.LINQProblems
             Console.WriteLine($"{string.Join(",", res3)}");
 
 
+            string[] sentences =
+            {
+                "The quick brown fox jumps over the lazy dog",
+                "LINQ is a powerful tool for C# developers",
+                "Programming is fun and challenging",
+                "Hello world from C# LINQ"
+            };
+
+            var res6 = sentences.Select(s=> new
+            {
+                Sentence=s,VowelCount=VowelsCount(s)
+            }).OrderByDescending(p => p.VowelCount);
+            Console.WriteLine($"{string.Join(",", res6)}CountVowel");
+
+
+
             var products = new[]
             {
                 new { Name = "Laptop", Price = 1200, Stock = 5 },
@@ -98,7 +114,24 @@ namespace StandardProblems.LINQProblems
                 fact *= i;
             }
 
-            return fact<1000000;
+            return fact < 1000000;
+        }
+        
+        public static int VowelsCount(string s)
+        {
+            int count = 0;
+            if (!string.IsNullOrEmpty(s))
+            {
+                foreach (char c in s)
+                {
+                    if (c == 'a' || c == 'e' || c == 'i' || c == 'u' || c == 'o')
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
         }
     }
 
