@@ -66,7 +66,8 @@ namespace StandardProblems.LINQProblems
             {
                 Sentence=s,VowelCount=VowelsCount(s)
             }).OrderByDescending(p => p.VowelCount);
-            Console.WriteLine($"{string.Join(",", res6)}CountVowel");
+            // Console.WriteLine($"{string.Join(",", res6)}CountVowel");
+
 
 
 
@@ -87,7 +88,20 @@ namespace StandardProblems.LINQProblems
             int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
             var res5 = numbers.Where(Fact);
-            Console.WriteLine($"{string.Join(",", res5)}");
+            // Console.WriteLine($"{string.Join(",", res5)}");
+
+            int[] numbers2 = { 1, 2, 3, 4, 5 };
+
+            var res7 = numbers2.SelectMany(a => numbers2, (a, b) => new { A = a, B = b, Product = a * b }).
+            Where(pair => pair.Product % 2 == 0).OrderBy(pair => pair.A).ThenBy(pair => pair.B);
+
+            Console.WriteLine($"{string.Join(",", res7)}");
+
+            string[] names = {"علی", "مریم", "رضا"};
+            string[] families = { "محمدی", "احمدی", "کریمی" };
+
+            var fullName = names.SelectMany(name => families, (name, family) => $"{name} {family}");
+
 
 
         }
