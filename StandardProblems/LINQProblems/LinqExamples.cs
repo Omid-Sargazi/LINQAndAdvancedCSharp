@@ -111,6 +111,19 @@ namespace StandardProblems.LINQProblems
             .SelectMany(combo => prices, (combo, price) => new { Combo = combo, Price = price });
 
 
+            string[] students = {"آرش", "نازنین", "کامیاب"};
+            string[] courses = {"ریاضی", "فیزیک", "برنامه‌نویسی"};
+            string[] grades = { "A", "B", "C" };
+
+            var studentRecords = students.SelectMany(s => courses, (student, course) => new { Student = student, Course = course })
+            .SelectMany(record => grades, (record, grade) => new
+            {
+                Student = record.Student,
+                Course = record.Course,
+                Grade = grade
+            });
+
+
 
         }
 
