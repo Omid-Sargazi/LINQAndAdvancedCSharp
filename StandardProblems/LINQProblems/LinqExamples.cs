@@ -66,7 +66,12 @@ namespace StandardProblems.LINQProblems
             };
 
             var res4 = products.Where(p => p.Price > 500 && p.Stock < 10)
-            .Select(p => new { Name = p.Name, Price = p.Price }).OrderByDescending(p=>p.Price);
+            .Select(p => new { Name = p.Name, Price = p.Price }).OrderByDescending(p => p.Price);
+
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+
+            var res5 = numbers.Where(Fact);
+            Console.WriteLine($"{string.Join(",", res5)}");
 
 
         }
@@ -84,5 +89,36 @@ namespace StandardProblems.LINQProblems
 
             return true;
         }
+
+        public static bool Fact(int num)
+        {
+            int fact = 1;
+            for (int i = 1; i <= num; i++)
+            {
+                fact *= i;
+            }
+
+            return fact<1000000;
+        }
     }
+
+
+    public class Personn
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public Personn(string name, int age)
+        {
+            Age = age;
+            Name = name;
+        }
+    }
+
+   public struct Point
+        {
+            public int X;
+            public int Y;
+            public Point(int x, int y) => (X, Y) = (x, y);
+        }
 }
