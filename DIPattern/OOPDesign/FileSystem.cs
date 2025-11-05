@@ -1,8 +1,8 @@
 namespace DIPattern.OOPDesign
 {
-    public interface IFileSystem:IFileDeletable,IFileOpenable,IFileSavable
+    public interface IFileSystem : IFileDeletable, IFileOpenable, IFileSavable
     {
-        
+
     }
 
     public class AudioFile : IFileSystem
@@ -83,7 +83,7 @@ namespace DIPattern.OOPDesign
             return new PaymentResult
             {
                 IsSuccess = true,
-                TransactionId="Pay"+Guid.NewGuid
+                TransactionId = "Pay" + Guid.NewGuid
             };
         }
     }
@@ -97,7 +97,7 @@ namespace DIPattern.OOPDesign
             return new PaymentResult
             {
                 IsSuccess = false,
-ErrorMessage="401",
+                ErrorMessage = "401",
             };
         }
     }
@@ -168,7 +168,7 @@ ErrorMessage="401",
 
     public abstract class ReportingSystem
     {
-        protected  IReportingSystem _reportingSystem;
+        protected IReportingSystem _reportingSystem;
         public ReportingSystem(IReportingSystem reportingSystem)
         {
             _reportingSystem = reportingSystem;
@@ -186,7 +186,7 @@ ErrorMessage="401",
         {
             Console.Write("Sending via Fax - ");
             _reportingSystem.MakeReport(context);
-            
+
         }
     }
 
@@ -227,4 +227,106 @@ ErrorMessage="401",
             emailSend.Send("Omid");
         }
     }
+
+
+
+    public class FileDestination : ILogDestination
+    {
+        public LogLevel MinimumLevel { get; }
+
+        public FileDestination(LogLevel minLevel = LogLevel.Info)
+        {
+            MinimumLevel = minLevel;
+        }
+
+        public void Write(LogEntry logEntry)
+        {
+            System.Console.WriteLine($"[File]{logEntry.Timestamp:o}[{logEntry.Level}]{logEntry.Message}");
+        }
+    }
+
+    public class DatabaseDestination : ILogDestination
+    {
+        public LogLevel MinimumLevel { get; }
+
+        public DatabaseDestination(LogLevel logLevel = LogLevel.Error)
+        {
+            MinimumLevel = logLevel;
+        }
+        public void Write(LogEntry logEntry)
+        {
+            System.Console.WriteLine($"[File]{logEntry.Timestamp:o}[{logEntry.Level}]{logEntry.Message}");
+
+        }
+    }
+
+    public class ConsoleDestination : ILogDestination
+    {
+        public LogLevel MinimumLevel { get; }
+
+        public ConsoleDestination(LogLevel logLevel = LogLevel.Wrning)
+        {
+            MinimumLevel = logLevel;
+        }
+
+        public void Write(LogEntry logEntry)
+        {
+            System.Console.WriteLine($"[File]{logEntry.Timestamp:o}[{logEntry.Level}]{logEntry.Message}");
+
+        }
+    }
+
+    public enum LogLevel
+
+    {
+        Info = 0,
+        Wrning = 1,
+        Error = 2,
+    };
+
+    public class LogEntry
+    {
+        public LogLevel Level { get; set; }
+        public string Message { get; set; }
+        public DateTime Timestamp { get; set; }
+
+        public LogEntry(LogLevel level, string message)
+        {
+            Level = level;
+            Message = message;
+            Timestamp = DateTime.UtcNow;
+        }
+    }
+
+    public interface ILogDestination
+    {
+        LogLevel MinimumLevel { get; }
+        void Write(LogEntry logEntry);
+    }
+
+    public class LoggingSystem
+    {
+        private readonly List<ILogDestination> _destinations = new List<ILogDestination>();
+
+        private readonly object _lock = new object();
+
+        public void AddDistination(ILogDestination logDestination)
+        {
+            if (logDestination == null) throw new ArgumentNullException(nameof(logDestination));
+            lock (_lock)
+
+                _destinations.Add(logDestination);
+        }
+
+        public void RemoveDestination(ILogDestination logDestination)
+        {
+            if (logDestination == null) return;
+        lock (_lock)
+        {
+            _destinations.Remove(logDestination);
+        }
+        }
+    }
+
+
 }
