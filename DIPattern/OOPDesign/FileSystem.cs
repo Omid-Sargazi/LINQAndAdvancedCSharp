@@ -1,10 +1,8 @@
 namespace DIPattern.OOPDesign
 {
-    public interface IFileSystem
+    public interface IFileSystem:IFileDeletable,IFileOpenable,IFileSavable
     {
-        void Open();
-        void Delete();
-        void Save();
+        
     }
 
     public class AudioFile : IFileSystem
@@ -41,5 +39,33 @@ namespace DIPattern.OOPDesign
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class ReadOnlyConfigFile : IFileOpenable, IFileDeletable
+    {
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Open()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IFileOpenable
+    {
+        void Open();
+    }
+
+    public interface IFileSavable
+    {
+        void Save();
+    }
+
+    public interface IFileDeletable
+    {
+        void Delete();
     }
 }
