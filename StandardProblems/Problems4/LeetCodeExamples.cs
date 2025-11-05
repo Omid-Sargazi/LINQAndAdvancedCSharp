@@ -124,6 +124,19 @@ namespace StandardProblems.Problems4
             var monthlySales = sales.GroupBy(s => new { s.Date.Year, s.Date.Month })
             .Select(g => new { YearMonth = $"{g.Key.Year}--{g.Key.Month:D2}", TotalAmount = g.Sum(s => s.Amount) }).OrderBy(x => x.YearMonth);
         }
+
+        public static void FindWordsMostVowels()
+        {
+            string[] words = { "apple", "banana", "elephant", "rhythm", "beautiful", "sky", "education" };
+            words.Select(word => new { Word = word, Count = FindVowel(word) }).OrderByDescending(w => w.Count).ThenBy(w => w.Word);
+
+        }
+
+        public static int FindVowel(string word)
+        {
+            char[] vowels = { 'a', 'e', 'i', 'u', 'o' };
+            return word.ToLower().Count(w => vowels.Contains(w));
+        }
         
         
     }
