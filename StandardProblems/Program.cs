@@ -17,4 +17,5 @@ var nums2 = new int[] { 7,1,5,3,6,4 };
 var nums3 = new int[] { 1, 1, 2, 2, -3, 4, 4, 5, 6, 7, 8 };
 // LeetCodes01.RemoveDuplicateFromSortedArray(nums3);
 
-LeetCodeExamples.MaximumSubarray(nums3);
+// LeetCodeExamples.MaximumSubarray(nums3);
+LeetCodeExamples.MajorityElement(nums3);
