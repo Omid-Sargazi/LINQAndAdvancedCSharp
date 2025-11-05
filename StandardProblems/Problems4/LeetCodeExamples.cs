@@ -15,5 +15,19 @@ namespace StandardProblems.Problems4
 
             Console.WriteLine($"MaxSubArray:{best}");
         }
+
+        public static void MaximumProfit(int[] prices)
+        {
+            int minPrice = prices[0];
+            int maxProfit = prices[0];
+
+            for (int i = 1; i < prices.Length; i++)
+            {
+                minPrice = Math.Min(prices[i], minPrice);
+                maxProfit = Math.Max(maxProfit, prices[i] - minPrice);
+            }
+
+            Console.WriteLine($"MaximumProfit: {maxProfit}");
+        }
     }
 }
