@@ -2,6 +2,13 @@ using System.ComponentModel;
 
 namespace DesignPattern.OOPProblems
 {
+
+    public enum CacheStrategyType
+    {
+        Memory,
+        Redis,
+        Distributed,
+    }
     public interface ICacheSystem
     {
         void Cache(string context);
@@ -11,7 +18,7 @@ namespace DesignPattern.OOPProblems
     {
         public void Cache(string context)
         {
-            Console.WriteLine("Cached Data by DistributedCache");
+            Console.WriteLine($"Cached Data by DistributedCache  {context}");
         }
     }
 
@@ -19,7 +26,7 @@ namespace DesignPattern.OOPProblems
     {
         public void Cache(string context)
         {
-            Console.WriteLine("Cached Data by RedisCache");
+            Console.WriteLine($"Cached Data by RedisCache  {context}");
 
         }
     }
@@ -28,42 +35,36 @@ namespace DesignPattern.OOPProblems
     {
         public void Cache(string context)
         {
-            Console.WriteLine("Cached Data by MemoryCache");
+            Console.WriteLine($"Cached Data by MemoryCache  {context}");
 
         }
     }
 
     public class CachingSystem
     {
-        protected ICacheSystem _cacheSystem;
-        public CachingSystem(ICacheSystem cacheSystem)
+        private readonly Func<ICacheSystem> _factory;
+        private readonly Lazy<ICacheSystem> _lazyCache;
+        // protected ICacheSystem _cacheSystem;
+        public CachingSystem(Func<ICacheSystem> factory)
         {
-            _cacheSystem = cacheSystem;
+            _factory = factory;
+            _lazyCache = new Lazy<ICacheSystem>(() => _factory());
+        }
+
+        public void Cache(string context)
+        {
+            _lazyCache.Value.Cache(context);
         }
     }
 
-    public class ResourceHungry
-    {
-        //Class which takes lots of memory if initialized.
-    }
 
-    public class ResourceCinsumer
+    public class CacheClient
     {
-        ResourceHungry _hungry;
-
-        private readonly object _resourceHungryLock = new object();
-        public ResourceHungry Hungey()
+        public static void Execute()
         {
-            lock(_resourceHungryLock)
-            {
-                if (_hungry == null)
-            {
-                _hungry = new ResourceHungry();
-            }
-                return _hungry;
-            }
-            
-
+            var caching = new CachingSystem(() => new RedisCache());
+            caching.Cache("data");
+            caching.Cache("data22");
         }
     }
 
