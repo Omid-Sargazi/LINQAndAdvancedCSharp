@@ -268,4 +268,26 @@ namespace DesignPattern.OOPProblems
     }
     
 
+    public class LinqExamples
+    {
+        public static void Execute()
+        {
+            var products = new[]
+            {
+                new { Name = "Laptop", Category = "Electronics", Price = 1000 },
+                new { Name = "Mouse", Category = "Electronics", Price = 50 },
+                new { Name = "Keyboard", Category = "Electronics", Price = 120 },
+                new { Name = "Monitor", Category = "Electronics", Price = 800 },
+                new { Name = "Shirt", Category = "Clothing", Price = 30 },
+                new { Name = "Pants", Category = "Clothing", Price = 45 },
+                new { Name = "Shoes", Category = "Clothing", Price = 80 },
+                new { Name = "Jacket", Category = "Clothing", Price = 120 },
+                new { Name = "Phone", Category = "Electronics", Price = 900 }
+            };
+
+            var result1 = products.GroupBy(p => p.Category)
+            .Select(g => new { Category = g.Key, TopPrices = g.OrderByDescending(g => g.Price).Take(2).Select(p => $"{p.Name}{p.Price}") }).OrderBy(x => x.Category);
+        }
+    }
+
 }
