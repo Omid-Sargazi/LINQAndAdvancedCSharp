@@ -1,4 +1,7 @@
 using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography;
 
 namespace DesignPattern.OOPProblems
 {
@@ -57,15 +60,112 @@ namespace DesignPattern.OOPProblems
         }
     }
 
+    public class CacheStrategyFactory
+    {
+        private readonly Dictionary<CacheStrategyType, Lazy<ICacheSystem>> _strategies;
+
+        public CacheStrategyFactory()
+        {
+            _strategies = new Dictionary<CacheStrategyType, Lazy<ICacheSystem>>
+            {
+                [CacheStrategyType.Redis] = new Lazy<ICacheSystem>(() => new RedisCache()),
+                [CacheStrategyType.Memory] = new Lazy<ICacheSystem>(() => new MemoryCache()),
+                [CacheStrategyType.Distributed] = new Lazy<ICacheSystem>(() => new DistributedCache()),
+            };
+        }
+        
+        public ICacheSystem GetStrategy(CacheStrategyType type)
+        {
+            return _strategies[type].Value;
+        }
+    }
+
 
     public class CacheClient
     {
         public static void Execute()
         {
-            var caching = new CachingSystem(() => new RedisCache());
-            caching.Cache("data");
-            caching.Cache("data22");
+            var factory = new CacheStrategyFactory();
+
+            var cache = new CachingSystem(() => factory.GetStrategy(CacheStrategyType.Redis));
+            cache.Cache("data");
+
+            var memoryCache = new CachingSystem(() => new MemoryCache());
+            memoryCache.Cache("data2");
         }
+    }
+
+
+    public interface IValidationRule<T>
+    {
+        string Validate(T obj);
+    }
+
+    public class EmailRequiredRule : IValidationRule<User>
+    {
+        public string Validate(User obj)
+        {
+            if (string.IsNullOrWhiteSpace(obj.Email))
+            {
+                return "Email Is Required";
+            }
+
+            return null;
+        }
+    }
+
+    public class EmailMustContainAtRule : IValidationRule<User>
+    {
+        public string Validate(User obj)
+        {
+            if (!obj.Email.Contains("@"))
+                return "Email must be have @";
+            return null;
+        }
+    }
+
+    public class AgeRangeRule : IValidationRule<User>
+    {
+        public string Validate(User obj)
+        {
+            if (obj.Age < 0 || obj.Age > 150)
+                return "Age must be between 0 and 150";
+
+            return null;
+        }
+    }
+
+    public class Validator<T>
+    {
+        private List<IValidationRule<T>> _rules = new List<IValidationRule<T>>();
+
+        public void AddRule(IValidationRule<T> rule)
+        {
+            _rules.Add(rule);
+        }
+
+        public List<string> Validate(T obj)
+        {
+            List<string> errors = new List<string>();
+
+            foreach (var rule in _rules)
+            {
+                var result = rule.Validate(obj);
+                if (result != null)
+                {
+                    errors.Add(result);
+                }
+            }
+
+            return errors;
+        }
+    }
+
+    public class User
+    {
+        public int Age { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
     }
 
 
