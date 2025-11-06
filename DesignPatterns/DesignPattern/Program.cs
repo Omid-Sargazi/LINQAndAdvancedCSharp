@@ -4,4 +4,11 @@ using DesignPattern.TaksProblem;
 
 Console.WriteLine("Hello, World!!!!!!");
 // ClientPriority.Run();
-CacheClient.Execute();
+// CacheClient.Execute();
+
+// int n = 410 % 10;
+// Console.WriteLine(n);
+
+// LinqExamples.SumOfDigits(451);
+
+LinqExamples.Execute();

@@ -287,6 +287,27 @@ namespace DesignPattern.OOPProblems
 
             var result1 = products.GroupBy(p => p.Category)
             .Select(g => new { Category = g.Key, TopPrices = g.OrderByDescending(g => g.Price).Take(2).Select(p => $"{p.Name}{p.Price}") }).OrderBy(x => x.Category);
+
+
+            int[] numbers = { 12, 34, 56, 78, 91, 23, 45, 67, 89, 100, 111, 222, 333 };
+
+            var res2 = numbers.Where(SumOfDigits);
+            Console.WriteLine($"{string.Join(",",res2)}");
+        }
+
+        public static bool SumOfDigits(int num)
+        {
+            int sum = 0;
+            while (num >= 1)
+            {
+                sum += num % 10;
+                num /= 10;
+            }
+            if(sum%2!=0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 
