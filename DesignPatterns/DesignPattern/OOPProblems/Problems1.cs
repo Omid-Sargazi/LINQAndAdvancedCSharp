@@ -307,10 +307,13 @@ namespace DesignPattern.OOPProblems
 
             var res3 = students.Where(s => s.BirthDate.Month == DateTime.Now.Month).Select(s => new { Name = s.Name, Age = (DateTime.Now.Year - s.BirthDate.Year) -
             (DateTime.Now.DayOfYear < s.BirthDate.DayOfYear ? 1 : 0) });
-           foreach (var student in res3)
-        {
-            Console.WriteLine($"{student.Name}: {student.Age} years");
-        }
+            foreach (var student in res3)
+            {
+                Console.WriteLine($"{student.Name}: {student.Age} years");
+            }
+
+            string[] words = { "spoon", "hello", "wolf", "fed", "cba", "onion", "red", "abcd" };
+            var res4 = words.Where(IsReverseAlphabetical).OrderByDescending(s => s); 
         }
 
         public static bool SumOfDigits(int num)
@@ -321,10 +324,25 @@ namespace DesignPattern.OOPProblems
                 sum += num % 10;
                 num /= 10;
             }
-            if(sum%2!=0)
+            if (sum % 2 != 0)
             {
                 return true;
             }
+            return false;
+        }
+        
+        private static bool IsReverseAlphabetical(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return false;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] > s[i - 1])
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
     }
