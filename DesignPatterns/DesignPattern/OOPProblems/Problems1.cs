@@ -169,4 +169,103 @@ namespace DesignPattern.OOPProblems
     }
 
 
+    public interface INotificationObserver
+    {
+        void Update(string message);
+    }
+
+    public class EmailObserver : INotificationObserver
+    {
+        private string _email;
+
+        public EmailObserver(string email)
+        {
+            _email = email;
+        }
+        public void Update(string message)
+        {
+            Console.WriteLine($"Email to{_email}:{message}");
+        }
+    }
+
+    public class SMSObserver : INotificationObserver
+    {
+        private readonly string _sms;
+        public SMSObserver(string sms)
+        {
+            _sms = sms;
+        }
+        public void Update(string message)
+        {
+            Console.WriteLine($"SMS to{_sms}:{message}");
+
+        }
+    }
+
+    public class PushObserver : INotificationObserver
+    {
+        private readonly string _deviceid;
+        public PushObserver(string deviceId)
+        {
+            _deviceid = deviceId;
+        }
+        public void Update(string message)
+        {
+            Console.WriteLine($"Push to{_deviceid}:{message}");
+        }
+    }
+
+    public class NotificationSubject
+    {
+        protected readonly List<INotificationObserver> _observer = new List<INotificationObserver>();
+        private readonly object _lock = new object();
+
+        public void Subscribe(INotificationObserver observer)
+        {
+            if (observer == null) return;
+            lock (_lock)
+            {
+                if (!_observer.Contains(observer))
+                {
+                    _observer.Add(observer);
+                }
+            }
+        }
+
+        public void Unsubscribe(INotificationObserver observer)
+        {
+            if (observer == null)
+            {
+                return;
+            }
+            lock (_lock)
+            {
+                _observer.Remove(observer);
+            }
+        }
+
+        public void NotifyAll(string message)
+        {
+            List<INotificationObserver> snapshot;
+            lock (_lock)
+            {
+                snapshot = new List<INotificationObserver>(_observer);
+            }
+
+            foreach (var obj in snapshot)
+            {
+                try
+                {
+                    obj.Update(message);
+                }
+                catch (System.Exception ex)
+                {
+
+                    Console.Error.WriteLine($"Observer error: {ex.Message}");
+                }
+            }
+        }
+    }
+    
+
 }
