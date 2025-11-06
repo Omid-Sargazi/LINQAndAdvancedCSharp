@@ -292,7 +292,25 @@ namespace DesignPattern.OOPProblems
             int[] numbers = { 12, 34, 56, 78, 91, 23, 45, 67, 89, 100, 111, 222, 333 };
 
             var res2 = numbers.Where(SumOfDigits);
-            Console.WriteLine($"{string.Join(",",res2)}");
+            // Console.WriteLine($"{string.Join(",", res2)}");
+
+
+            var students = new[]
+            {
+                new { Name = "Ali", BirthDate = new DateTime(2000, 11, 15) },
+                new { Name = "Sara", BirthDate = new DateTime(1999, 10, 8) },
+                new { Name = "Reza", BirthDate = new DateTime(2001, 9, 20) },
+                new { Name = "Fatemeh", BirthDate = new DateTime(1998, 1, 25) },
+                new { Name = "Mohammad", BirthDate = new DateTime(2002, 3, 10) },
+                new { Name = "Zahra", BirthDate = new DateTime(2000, 1, 5) }
+            };
+
+            var res3 = students.Where(s => s.BirthDate.Month == DateTime.Now.Month).Select(s => new { Name = s.Name, Age = (DateTime.Now.Year - s.BirthDate.Year) -
+            (DateTime.Now.DayOfYear < s.BirthDate.DayOfYear ? 1 : 0) });
+           foreach (var student in res3)
+        {
+            Console.WriteLine($"{student.Name}: {student.Age} years");
+        }
         }
 
         public static bool SumOfDigits(int num)
