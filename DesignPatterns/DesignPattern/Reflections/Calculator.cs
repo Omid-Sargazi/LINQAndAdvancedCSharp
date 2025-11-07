@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Reflection.Metadata;
 
 namespace DesignPattern.Reflections
 {
@@ -33,10 +34,115 @@ namespace DesignPattern.Reflections
                 object result = method.Invoke(calculator, parameters);
                 Console.WriteLine($"Result {result}");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
                 Console.WriteLine($"Error:{ex.Message}");
+            }
+        }
+
+        public enum Format
+
+        {
+            PDF,
+            Word,
+            Image,
+        }
+
+        public class Document
+        {
+            public Format Format { get; set; }
+            public string Context { get; set; }
+            public Document(Format format, string context)
+            {
+                Format = format;
+                Context = context;
+            }
+        }
+
+        public interface IConverter
+        {
+            bool CanConvert(Format from, Format to);
+            Document Convert(Document document, Format to);
+        }
+
+        public class PdfToWordConverter : IConverter
+        {
+            public bool CanConvert(Format from, Format to)
+            {
+                return from == Format.PDF && to == Format.Word;
+            }
+
+            public Document Convert(Document document, Format to)
+            {
+                Console.WriteLine("Converting PDF -> Word");
+                return new Document(Format.Word, document.Context + "(converted to Word)");
+            }
+        }
+
+        public class WordToPdfConverter : IConverter
+        {
+            public bool CanConvert(Format from, Format to)
+            {
+                return from == Format.Word && to == Format.PDF;
+            }
+
+            public Document Convert(Document document, Format to)
+            {
+                Console.WriteLine("Converting Word -> PDF");
+                return new Document(Format.PDF, document.Context + "converted to pdf");
+            }
+        }
+
+        public class PdfToImageConverter : IConverter
+        {
+            public bool CanConvert(Format from, Format to)
+            {
+                return from == Format.PDF && to == Format.Image;
+            }
+
+            public Document Convert(Document document, Format to)
+            {
+                Console.WriteLine("Converting PDF -> Image");
+                return new Document(Format.PDF, document + "Converted to Image");
+            }
+        }
+
+        public class ConverterService
+        {
+            private List<IConverter> _converters = new List<IConverter>();
+
+            public void Register(IConverter converter)
+            {
+                if (converter == null) throw new ArgumentNullException(nameof(converter));
+                _converters.Add(converter);
+            }
+
+            public void Unregister(IConverter converter)
+            {
+                if (converter == null) return;
+                _converters.Remove(converter);
+            }
+
+            public Document Convert(Document doc, Format to)
+            {
+                foreach (var c in _converters)
+                {
+                    if (c.CanConvert(doc.Format, to))
+                    {
+                        try
+                        {
+                            return c.Convert(doc, to);
+                        }
+                        catch (System.Exception ex)
+                        {
+
+                            Console.WriteLine($"Converter Failed:{ex.Message}");
+                        }
+                    }
+                }
+                Console.WriteLine($"No Converter Avilable for {doc.Format}+=>{to}");
+                return null;
             }
         }
     }
