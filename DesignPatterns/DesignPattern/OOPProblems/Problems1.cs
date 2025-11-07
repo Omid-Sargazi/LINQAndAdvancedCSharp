@@ -392,6 +392,11 @@ namespace DesignPattern.OOPProblems
 
             var nextWeekEvents = events.Where(e => e >= DateTime.Today && e <= DateTime.Today.AddDays(7))
             .OrderBy(e => e);
+
+            string[] words3 = { "radar", "level", "hello", "world", "madam", "civic", "racecar", "apple" };
+
+            var palindorom = words3.Where(IsPalindrome).OrderBy(p =>p);
+
            
                         
         }
@@ -452,7 +457,23 @@ namespace DesignPattern.OOPProblems
             return false;
         }
 
+        private static bool IsPalindrome(string word)
+        {
+            if (string.IsNullOrEmpty(word)) return false;
 
+            int left = 0;
+            int right = word.Length - 1;
+
+            while (left < right)
+            {
+                if (char.ToLower(word[left]) != char.ToLower(word[right]))
+                    return false;
+                left++;
+                right--;
+            }
+
+            return true;
+        }
     }
 
 }
