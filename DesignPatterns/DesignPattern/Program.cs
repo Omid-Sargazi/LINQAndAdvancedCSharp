@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DesignPattern.OOPProblems;
+using DesignPattern.Reflections;
 using DesignPattern.TaksProblem;
 
 Console.WriteLine("Hello, World!!!!!!");
@@ -11,4 +12,6 @@ Console.WriteLine("Hello, World!!!!!!");
 
 // LinqExamples.SumOfDigits(451);
 
-LinqExamples.Execute();
+// LinqExamples.Execute();
+
+CalReflection.Execute();
