@@ -333,7 +333,13 @@ namespace DesignPattern.OOPProblems
             var res8 = products2.GroupBy(p => p.Category).
             Select(g => new { Name = g.Key, HighRating = g.OrderByDescending(p => p.Rating).FirstOrDefault() }).OrderBy(p => p.Name);
 
-            Console.WriteLine($"{string.Join(",",res8)}");
+            Console.WriteLine($"{string.Join(",", res8)}");
+
+            int[] numbers3 = { 12, 23, 34, 45, 56, 67, 78, 89, 91, 100, 111, 123, 456, 789 };
+
+            var res9 = numbers.Where(SumOfDigits2).OrderBy(p => p);
+            Console.WriteLine($"{string.Join(",",res9)}");
+            
                         
         }
 
@@ -346,6 +352,32 @@ namespace DesignPattern.OOPProblems
                 num /= 10;
             }
             if (sum % 2 != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool SumOfDigits2(int num)
+        {
+            int sum = 0;
+            while (num >= 1)
+            {
+                sum += num % 10;
+                num /= 10;
+            }
+
+            int prime = 0;
+
+            for (int i = 1; i <= sum; i++)
+            {
+                if (sum % i == 0)
+                {
+                    prime++;
+                }
+            }
+
+            if (prime == 2 || prime==1)
             {
                 return true;
             }
@@ -366,8 +398,8 @@ namespace DesignPattern.OOPProblems
 
             return false;
         }
-        
-        
+
+
     }
 
 }
