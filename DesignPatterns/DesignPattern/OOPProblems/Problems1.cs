@@ -367,7 +367,32 @@ namespace DesignPattern.OOPProblems
             int n = 5;
             var num12 = Enumerable.Range(1, 5);
             var factorial = num12.Aggregate((cur, next) => cur * next);
-                        
+
+
+            var articles = new[]
+            {
+                new { Title = "C# Basics", Tags = new[] {"csharp", "programming", "beginner"} },
+                new { Title = "Advanced C#", Tags = new[] {"csharp", "programming", "expert", "linq"} },
+                new { Title = "C# LINQ Guide", Tags = new[] {"csharp", "linq", "programming"} },
+                new { Title = "C# Best Practices", Tags = new[] {"csharp", "programming", "expert"} }
+            };
+
+            var commonTags = articles.Select(a => a.Tags.Distinct()).Aggregate((cur, next) => cur.Intersect(next)).OrderBy(o => o);
+
+            DateTime[] events =
+            {
+                DateTime.Today.AddDays(-2),
+                DateTime.Today.AddDays(1),
+                DateTime.Today.AddDays(3),
+                DateTime.Today.AddDays(7),
+                DateTime.Today.AddDays(10),
+                DateTime.Today.AddDays(-5),
+                DateTime.Today.AddDays(5)
+            };
+
+            var nextWeekEvents = events.Where(e => e >= DateTime.Today && e <= DateTime.Today.AddDays(7))
+            .OrderBy(e => e);
+           
                         
         }
 
