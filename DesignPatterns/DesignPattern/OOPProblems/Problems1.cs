@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
 namespace DesignPattern.OOPProblems
@@ -338,8 +339,35 @@ namespace DesignPattern.OOPProblems
             int[] numbers3 = { 12, 23, 34, 45, 56, 67, 78, 89, 91, 100, 111, 123, 456, 789 };
 
             var res9 = numbers.Where(SumOfDigits2).OrderBy(p => p);
-            Console.WriteLine($"{string.Join(",",res9)}");
-            
+            Console.WriteLine($"{string.Join(",", res9)}");
+
+            string[] sentences =
+            {
+                "The quick brown fox",
+                "jumps over the lazy dog",
+                "Hello world from C#",
+                "LINQ is powerful tool"
+            };
+
+            var commonLetters = sentences
+            .Select(s => s.ToLower().Where(char.IsLetter).Distinct())
+            .Aggregate((cur, next) => cur.Intersect(next)).OrderBy(p => p);
+
+            int[] nums = { 1, 2, 3, 4, 5 };
+            int sum = nums.Aggregate((cur, next) => cur + next);
+            int pro = nums.Aggregate((cur, next) => cur * next);
+            int sum2 = nums.Aggregate(10, (cur, next) => cur + next);
+
+            string[] wordss = { "Hello", "World", "LINQ" };
+            string result = wordss.Aggregate((cur, next) => cur + " " + next);
+
+            int max = nums.Aggregate((cur, next) => cur > next ? cur : next);
+            string[] words2 = { "I", "Love", "C#" };
+            var res11 = words2.Aggregate((cur, next) => cur + " " + next);
+            int n = 5;
+            var num12 = Enumerable.Range(1, 5);
+            var factorial = num12.Aggregate((cur, next) => cur * next);
+                        
                         
         }
 
