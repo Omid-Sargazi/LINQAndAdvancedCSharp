@@ -319,7 +319,22 @@ namespace DesignPattern.OOPProblems
             int[] numbers2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
             var res7 = numbers2.Where(n => n % 3 == 0 || n % 5 == 0).OrderBy(n => n);
-            
+
+            var products2 = new[]
+            {
+                new { Name = "Laptop", Category = "Electronics", Price = 1000, Rating = 4.5 },
+                new { Name = "Mouse", Category = "Electronics", Price = 50, Rating = 4.2 },
+                new { Name = "Keyboard", Category = "Electronics", Price = 120, Rating = 4.7 },
+                new { Name = "Shirt", Category = "Clothing", Price = 30, Rating = 4.0 },
+                new { Name = "Pants", Category = "Clothing", Price = 45, Rating = 4.3 },
+                new { Name = "Shoes", Category = "Clothing", Price = 80, Rating = 4.8 },
+                new { Name = "Phone", Category = "Electronics", Price = 900, Rating = 4.6 }
+            };
+            var res8 = products2.GroupBy(p => p.Category).
+            Select(g => new { Name = g.Key, HighRating = g.OrderByDescending(p => p.Rating).FirstOrDefault() }).OrderBy(p => p.Name);
+
+            Console.WriteLine($"{string.Join(",",res8)}");
+                        
         }
 
         public static bool SumOfDigits(int num)
