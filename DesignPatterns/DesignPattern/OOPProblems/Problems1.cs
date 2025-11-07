@@ -313,7 +313,13 @@ namespace DesignPattern.OOPProblems
             }
 
             string[] words = { "spoon", "hello", "wolf", "fed", "cba", "onion", "red", "abcd" };
-            var res4 = words.Where(IsReverseAlphabetical).OrderByDescending(s => s); 
+            var res4 = words.Where(IsReverseAlphabetical).OrderByDescending(s => s);
+
+
+            int[] numbers2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+
+            var res7 = numbers2.Where(n => n % 3 == 0 || n % 5 == 0).OrderBy(n => n);
+            
         }
 
         public static bool SumOfDigits(int num)
@@ -330,7 +336,7 @@ namespace DesignPattern.OOPProblems
             }
             return false;
         }
-        
+
         private static bool IsReverseAlphabetical(string s)
         {
             if (string.IsNullOrEmpty(s)) return false;
@@ -345,6 +351,8 @@ namespace DesignPattern.OOPProblems
 
             return false;
         }
+        
+        
     }
 
 }
