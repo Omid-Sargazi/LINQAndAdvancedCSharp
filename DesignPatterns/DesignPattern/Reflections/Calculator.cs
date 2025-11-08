@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime;
 
 namespace DesignPattern.Reflections
 {
@@ -146,4 +147,64 @@ namespace DesignPattern.Reflections
             }
         }
     }
+
+    public enum Discount
+    {
+        Season,
+        Percentage,
+        Fixed,
+    }
+
+    public interface IDiscount
+    {
+        void ApplyDiscount(decimal amount);
+    }
+
+    public class SeasonalDiscount : IDiscount
+    {
+        public void ApplyDiscount(decimal amount)
+        {
+            Console.WriteLine($"Season Discount:{amount - amount * .9m}");
+        }
+    }
+
+    public class FixedAmountDiscount : IDiscount
+    {
+        public void ApplyDiscount(decimal amount)
+        {
+            Console.WriteLine($"Season Discount:{amount - amount * .8m}");
+
+        }
+    }
+
+    public class PercentageDiscount : IDiscount
+    {
+        public void ApplyDiscount(decimal amount)
+        {
+            Console.WriteLine($"Season Discount:{amount - amount * .7m}");
+
+        }
+    }
+
+    public class SystemDiscount
+    {
+        private decimal Amount;
+        private List<IDiscount> _discounts = new List<IDiscount>();
+
+        public SystemDiscount(decimal amount)
+        {
+            Amount = amount;
+        }
+
+       public  void Execute()
+         {
+            foreach(var discount in _discounts)
+            {
+                discount.ApplyDiscount(Amount);
+            }
+        }
+
+
+    }
+
 }
