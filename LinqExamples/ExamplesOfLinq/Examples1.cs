@@ -75,6 +75,30 @@ namespace LinqExamples.ExamplesOfLinq
             var groupedStudents = students.Select(s => new { Level = s.Score < 60 ? "Weak" : s.Score > 60 && s.Score < 80 ? "Average" : "Strong", Name = s.Name, Score = s.Score })
             .GroupBy(s => s.Level).Select(g => new { g.Key, Name = g.Select(s => s.Name), Score = g.Select(s => s.Score) }).ToList();
 
+            var salaryBands = employees2.GroupBy(e => e.Salary switch
+            {
+                < 55000 => "Low",
+                >= 55000 and <= 75000 => "Average",
+                > 75000 => "high",
+            }).Select(g => new { Brand = g.Key, Count = g.Count(), Employee = g }).OrderBy(x => x.Brand);
+
+            var departmentEquity = employees2.GroupBy(e => e.Department)
+            .Select(g => new
+            {
+                Dep = g.Key,
+                Min = g.Min(e => e.Salary),
+                Max = g.Max(e => e.Salary),
+                SalaryGap = g.Max(g => g.Salary) - g.Min(g => g.Salary),
+                EmployeeCount = g.Count(),
+                IsBalanced = (g.Max(g => g.Salary) - g.Min(g => g.Salary)) <= 15000,
+            }).OrderBy(d => d.Dep);
+
+            
+
+
+
+
+
 
 
         }
