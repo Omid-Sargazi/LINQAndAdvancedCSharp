@@ -1,0 +1,1 @@
+SELECT CategoryName,AVG(UnitPrice) as AvePrice FROM Products  as p JOIN Categories as c on p.CategoryID = c.CategoryID GROUP BY CategoryName HAVING AVG(UnitPrice)>28
