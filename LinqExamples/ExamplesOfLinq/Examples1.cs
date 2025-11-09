@@ -131,6 +131,15 @@ namespace LinqExamples.ExamplesOfLinq
                 new EmployeeProject { EmployeeId = 6, ProjectId = 2, Role = "Developer" }
             };
 
+             var employees3 = new List<Employee>
+            {
+                new Employee { Id = 1, Name = "علی", Department = "فروش", Salary = 50000 },
+                new Employee { Id = 2, Name = "رضا", Department = "توسعه", Salary = 70000 },
+                new Employee { Id = 3, Name = "سارا", Department = "فروش", Salary = 55000 },
+                new Employee { Id = 4, Name = "نازنین", Department = "توسعه", Salary = 80000 },
+                new Employee { Id = 5, Name = "محمد", Department = "پشتیبانی", Salary = 45000 }
+            };
+
             // مشکل اصلی اینجا بود - پرانتز و کاما رو درست کردم
             var res1 = employeeProjects.Join(projects,
                 e => e.ProjectId,
@@ -185,12 +194,21 @@ namespace LinqExamples.ExamplesOfLinq
             .Join(students2,
                 g => g.Key,
                 s => s.Id,
-                (g, s) => new { 
-                    StudentName = s.Name, 
-                    CourseName = g.Select(x => x.CourseName), 
-                    Grade = g.Select(x => x.Grade) 
+                (g, s) => new
+                {
+                    StudentName = s.Name,
+                    CourseName = g.Select(x => x.CourseName),
+                    Grade = g.Select(x => x.Grade)
                 }
             );
+
+            var res3 = employeeProjects.Join(employees3,
+            ep => ep.EmployeeId,
+
+        e => e.Id,
+
+(ep, e) => new { EmpName = e.Name, Role = ep.Role }
+            ).ToList();
         }
     }
 
