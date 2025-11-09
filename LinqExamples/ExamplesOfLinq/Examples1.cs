@@ -14,10 +14,10 @@ namespace LinqExamples.ExamplesOfLinq
         };
 
 
-           ExamplesOfLinq.EmployeeWithPage(employees, 2, 1);
+            ExamplesOfLinq.EmployeeWithPage(employees, 2, 1);
         }
 
-        private static void EmployeeWithPage(List<Employee> employees,int pageNumber, int pageSize)
+        private static void EmployeeWithPage(List<Employee> employees, int pageNumber, int pageSize)
         {
 
             var ordered = employees.OrderBy(e => e.Department)
@@ -56,17 +56,35 @@ namespace LinqExamples.ExamplesOfLinq
             .GroupBy(e => e.SalaryLevel).Select(g => new { Level = g.Key, Count = g.Count(), Employee = g.Select(e => e.Name) }).ToList();
 
             // Console.WriteLine($"{string.Join(",", levelForEachEmployee)}");
-            foreach(var group in levelForEachEmployee)
+            foreach (var group in levelForEachEmployee)
             {
                 Console.WriteLine($"Level:{group.Level},Count:{group.Count}");
                 Console.WriteLine($"Employees:{string.Join(",", group.Employee)}");
-                 Console.WriteLine("----------------------------");
+                Console.WriteLine("----------------------------");
             }
+
+            var students = new List<Student>
+            {
+                new Student { Name = "Ali", Score = 45 },
+                new Student { Name = "Sara", Score = 90 },
+                new Student { Name = "Reza", Score = 75 },
+                new Student { Name = "Neda", Score = 82 },
+                new Student { Name = "Hamed", Score = 60 }
+            };
+
+            var groupedStudents = students.Select(s => new { Level = s.Score < 60 ? "Weak" : s.Score > 60 && s.Score < 80 ? "Average" : "Strong", Name = s.Name, Score = s.Score })
+            .GroupBy(s => s.Level).Select(g => new { g.Key, Name = g.Select(s => s.Name), Score = g.Select(s => s.Score) }).ToList();
 
 
 
         }
-        
+
+    }
+
+    public class Student
+    {
+        public string Name { get; set; }
+        public int Score { get; set; }
     }
 
     public class Employee
