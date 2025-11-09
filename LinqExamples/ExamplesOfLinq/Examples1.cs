@@ -213,7 +213,17 @@ namespace LinqExamples.ExamplesOfLinq
             var teamsByProjects = projects.Join(employeeProjects,
             p => p.Id, ep => ep.ProjectId, (p, ep) => new { p.Id, ProjectName = p.Name, ep.EmployeeId, ep.Role })
             .Join(employees3, pe => pe.EmployeeId, e => e.Id, (pe, e) => new { pe.Id, pe.ProjectName, EmpName = e.Name, pe.Role })
-            .GroupBy(x => new { x.Id, x.ProjectName }).Select(g => new { ProjectId = g.Key.Id, ProjectName = g.Key.ProjectName, members = g.Select(e => new { e.EmpName, e.Role }).ToList() }).ToList();
+            .GroupBy(x => new { x.Id, x.ProjectName }).
+            Select(g => new
+            {
+                ProjectId = g.Key.Id,
+                ProjectName = g.Key.ProjectName,
+                members =
+             g.Select(e => new { e.EmpName, e.Role }).ToList()
+            }).ToList();
+             
+
+             
 
         }
     }
