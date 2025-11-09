@@ -132,6 +132,19 @@ namespace LinqExamples.ExamplesOfLinq
             }).GroupBy(e => e.EmployeeId).Select(g => new { g.Key, Projects = g.Select(x => x.ProjectId).ToList() }).ToList();
 
 
+            var projectTeams = projects
+            .Join(employeeProjects, p => p.Id, emp => emp.ProjectId, (p, emp) => new { Project = p, EmployeeProject = emp })
+            .Join(employees, combine => combine.EmployeeProject.EmployeeId, e => e.Id, (combine, e) => new
+            {
+                ProjectName = combine.Project.Name,
+                EmployeeName = e.Name,
+                Role = combine.EmployeeProject.Role,
+                Department = combine.Project.Department
+            }).GroupBy(x => x.ProjectName).Select(g => new
+            {
+                ProjectName = g.Key,
+                TeamMembers = g.Select(m => $"{m.EmployeeName}({m.Role})").ToList()
+            }).OrderBy(x => x.ProjectName);
             
         }
     }
