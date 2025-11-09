@@ -57,6 +57,7 @@
 // client.Run(40);
 
 using LinqExamples.DelegateProblems;
+using LinqExamples.ExamplesOfLinq;
 using LinqExamples.Problem1;
 using LinqExamples.Problems;
 using LinqExamples.ReadAsyncParalel;
@@ -90,4 +91,5 @@ using LinqExamples.ReadAsyncParalel;
 // admin.HandleRequest(req5);
 
 
-LinqProblem1.Run();
+// LinqProblem1.Run();
+ExamplesOfLinq.Execute();

@@ -13,10 +13,13 @@ namespace LinqExamples.ExamplesOfLinq
             new Employee { Id = 5, Name = "محمد", Department = "پشتیبانی", Salary = 45000 }
         };
 
+
+           ExamplesOfLinq.EmployeeWithPage(employees, 2, 1);
         }
 
         private static void EmployeeWithPage(List<Employee> employees,int pageNumber, int pageSize)
         {
+
             var ordered = employees.OrderBy(e => e.Department)
             .ThenByDescending(e => e.Salary);
 
@@ -35,7 +38,32 @@ namespace LinqExamples.ExamplesOfLinq
                 Data = pageItems,
             };
 
-            
+
+            var employees2 = new List<Employee>
+            {
+                new Employee { Id = 1, Name = "Saeed", Department = "Sell", Salary = 50000 },
+                new Employee { Id = 2, Name = "Omid", Department = "Develop", Salary = 70000 },
+                new Employee { Id = 3, Name = "Sara", Department = "Sell", Salary = 55000 },
+                new Employee { Id = 4, Name = "Boby", Department = "Develop", Salary = 80000 },
+                new Employee { Id = 5, Name = "Sali", Department = "Backup", Salary = 45000 },
+                new Employee { Id = 6, Name = "Maki", Department = "Develop", Salary = 75000 }
+            };
+
+            Console.WriteLine($"****************");
+
+            var AllAverage = employees2.Average(e => e.Salary);
+            var levelForEachEmployee = employees2.Select(e => new { SalaryLevel = e.Salary < AllAverage ? "Below" : e.Salary > AllAverage ? "Above" : "Average", Name = e.Name, Salary = e.Salary })
+            .GroupBy(e => e.SalaryLevel).Select(g => new { Level = g.Key, Count = g.Count(), Employee = g.Select(e => e.Name) }).ToList();
+
+            // Console.WriteLine($"{string.Join(",", levelForEachEmployee)}");
+            foreach(var group in levelForEachEmployee)
+            {
+                Console.WriteLine($"Level:{group.Level},Count:{group.Count}");
+                Console.WriteLine($"Employees:{string.Join(",", group.Employee)}");
+                 Console.WriteLine("----------------------------");
+            }
+
+
 
         }
         
