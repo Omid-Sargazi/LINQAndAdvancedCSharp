@@ -81,6 +81,56 @@ namespace LinqExamples.ExamplesOfLinq
             .Select(g => new { StudentName = g.Key, Courses = g.Select(c => new { c.CourseName, c.Grade }).ToList() })
             .ToList();
 
+            var projects = new List<Project>
+            {
+                new Project { Id = 1, Name = "سیستم فروش", Department = "فروش", Budget = 100000, LeadEmployeeId = 1 },
+                new Project { Id = 2, Name = "اپ موبایل", Department = "توسعه", Budget = 200000, LeadEmployeeId = 4 },
+                new Project { Id = 3, Name = "پشتیبانی مشتریان", Department = "پشتیبانی", Budget = 50000, LeadEmployeeId = 5 }
+            };
+
+            var employeeProjects = new List<EmployeeProject>
+            {
+                new EmployeeProject { EmployeeId = 1, ProjectId = 1, Role = "Lead" },
+                new EmployeeProject { EmployeeId = 2, ProjectId = 2, Role = "Developer" },
+                new EmployeeProject { EmployeeId = 3, ProjectId = 1, Role = "Tester" },
+                new EmployeeProject { EmployeeId = 1, ProjectId = 2, Role = "Lead" },
+                new EmployeeProject { EmployeeId = 2, ProjectId = 3, Role = "Lead" },
+                new EmployeeProject { EmployeeId = 6, ProjectId = 2, Role = "Developer" }
+            };
+
+            var employees = new List<Employee>
+            {
+                new Employee { Id = 1, Name = "علی", Department = "فروش", Salary = 50000 },
+                new Employee { Id = 2, Name = "رضا", Department = "توسعه", Salary = 70000 },
+                new Employee { Id = 3, Name = "سارا", Department = "فروش", Salary = 55000 },
+                new Employee { Id = 4, Name = "نازنین", Department = "توسعه", Salary = 80000 },
+                new Employee { Id = 5, Name = "محمد", Department = "پشتیبانی", Salary = 45000 }
+            };
+
+            var employeyWithProjects = employees.Join(employeeProjects, e => e.Id, em => em.EmployeeId, (e, em) => new
+            {
+                Employee = e,
+                EmployeeProject = em
+            }).Join(projects, combine => combine.EmployeeProject.ProjectId, p => p.Id, (combine, p) => new
+            {
+                EmployeeId = combine.Employee.Id,
+                EmployeeName = combine.Employee.Name,
+                ProjectName = p.Name,
+                Role = combine.EmployeeProject.Role,
+                Department = p.Department
+            }).GroupBy(x => new { x.EmployeeId, x.EmployeeName }).Select(g => new
+            {
+                EmployeeName = g.Key.EmployeeName,
+                projects = g.Select(x => x.ProjectName)
+            });
+
+            var projectsRoles = projects.Join(employeeProjects, p => p.Id, e => e.ProjectId, (p, e) => new
+            {
+                p.Name,
+                e.EmployeeId,
+                e.ProjectId
+            }).GroupBy(e => e.EmployeeId).Select(g => new { g.Key, Projects = g.Select(x => x.ProjectId).ToList() }).ToList();
+
 
             
         }
@@ -109,6 +159,6 @@ namespace LinqExamples.ExamplesOfLinq
     }
 
     
-
+    
 
 }
