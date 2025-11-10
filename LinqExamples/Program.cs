@@ -60,6 +60,7 @@ using LinqExamples.DelegateProblems;
 using LinqExamples.ExamplesOfLinq;
 using LinqExamples.Problem1;
 using LinqExamples.Problems;
+using LinqExamples.Problems4;
 using LinqExamples.ReadAsyncParalel;
 
 // ClientDelegate1.Run();
@@ -92,4 +93,6 @@ using LinqExamples.ReadAsyncParalel;
 
 
 // LinqProblem1.Run();
-ExamplesOfLinq.Execute();
+// ExamplesOfLinq.Execute();
+Console.WriteLine($"Hello Linq");
+LinqOfExamples.Execute();

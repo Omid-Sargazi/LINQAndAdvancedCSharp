@@ -106,8 +106,17 @@ namespace LinqExamples.Problems4
             new Prescription { Id = 5, AppointmentId = 5, MedicineName = "Digoxin", Dosage = "0.25mg", DurationDays = 90, MedicineCost = 250000 },
             new Prescription { Id = 6, AppointmentId = 7, MedicineName = "Alprazolam", Dosage = "0.5mg", DurationDays = 30, MedicineCost = 180000 }
         };
-        
 
+
+            var doctorPerformance = doctors.Select(doctor => new
+            {
+                Doctor = doctor.Name,
+                Specialization = doctor.Specialization,
+                CompletedAppointments = appointments.Count(a => a.DoctorId == doctor.Id && a.Status == "Completed"),
+                ConsultationIncome = appointments.Where(a => a.DoctorId == doctor.Id && a.Status == "Completed").Sum(a => a.FeePaid),
+                MedicineIncome = appointments.Where(a => a.DoctorId == doctor.Id && a.Status == "Completed").Join(prescriptions, a => a.Id, p => p.AppointmentId, (a, p) => p.MedicineCost).Sum(),
+                AverageTreatmentCost = appointments.Where(a => a.DoctorId == doctor.Id && a.Status == "Completed").Select(a => a.FeePaid + prescriptions.Where(p => p.AppointmentId == a.Id).Sum(p => p.MedicineCost)).DefaultIfEmpty(0).Average()
+            }).Where(d => d.CompletedAppointments > 0).OrderByDescending(d => d.ConsultationIncome + d.MedicineIncome);
 
 
         }
