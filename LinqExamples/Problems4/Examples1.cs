@@ -118,6 +118,14 @@ namespace LinqExamples.Problems4
                 AverageTreatmentCost = appointments.Where(a => a.DoctorId == doctor.Id && a.Status == "Completed").Select(a => a.FeePaid + prescriptions.Where(p => p.AppointmentId == a.Id).Sum(p => p.MedicineCost)).DefaultIfEmpty(0).Average()
             }).Where(d => d.CompletedAppointments > 0).OrderByDescending(d => d.ConsultationIncome + d.MedicineIncome);
 
+            var patientAnalysis = patients.Select(patient => new
+            {
+                Patient = patient.Name,
+                AgeGroup = patient.Age < 30 ? "Young" : patient.Age <= 50 ? "Old" : "eldest",
+                TotalAppointments = appointments.Count(a => a.PatientId == patient.Id),
+                TotalCost = appointments.Where(a => a.PatientId == patient.Id && a.Status == "Completed").Sum(a => a.FeePaid + prescriptions.Where(p => p.AppointmentId == a.Id).Sum(p => p.MedicineCost))
+            }).OrderByDescending(p => p.TotalCost);
+
 
         }
 
