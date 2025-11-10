@@ -126,6 +126,19 @@ namespace LinqExamples.Problems4
                 TotalCost = appointments.Where(a => a.PatientId == patient.Id && a.Status == "Completed").Sum(a => a.FeePaid + prescriptions.Where(p => p.AppointmentId == a.Id).Sum(p => p.MedicineCost))
             }).OrderByDescending(p => p.TotalCost);
 
+            var medicinePopular = prescriptions.GroupBy(p => p.MedicineName).Select(g => new
+            {
+                MedicineName = g.Key,
+                PrescriptionCount = g.Count(),
+                TotalPatients = g.Select(p => p.AppointmentId).Distinct().Count(),
+                TotalCost = g.Sum(p => p.MedicineCost),
+                AveDuration = g.Average(p => p.DurationDays),
+                PrescribingDoctors = g.Select(p => p.AppointmentId).Join(appointments,
+appointmentId => appointmentId, appointment => appointment.Id, (appointmentId, appointment) => appointment.DoctorId).Distinct()
+.Join(doctors, doctorId => doctorId, doctor => doctor.Id, (doctorId, doctor) => doctor.Name).Distinct().ToList()
+            }).OrderByDescending(m => m.PrescriptionCount).ThenByDescending(m => m.TotalCost);
+            
+
 
         }
 
