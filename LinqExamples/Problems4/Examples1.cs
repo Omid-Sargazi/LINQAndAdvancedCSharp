@@ -1,3 +1,6 @@
+using LinqExamples.Problem1;
+using LinqExamples.Problems3;
+
 namespace LinqExamples.Problems4
 {
     public class LinqOfExamples
@@ -58,6 +61,52 @@ namespace LinqExamples.Problems4
 
             var highSellingOrLowStock = highSellingProductIds.Union(lowStockProductIds).Join(products, id => id, p => p.Id, (id, p) => p.Name).Distinct();
 
+            var highSellingAndLowStock = highSellingProductIds.Intersect(lowStockProductIds).Join(products, id => id, p => p.Id, (id, p) => new
+            {
+                p.Name,
+                p.StockQuantity,
+                TotalSold = sales.Where(s => s.ProductId == id).Sum(s => s.Quantity)
+            });
+
+
+            var patients = new List<Patient>
+{
+    new Patient { Id = 1, Name = "فاطمه احمدی", Age = 35, Gender = "Female", BloodType = "A+", RegistrationDate = new DateTime(2023, 2, 10) },
+    new Patient { Id = 2, Name = "علی محمدی", Age = 28, Gender = "Male", BloodType = "O+", RegistrationDate = new DateTime(2023, 5, 15) },
+    new Patient { Id = 3, Name = "سارا کریمی", Age = 42, Gender = "Female", BloodType = "B+", RegistrationDate = new DateTime(2022, 11, 20) },
+    new Patient { Id = 4, Name = "رضا حسینی", Age = 65, Gender = "Male", BloodType = "AB+", RegistrationDate = new DateTime(2024, 1, 5) },
+    new Patient { Id = 5, Name = "نازنین جعفری", Age = 19, Gender = "Female", BloodType = "A-", RegistrationDate = new DateTime(2023, 8, 30) }
+};
+
+        var doctors = new List<Doctor>
+        {
+            new Doctor { Id = 1, Name = "دکتر شریفی", Specialization = "قلب", ConsultationFee = 500000 },
+            new Doctor { Id = 2, Name = "دکتر امیری", Specialization = "اعصاب", ConsultationFee = 450000 },
+            new Doctor { Id = 3, Name = "دکتر محمودی", Specialization = "گوارش", ConsultationFee = 400000 },
+            new Doctor { Id = 4, Name = "دکتر علیزاده", Specialization = "قلب", ConsultationFee = 550000 }
+        };
+
+        var appointments = new List<Appointment>
+        {
+            new Appointment { Id = 1, PatientId = 1, DoctorId = 1, AppointmentDate = new DateTime(2024, 1, 10), Status = "Completed", Diagnosis = "فشار خون", FeePaid = 500000 },
+            new Appointment { Id = 2, PatientId = 1, DoctorId = 1, AppointmentDate = new DateTime(2024, 1, 25), Status = "Scheduled", Diagnosis = "", FeePaid = 0 },
+            new Appointment { Id = 3, PatientId = 2, DoctorId = 2, AppointmentDate = new DateTime(2024, 1, 12), Status = "Completed", Diagnosis = "میگرن", FeePaid = 450000 },
+            new Appointment { Id = 4, PatientId = 3, DoctorId = 1, AppointmentDate = new DateTime(2024, 1, 15), Status = "Completed", Diagnosis = "آریتمی", FeePaid = 500000 },
+            new Appointment { Id = 5, PatientId = 4, DoctorId = 4, AppointmentDate = new DateTime(2024, 1, 18), Status = "Completed", Diagnosis = "نارسایی قلبی", FeePaid = 550000 },
+            new Appointment { Id = 6, PatientId = 5, DoctorId = 3, AppointmentDate = new DateTime(2024, 1, 20), Status = "Cancelled", Diagnosis = "", FeePaid = 0 },
+            new Appointment { Id = 7, PatientId = 2, DoctorId = 2, AppointmentDate = new DateTime(2024, 1, 28), Status = "Completed", Diagnosis = "استرس", FeePaid = 450000 }
+        };
+
+            var prescriptions = new List<Prescription>
+        {
+            new Prescription { Id = 1, AppointmentId = 1, MedicineName = "Losartan", Dosage = "50mg", DurationDays = 30, MedicineCost = 200000 },
+            new Prescription { Id = 2, AppointmentId = 1, MedicineName = "Aspirin", Dosage = "80mg", DurationDays = 90, MedicineCost = 50000 },
+            new Prescription { Id = 3, AppointmentId = 3, MedicineName = "Sumatriptan", Dosage = "50mg", DurationDays = 15, MedicineCost = 300000 },
+            new Prescription { Id = 4, AppointmentId = 4, MedicineName = "Metoprolol", Dosage = "25mg", DurationDays = 60, MedicineCost = 150000 },
+            new Prescription { Id = 5, AppointmentId = 5, MedicineName = "Digoxin", Dosage = "0.25mg", DurationDays = 90, MedicineCost = 250000 },
+            new Prescription { Id = 6, AppointmentId = 7, MedicineName = "Alprazolam", Dosage = "0.5mg", DurationDays = 30, MedicineCost = 180000 }
+        };
+        
 
 
 
@@ -83,5 +132,47 @@ namespace LinqExamples.Problems4
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
     }
+
+
+    public class Patient
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; } // "Male", "Female"
+        public string BloodType { get; set; }
+        public DateTime RegistrationDate { get; set; }
+    }
+
+    public class Doctor
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Specialization { get; set; }
+        public decimal ConsultationFee { get; set; }
+    }
+
+
+    public class Appointment
+    {
+        public int Id { get; set; }
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
+        public DateTime AppointmentDate { get; set; }
+        public string Status { get; set; } // "Scheduled", "Completed", "Cancelled", "NoShow"
+        public string Diagnosis { get; set; }
+        public decimal FeePaid { get; set; }
+    }
+    public class Prescription
+    {
+        public int Id { get; set; }
+        public int AppointmentId { get; set; }
+        public string MedicineName { get; set; }
+        public string Dosage { get; set; }
+        public int DurationDays { get; set; }
+        public decimal MedicineCost { get; set; }
+    }
+
+
 
 }
