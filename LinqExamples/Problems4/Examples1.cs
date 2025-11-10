@@ -25,11 +25,22 @@ namespace LinqExamples.Problems4
             };
 
 
-            var StockLessThanMinimumStock = products.Where(p => p.StockQuantity < p.MinimumStockLevel)
-            .Select(p => new { Name = p.Name, StockQty = p.StockQuantity, MinQty = p.MinimumStockLevel, Shortage = p.MinimumStockLevel - p.StockQuantity });
+            // var StockLessThanMinimumStock = products.Where(p => p.StockQuantity < p.MinimumStockLevel)
+            // .Select(p => new { Name = p.Name, StockQty = p.StockQuantity, MinQty = p.MinimumStockLevel, Shortage = p.MinimumStockLevel - p.StockQuantity });
 
-            var highSellingProducts = sales.GroupBy(s => s.ProductId).Where(g => g.Sum(s => s.Quantity) > 5).Select(p => p.Key);
-            var lowStockProducts = products.Where(p => p.StockQuantity < 15).Select(p => p.Id);
+            // var highSellingProducts = sales.GroupBy(s => s.ProductId).Where(g => g.Sum(s => s.Quantity) > 5).Select(p => p.Key);
+            // var lowStockProducts = products.Where(p => p.StockQuantity < 15).Select(p => p.Id);
+
+            // var needReorder = products.Where(p => p.StockQuantity < p.MinimumStockLevel).Select(p => new
+            // {
+            //     p.Name,
+            //     p.StockQuantity,
+            //     p.MinimumStockLevel,
+            //     Shortage = p.MinimumStockLevel - p.StockQuantity
+            // });
+            // // اتحاد: محصولاتی که یا پرفروش هستند یا موجودی کم دارند
+            // var highSellingOrLowStock = highSellingProducts.Union(lowStockProducts).Join(products,id=>id,p=>p.Id,(id,p)=>p.Name);
+
 
             var needReorder = products.Where(p => p.StockQuantity < p.MinimumStockLevel).Select(p => new
             {
@@ -38,9 +49,14 @@ namespace LinqExamples.Problems4
                 p.MinimumStockLevel,
                 Shortage = p.MinimumStockLevel - p.StockQuantity
             });
-            // اتحاد: محصولاتی که یا پرفروش هستند یا موجودی کم دارند
-            var highSellingOrLowStock = highSellingProducts.Union(lowStockProducts).Join(products,id=>id,p=>p.Id,(id,p)=>p.Name);
 
+            var highSellingProductIds = sales.GroupBy(s => s.ProductId)
+            .Where(g => g.Sum(s => s.Quantity) >= 5)
+            .Select(s => s.Key);
+
+            var lowStockProductIds = products.Where(p => p.StockQuantity < 20).Select(p => p.Id);
+
+            var highSellingOrLowStock = highSellingProductIds.Union(lowStockProductIds).Join(products, id => id, p => p.Id, (id, p) => p.Name).Distinct();
 
 
 
