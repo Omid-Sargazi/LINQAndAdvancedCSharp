@@ -26,7 +26,20 @@ namespace LinqExamples.Problems4
 
 
             var StockLessThanMinimumStock = products.Where(p => p.StockQuantity < p.MinimumStockLevel)
-            .Select(p => new { Name = p.Name, StockQty = p.StockQuantity, MinQty = p.MinimumStockLevel,Shortage=p.MinimumStockLevel-p.StockQuantity });
+            .Select(p => new { Name = p.Name, StockQty = p.StockQuantity, MinQty = p.MinimumStockLevel, Shortage = p.MinimumStockLevel - p.StockQuantity });
+
+            var highSellingProducts = sales.GroupBy(s => s.ProductId).Where(g => g.Sum(s => s.Quantity) > 5).Select(p => p.Key);
+            var lowStockProducts = products.Where(p => p.StockQuantity < 15).Select(p => p.Name);
+
+            var needReorder = products.Where(p => p.StockQuantity < p.MinimumStockLevel).Select(p => new
+            {
+                p.Name,
+                p.StockQuantity,
+                p.MinimumStockLevel,
+                Shortage = p.MinimumStockLevel - p.StockQuantity
+            });
+
+            
 
 
 
