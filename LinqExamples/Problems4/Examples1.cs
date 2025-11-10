@@ -29,7 +29,7 @@ namespace LinqExamples.Problems4
             .Select(p => new { Name = p.Name, StockQty = p.StockQuantity, MinQty = p.MinimumStockLevel, Shortage = p.MinimumStockLevel - p.StockQuantity });
 
             var highSellingProducts = sales.GroupBy(s => s.ProductId).Where(g => g.Sum(s => s.Quantity) > 5).Select(p => p.Key);
-            var lowStockProducts = products.Where(p => p.StockQuantity < 15).Select(p => p.Name);
+            var lowStockProducts = products.Where(p => p.StockQuantity < 15).Select(p => p.Id);
 
             var needReorder = products.Where(p => p.StockQuantity < p.MinimumStockLevel).Select(p => new
             {
@@ -38,8 +38,10 @@ namespace LinqExamples.Problems4
                 p.MinimumStockLevel,
                 Shortage = p.MinimumStockLevel - p.StockQuantity
             });
+            // اتحاد: محصولاتی که یا پرفروش هستند یا موجودی کم دارند
+            var highSellingOrLowStock = highSellingProducts.Union(lowStockProducts).Join(products,id=>id,p=>p.Id,(id,p)=>p.Name);
 
-            
+
 
 
 
