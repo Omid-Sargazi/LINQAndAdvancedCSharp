@@ -145,9 +145,34 @@ namespace LinqExamples.ExamplesOfLinq
                 ProjectName = g.Key,
                 TeamMembers = g.Select(m => $"{m.EmployeeName}({m.Role})").ToList()
             }).OrderBy(x => x.ProjectName);
-            
+
+
+            var tasks = new List<Task>
+            {
+                new Task { Id = 1, ProjectId = 1, Title = "طراحی دیتابیس", AssignedToId = 1, Status = "Done", EstimatedHours = 20, ActualHours = 18 },
+                new Task { Id = 2, ProjectId = 1, Title = "تست واحد", AssignedToId = 3, Status = "InProgress", EstimatedHours = 15, ActualHours = 10 },
+                new Task { Id = 3, ProjectId = 2, Title = "توسعه UI", AssignedToId = 2, Status = "Done", EstimatedHours = 40, ActualHours = 35 },
+                new Task { Id = 4, ProjectId = 2, Title = "تست یکپارچگی", AssignedToId = 6, Status = "ToDo", EstimatedHours = 25, ActualHours = 0 },
+                new Task { Id = 5, ProjectId = 2, Title = "بهینه‌سازی", AssignedToId = 4, Status = "InProgress", EstimatedHours = 30, ActualHours = 15 }
+            };
+
+
+
+
         }
     }
+    
+
+    public class Task
+{
+    public int Id { get; set; }
+    public int ProjectId { get; set; }
+    public string Title { get; set; }
+    public int AssignedToId { get; set; }
+    public string Status { get; set; } // "ToDo", "InProgress", "Done"
+    public int EstimatedHours { get; set; }
+    public int ActualHours { get; set; }
+}
 
 
 
