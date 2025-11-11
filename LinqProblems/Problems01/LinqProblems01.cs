@@ -24,7 +24,17 @@ namespace LinqProblems.Problems01
                 highSalary = g.Max(e=>e.Salary)
             });
 
-            Console.WriteLine($"{string.Join(",",res2.Select(e=>e.DepName))}");
+            Console.WriteLine($"{string.Join(",", res2.Select(e => e.DepName))}");
+
+            var departmentStatistics = employees.GroupBy(e => e.Department)
+            .Select(g => new
+            {
+                Department = g.Key,
+                AverageSalary = Math.Round(g.Average(e => e.Salary), 2),
+                MaxSalary = g.Max(e => e.Salary),
+                MinSalary = g.Min(e => e.Salary),
+                TotalSalary = g.Sum(e => e.Salary)
+            }).OrderByDescending(dep => dep.AverageSalary);
 
         }
     }
