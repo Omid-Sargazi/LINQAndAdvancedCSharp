@@ -49,11 +49,20 @@ namespace LinqProblems.Problems01
             .Select(g => new { RepeatName = g.Key, Name = g.Key, Dept = g.Select(e => e.Department), Salary = g.Select(e => e.Salary) });
 
             var duplicateEmployees2 = employeesWithDuplicates.GroupBy(e => e.Name).Where(g => g.Count() > 1).SelectMany(e=>e);
-            foreach(var item in duplicateEmployees2)
+            foreach (var item in duplicateEmployees2)
             {
                 Console.WriteLine($"{item.Department}+{item.Name}+{item.Name}+{item.Salary}");
-                
+
             }
+
+            var employeesByName3 = employeesWithDuplicates.GroupBy(e => e.Name)
+            .Where(g => g.Count() > 1)
+            .Select(g => new
+            {
+                Name = g.Key,
+                Employees = g.Select(e => $"Id:{e.Id}, Dept{e.Department},Salary:{e.Salary}"),
+                Count = g.Count(),
+            });
 
         }
     }
