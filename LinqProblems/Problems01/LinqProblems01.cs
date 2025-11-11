@@ -24,7 +24,7 @@ namespace LinqProblems.Problems01
                 highSalary = g.Max(e=>e.Salary)
             });
 
-            Console.WriteLine($"{string.Join(",", res2.Select(e => e.DepName))}");
+            // Console.WriteLine($"{string.Join(",", res2.Select(e => e.DepName))}");
 
             var departmentStatistics = employees.GroupBy(e => e.Department)
             .Select(g => new
@@ -35,6 +35,25 @@ namespace LinqProblems.Problems01
                 MinSalary = g.Min(e => e.Salary),
                 TotalSalary = g.Sum(e => e.Salary)
             }).OrderByDescending(dep => dep.AverageSalary);
+
+            var employeesWithDuplicates = new List<Employee>
+            {
+                new Employee { Id = 1, Name = "Omid", Department = "Sell", Salary = 50000 },
+                new Employee { Id = 2, Name = "Saeed", Department = "Dev", Salary = 70000 },
+                new Employee { Id = 3, Name = "Saeed", Department = "Marke", Salary = 60000 },
+                new Employee { Id = 4, Name = "Omid", Department = "dev", Salary = 75000 },
+                new Employee { Id = 5, Name = "Vahid", Department = "Backup", Salary = 48000 }
+            };
+
+            var duplicateEmployees = employeesWithDuplicates.GroupBy(e => e.Name)
+            .Select(g => new { RepeatName = g.Key, Name = g.Key, Dept = g.Select(e => e.Department), Salary = g.Select(e => e.Salary) });
+
+            var duplicateEmployees2 = employeesWithDuplicates.GroupBy(e => e.Name).Where(g => g.Count() > 1).SelectMany(e=>e);
+            foreach(var item in duplicateEmployees2)
+            {
+                Console.WriteLine($"{item.Department}+{item.Name}+{item.Name}+{item.Salary}");
+                
+            }
 
         }
     }
