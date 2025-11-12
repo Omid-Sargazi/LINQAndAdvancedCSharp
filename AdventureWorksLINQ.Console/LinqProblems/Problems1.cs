@@ -23,10 +23,21 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                             ListPrice = plph.ListPrice
                         };
             var res = query.AsNoTracking().ToList();
-            foreach(var item in res)
+            foreach (var item in res)
             {
                 System.Console.WriteLine($"{item.ProductName}+{item.ListPrice}");
             }
+
+            var query2 = from p in db.Products
+                         join plplh in db.ProductListPriceHistories
+                         on p.ProductId equals plplh.ProductId
+                         where plplh.EndDate == null
+                         select new
+                         {
+                             ProductName = p.Name,
+                             ListPrice = plplh.ListPrice
+                         };
+            
         }
     }
 }
