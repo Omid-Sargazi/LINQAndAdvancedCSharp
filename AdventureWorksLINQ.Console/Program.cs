@@ -3,6 +3,7 @@ using AdventureWorksLINQ.Console.EFCore;
 using AdventureWorksLINQ.Console.EFCore.EFCorePerformanceTuning;
 using AdventureWorksLINQ.Console.Generics;
 using AdventureWorksLINQ.Console.IqueryableProblem;
+using AdventureWorksLINQ.Console.LinqProblems;
 using AdventureWorksLINQ.Console.Product;
 using AdventureWorksLINQ.Console.QueryExample;
 using AdventureWorksLINQ.Console.QueryExamples;
@@ -74,14 +75,15 @@ public class Program
         var arr1 = new int[] { 1, 2, 3, 4};
         var arr2 = new int[] { 2,7,11,15};
         var arr3 = new int[] { 1, 1, 1, 1, 2, 2, 3, 3, 4,5 };
-        var arr4 = new int[] { 1,1, 2, 3,4,5 };
+        var arr4 = new int[] { 1, 1, 2, 3, 4, 5 };
 
         // LeetCode1.RemoveDuplicatesSortedArray(arr4);
         // Iqueryable1.MaximumProductSubarray(arr1);
 
         // Iqueryable1.Query1();
         // Iqueryable1.LeetCode1(arr1);
-        Problem6.Run();
+        // Problem6.Run();
+        LinqExamples2.Execute();
 
     }
 }
