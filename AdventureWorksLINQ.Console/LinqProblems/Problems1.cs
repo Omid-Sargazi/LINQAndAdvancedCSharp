@@ -38,6 +38,8 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                              ListPrice = plplh.ListPrice
                          };
             
+
+           
         }
     }
 }
