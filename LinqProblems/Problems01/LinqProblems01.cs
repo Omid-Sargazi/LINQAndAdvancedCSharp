@@ -5,13 +5,13 @@ namespace LinqProblems.Problems01
         public static void Execute()
         {
             var employees = new List<Employee>
-        {
-            new Employee { Id = 1, Name = "علی", Department = "فروش", Salary = 50000 },
-            new Employee { Id = 2, Name = "رضا", Department = "توسعه", Salary = 70000 },
-            new Employee { Id = 3, Name = "سارا", Department = "فروش", Salary = 55000 },
-            new Employee { Id = 4, Name = "نازنین", Department = "توسعه", Salary = 80000 },
-            new Employee { Id = 5, Name = "محمد", Department = "پشتیبانی", Salary = 45000 }
-        };
+            {
+                new Employee { Id = 1, Name = "علی", Department = "فروش", Salary = 50000 },
+                new Employee { Id = 2, Name = "رضا", Department = "توسعه", Salary = 70000 },
+                new Employee { Id = 3, Name = "سارا", Department = "فروش", Salary = 55000 },
+                new Employee { Id = 4, Name = "نازنین", Department = "توسعه", Salary = 80000 },
+                new Employee { Id = 5, Name = "محمد", Department = "پشتیبانی", Salary = 45000 }
+            };
             var average = employees.Average(e => e.Salary);
 
             var res1 = employees.Where(e => e.Salary > employees.Average(e => e.Salary)).Select(e => new { e.Name, e.Salary });
@@ -21,7 +21,7 @@ namespace LinqProblems.Problems01
                 DepName = g.Key,
                 NumsOfEmployee = g.Count(),
                 AveSalary = g.Average(e => e.Salary),
-                highSalary = g.Max(e=>e.Salary)
+                highSalary = g.Max(e => e.Salary)
             });
 
             // Console.WriteLine($"{string.Join(",", res2.Select(e => e.DepName))}");
@@ -48,7 +48,7 @@ namespace LinqProblems.Problems01
             var duplicateEmployees = employeesWithDuplicates.GroupBy(e => e.Name)
             .Select(g => new { RepeatName = g.Key, Name = g.Key, Dept = g.Select(e => e.Department), Salary = g.Select(e => e.Salary) });
 
-            var duplicateEmployees2 = employeesWithDuplicates.GroupBy(e => e.Name).Where(g => g.Count() > 1).SelectMany(e=>e);
+            var duplicateEmployees2 = employeesWithDuplicates.GroupBy(e => e.Name).Where(g => g.Count() > 1).SelectMany(e => e);
             foreach (var item in duplicateEmployees2)
             {
                 Console.WriteLine($"{item.Department}+{item.Name}+{item.Name}+{item.Salary}");
@@ -64,6 +64,49 @@ namespace LinqProblems.Problems01
                 Count = g.Count(),
             });
 
+            var result = GetPagedEmployees(employees, pageNumber: 1, pageSize: 2);
+
+// Display results
+            Console.WriteLine($"Page {result.PageNumber} of {result.TotalPages} (Total: {result.TotalCount} employees)");
+            foreach (var emp in result.Data)
+            {
+                Console.WriteLine($"- {emp.Name} - {emp.Department} - {emp.Salary}");
+            }
+
+
+        }
+        
+        public static PagedResult<Employee> GetPagedEmployees(List<Employee> employees,int pageNumber,int pageSize)
+        {
+            if (pageNumber < 1) pageNumber = 1;
+            if (pageSize < 1) pageSize = 1;
+
+            var sortedEmployees = employees
+            .OrderBy(emp => emp.Department)
+            .ThenByDescending(emp => emp.Salary)
+            .ToList();
+
+             int totalCount = sortedEmployees.Count;
+            int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            
+            // Ensure pageNumber is within valid range
+            pageNumber = Math.Min(pageNumber, totalPages);
+
+            // Apply pagination using Skip and Take
+            var pagedData = sortedEmployees
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+                
+            return new PagedResult<Employee>
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                TotalPages = totalPages,
+                Data = pagedData
+            };
+        
         }
     }
 
@@ -73,6 +116,15 @@ namespace LinqProblems.Problems01
         public string Name { get; set; }
         public string Department { get; set; }
         public decimal Salary { get; set; }
+    }
+
+    public class PagedResult<T>
+    {
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public int TotalCount { get; set; }
+        public int TotalPages { get; set; }
+        public IEnumerable<T> Data { get; set; }
     }
 
 }
