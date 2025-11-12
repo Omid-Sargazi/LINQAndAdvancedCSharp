@@ -215,6 +215,27 @@ namespace LinqProblems.Problems01
             }).ToList();
 
 
+            var projectDict = projects.ToDictionary(p => p.Id);
+
+            var projectsByEmployee2 = employeeProjects
+            .GroupBy(ep => ep.EmployeeId)
+            .Select(g =>
+            {
+                var emp = employees.FirstOrDefault(e => e.Id == g.Key);
+                return new
+                {
+                    EmployeeId = g.Key,
+                    EmployeeName = emp?.Name,
+                    Projects = g.Select(ep => new
+                    {
+                        ProjectId = ep.ProjectId,
+                        ProjectName = projectDict.TryGetValue(ep.ProjectId, out var p) ? p.Name : null,
+                        ep.Role,
+                    }).Where(x => x.ProjectName != null).ToList()
+                };
+            }).ToList();
+
+
         }
     }
 
