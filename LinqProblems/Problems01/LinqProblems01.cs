@@ -120,44 +120,44 @@ namespace LinqProblems.Problems01
 
         }
 
-        public class SalaryAnalysis
-        {
-            public static void AnalyzeSalaries(List<Employee> employees)
-            {
-                var salaryBand = employees
-                .GroupBy(e => e.Salary switch
-                {
-                    < 55000 => "Low",
-                    >= 55000 and <= 75000 => "Mid",
-                    >= 75000 => "High",
-                    _ => "Unknown"
-                }).Select(g => new { Band = g.Key.Count = g.Count(), Employees = g }).OrderBy(e => e.Band);
+        //     public class SalaryAnalysis
+        //     {
+        //         public static void AnalyzeSalaries(List<Employee> employees)
+        //         {
+        //             var salaryBand = employees
+        //             .GroupBy(e => e.Salary switch
+        //             {
+        //                 < 55000 => "Low",
+        //                 >= 55000 and <= 75000 => "Mid",
+        //                 >= 75000 => "High"
+        //             }).Select(g => new { Band = g.Key, Count = g.Count(), Employees = g }).OrderBy(e => e.Band);
 
-                var departmentEquity = employees
-                .GroupBy(e => e.Department)
-                .Select(g => new
-                {
-                    Department = g.Key,
-                    MinSalary = g.Min(e => e.Salary),
-                    MaxSalary = g.Max(e => e.Salary),
-                    SalaryGap = g.Max(e => e.Salary) - g.Min(e => e.Salary),
-                    EmployeeCount = g.Count(),
-                    IsBalanced = (g.Max(e => e.Salary) - g.Min(e => e.Salary)) <= 15000,
+        //             var departmentEquity = employees
+        //             .GroupBy(e => e.Department)
+        //             .Select(g => new
+        //             {
+        //                 Department = g.Key,
+        //                 MinSalary = g.Min(e => e.Salary),
+        //                 MaxSalary = g.Max(e => e.Salary),
+        //                 SalaryGap = g.Max(e => e.Salary) - g.Min(e => e.Salary),
+        //                 EmployeeCount = g.Count(),
+        //                 IsBalanced = (g.Max(e => e.Salary) - g.Min(e => e.Salary)) <= 15000,
 
-                }).OrderBy(dep => dep.Department);
+        //             }).OrderBy(dep => dep.Department);
 
-                var departmentRankings = employees
-                .GroupBy(emp => emp.Department)
-                .SelectMany(g => g.OrderByDescending(emp => emp.Salary).Select((emp, index) => new
-                {
-                    Department = g.Key,
-                    Employee = emp,
-                    Rank = index + 1
-                })).OrderBy(x => x.Department).ThenBy(x => x.Rank);
+        //             var departmentRankings = employees
+        //             .GroupBy(emp => emp.Department)
+        //             .SelectMany(g => g.OrderByDescending(emp => emp.Salary).Select((emp, index) => new
+        //             {
+        //                 Department = g.Key,
+        //                 Employee = emp,
+        //                 Rank = index + 1
+        //             })).OrderBy(x => x.Department).ThenBy(x => x.Rank);
 
 
-            }
-        }
+        //         }
+        //     }
+        // }
     }
 
     public class ProjectAnalysis
