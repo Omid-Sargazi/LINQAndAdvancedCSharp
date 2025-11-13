@@ -51,6 +51,23 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                              FullName = g.Key.LastName + "" + g.Key.FirstName,
                              OrderCount = g.Count()
                          };
+
+            var startDate2 = new DateTime(2013, 1, 1);
+            var endDate2 = new DateTime(2014, 1, 1);
+
+            var query4 = from p in db.Products
+                         join
+            sod in db.SalesOrderDetails on p.ProductId equals sod.ProductId
+                         join soh in db.SalesOrderHeaders on sod.SalesOrderId equals soh.SalesOrderId
+                         where soh.OrderDate >= startDate2 && soh.OrderDate <= endDate
+                         group sod by new { p.Name, p.ProductNumber } into g
+                         select new
+                         {
+                             Name = g.Key.Name,
+                             ProductNumber = g.Key.ProductNumber,
+                             TotalCount = g.Sum(s => s.OrderQty)
+                         };
+            var result = query4.OrderByDescending(s => s.TotalCount).ToList();
            
         }
     }
