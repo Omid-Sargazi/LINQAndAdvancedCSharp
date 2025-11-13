@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandardProblems", "Standar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqProblems", "LinqProblems\LinqProblems.csproj", "{D116EA74-5342-4AC8-8895-D4287F6F158B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadingProblems", "ThreadingProblems\ThreadingProblems.csproj", "{1F9FE5FF-9EE2-4713-B09F-6ABE379D5921}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -218,6 +220,10 @@ Global
 		{D116EA74-5342-4AC8-8895-D4287F6F158B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D116EA74-5342-4AC8-8895-D4287F6F158B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D116EA74-5342-4AC8-8895-D4287F6F158B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F9FE5FF-9EE2-4713-B09F-6ABE379D5921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F9FE5FF-9EE2-4713-B09F-6ABE379D5921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F9FE5FF-9EE2-4713-B09F-6ABE379D5921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F9FE5FF-9EE2-4713-B09F-6ABE379D5921}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}

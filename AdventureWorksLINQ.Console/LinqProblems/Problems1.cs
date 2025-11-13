@@ -37,8 +37,20 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                              ProductName = p.Name,
                              ListPrice = plplh.ListPrice
                          };
-            
 
+            var startDate = new DateTime(2014, 01, 01);
+            var endDate = new DateTime(2015, 01, 01);
+
+            var query3 = from p in db.People
+                         join soh in db.SalesOrderHeaders
+                         on p.BusinessEntityId equals soh.CustomerId
+                         where soh.OrderDate >= startDate && soh.OrderDate <= endDate
+                         group soh by new { p.LastName, p.FirstName } into g
+                         select new
+                         {
+                             FullName = g.Key.LastName + "" + g.Key.FirstName,
+                             OrderCount = g.Count()
+                         };
            
         }
     }
