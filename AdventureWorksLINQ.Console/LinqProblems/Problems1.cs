@@ -90,6 +90,19 @@ namespace AdventureWorksLINQ.Console.LinqProblems
 
                      };
             var res2 = await q1.AsNoTracking().Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var q11 = db.Products.Where(p => p.SellStartDate != null)
+            .OrderBy(p => p.ProductSubcategory.ProductCategory.Name)
+            .ThenBy(p => p.ProductSubcategory.Name)
+            .ThenBy(p => p.Name)
+            .Select(p => new
+            {
+                p.ProductId,
+                ProductName = p.Name,
+                SubcategoryName = p.ProductSubcategory != null ? p.ProductSubcategory.Name : null,
+                CategoryName = p.ProductSubcategory != null ? p.ProductSubcategory.ProductCategory.Name : null,
+            }).AsNoTracking().Skip((page-1)*pageSize).Take(pageSize).ToList();
+
            
         }
     }
