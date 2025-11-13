@@ -1,3 +1,5 @@
+using System.Runtime.Intrinsics.X86;
+using System.Threading.Tasks;
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +9,7 @@ namespace AdventureWorksLINQ.Console.LinqProblems
     {
         private static AdventureWorks2019Context db = new AdventureWorks2019Context();
 
-        public static void Execute()
+        public static async Task Execute()
         {
 
             System.Console.WriteLine("Adventure Works2019");
@@ -68,6 +70,26 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                              TotalCount = g.Sum(s => s.OrderQty)
                          };
             var result = query4.OrderByDescending(s => s.TotalCount).ToList();
+
+            var page = 1;     // صفحه مورد نظر
+            var pageSize = 50;
+            var q1 = from p in db.Products
+                     join sc in db.ProductSubcategories on
+            p.ProductSubcategoryId equals sc.ProductSubcategoryId into scg
+                     from sc in scg.DefaultIfEmpty()
+                     join pc in db.ProductCategories on sc.ProductCategoryId equals pc.ProductCategoryId into cg
+                     from pc in cg.DefaultIfEmpty()
+                     where p.SellStartDate != null
+                     orderby pc.Name, sc.Name, p.Name
+                     select new
+                     {
+                         p.ProductId,
+                         ProductName = p.Name,
+                         SubcategoryName = sc != null ? sc.Name : null,
+                         CategoryName = pc != null ? pc.Name : null
+
+                     };
+            var res2 = await q1.AsNoTracking().Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
            
         }
     }
