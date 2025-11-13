@@ -24,6 +24,12 @@
 -- SELECT p.ProductID,p.Name as ProductName, sc.Name as SubcategoryName, pc.Name as CategoryName FROM Production.Product as p JOIN Production.ProductSubcategory as sc ON p.ProductSubcategoryID = sc.ProductSubcategoryID JOIN Production.ProductCategory
 -- as pc on pc.ProductCategoryID = sc.ProductCategoryID
 
-SELECT p.ProductID,p.Name as ProductName,sc.Name as SubcategoryName,pc.Name as CategoryName FROM Production.Product as p LEFT JOIN Production.ProductSubcategory as sc on p.ProductSubcategoryID = sc.ProductSubcategoryID LEFT JOIN
-Production.ProductCategory as pc on pc.ProductCategoryID = sc.ProductCategoryID WHERE p.SellStartDate is NOT null ORDER BY pc.Name,sc.Name,p.Name
-OFFSET 0 ROWS FETCH NEXT 50 ROWs ONLY
+-- SELECT p.ProductID,p.Name as ProductName,sc.Name as SubcategoryName,pc.Name as CategoryName FROM Production.Product as p LEFT JOIN Production.ProductSubcategory as sc on p.ProductSubcategoryID = sc.ProductSubcategoryID LEFT JOIN
+-- Production.ProductCategory as pc on pc.ProductCategoryID = sc.ProductCategoryID WHERE p.SellStartDate is NOT null ORDER BY pc.Name,sc.Name,p.Name
+-- OFFSET 0 ROWS FETCH NEXT 50 ROWs ONLY
+
+
+WITH ActiveProduct as (
+    SELECT ProductID,ProductSubcategoryID from Production.Product WHERE SellStartDate is not null
+)
+SELECT * FROM Production.ProductCategory

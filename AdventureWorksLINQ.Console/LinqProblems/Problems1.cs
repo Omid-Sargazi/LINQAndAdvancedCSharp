@@ -1,5 +1,6 @@
 using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
+using AdventureWorksLINQ.Console.EFCore;
 using AdventureWorksLINQ.Console.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -101,7 +102,33 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                 ProductName = p.Name,
                 SubcategoryName = p.ProductSubcategory != null ? p.ProductSubcategory.Name : null,
                 CategoryName = p.ProductSubcategory != null ? p.ProductSubcategory.ProductCategory.Name : null,
-            }).AsNoTracking().Skip((page-1)*pageSize).Take(pageSize).ToList();
+            }).AsNoTracking().Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+
+            var q13 = from c in db.ProductCategories
+                      from sc in db.ProductSubcategories.DefaultIfEmpty()
+                      select new
+                      {
+                          Category = c.Name,
+                          SubCategory = sc != null ? sc.Name : null,
+                          ProductCount = sc.Products.Where(p => p.SellStartDate != null).Count()
+                      };
+
+            var q14 = from c in db.ProductCategories
+                      join sc in db.ProductSubcategories
+                      on c.ProductCategoryId equals sc.ProductSubcategoryId into scg
+                      from sc in scg.DefaultIfEmpty()
+                      join p in db.Products on sc.ProductSubcategoryId equals p.ProductSubcategoryId into pg
+                      from p in pg.DefaultIfEmpty()
+                      where p == null || p.SellStartDate != null
+                      group p by new { c.Name, SubCategory = sc != null ? sc.Name : null }
+                         into g
+                      select new
+                      {
+                          Category = g.Key.Name,
+                          Subcategory = g.Key.SubCategory,
+                          ProductCount = g.Count(x => x != null)
+                      };
 
            
         }
