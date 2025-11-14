@@ -30,14 +30,31 @@ public class Queries
             System.Console.WriteLine(order.Customer.Person.FirstName);
         }
 
-        var query20 = from d in db.SalesOrderDetails join h in db.SalesOrderHeaders on
-        d.SalesOrderId equals h.SalesOrderId join prod in db.Products on d.ProductId equals prod.ProductId where h.Status == 5
-                      group d by new { prod.ProductId, prod.Name } into g orderby g.Sum(x => x.LineTotal) descending select new
+        var query20 = from d in db.SalesOrderDetails
+                      join h in db.SalesOrderHeaders on
+        d.SalesOrderId equals h.SalesOrderId
+                      join prod in db.Products on d.ProductId equals prod.ProductId
+                      where h.Status == 5
+                      group d by new { prod.ProductId, prod.Name } into g
+                      orderby g.Sum(x => x.LineTotal) descending
+                      select new
                       {
                           ProductId = g.Key.ProductId,
                           ProductName = g.Key.Name,
                           TotalSale = g.Sum(x => x.LineTotal)
                       };
+
+        var employees = db.Employees.Where(e => e.HireDate >= DateOnly.FromDateTime(new DateTime(2010, 1, 1))).OrderByDescending(e => e.HireDate)
+        .Select(e => new
+        {
+            e.BusinessEntityId,
+            e.NationalIdnumber,
+            e.HireDate,
+            e.JobTitle,
+            e.MaritalStatus,
+            e.Gender,
+        });
+        
 
     }
     
