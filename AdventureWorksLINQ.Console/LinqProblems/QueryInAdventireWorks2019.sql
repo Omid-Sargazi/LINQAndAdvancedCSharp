@@ -29,7 +29,14 @@
 -- OFFSET 0 ROWS FETCH NEXT 50 ROWs ONLY
 
 
-WITH ActiveProduct as (
-    SELECT ProductID,ProductSubcategoryID from Production.Product WHERE SellStartDate is not null
+-- WITH ActiveProduct as (
+--     SELECT ProductID,ProductSubcategoryID from Production.Product WHERE SellStartDate is not null
+-- )
+-- SELECT * FROM Production.ProductCategory
+
+WITH CompletedOrder As(
+    SELECT SalesOrderID as x from Sales.SalesOrderHeader WHERE [Status]=5
 )
-SELECT * FROM Production.ProductCategory
+
+SELECT p.ProductID,p.Name,SUM(sod.LineTotal)as TotalSale FROM Sales.SalesOrderDetail sod JOIN CompletedOrder as co on sod.SalesOrderID = co.x JOIN Production.Product as p on p.ProductID = sod.ProductID
+GROUP BY p.ProductID,p.Name ORDER BY TotalSale DESC
