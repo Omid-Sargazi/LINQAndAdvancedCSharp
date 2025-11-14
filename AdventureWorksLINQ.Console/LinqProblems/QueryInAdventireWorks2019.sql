@@ -34,9 +34,20 @@
 -- )
 -- SELECT * FROM Production.ProductCategory
 
-WITH CompletedOrder As(
-    SELECT SalesOrderID as x from Sales.SalesOrderHeader WHERE [Status]=5
-)
+-- WITH CompletedOrder As(
+--     SELECT SalesOrderID as x from Sales.SalesOrderHeader WHERE [Status]=5
+-- )
 
-SELECT p.ProductID,p.Name,SUM(sod.LineTotal)as TotalSale FROM Sales.SalesOrderDetail sod JOIN CompletedOrder as co on sod.SalesOrderID = co.x JOIN Production.Product as p on p.ProductID = sod.ProductID
-GROUP BY p.ProductID,p.Name ORDER BY TotalSale DESC
+-- SELECT p.ProductID,p.Name,SUM(sod.LineTotal)as TotalSale FROM Sales.SalesOrderDetail sod JOIN CompletedOrder as co on sod.SalesOrderID = co.x JOIN Production.Product as p on p.ProductID = sod.ProductID
+-- GROUP BY p.ProductID,p.Name ORDER BY TotalSale DESC
+
+
+-- SELECT BusinessEntityID,NationalIDNumber,JobTitle,BirthDate,MaritalStatus FROM HumanResources.Employee WHERE HireDate>='2010-01-01' ORDER BY HireDate
+
+-- SELECT p.FirstName,p.LastName,pe.EmailAddress,pp.PhoneNumber FROM Person.Person as p JOIN Person.EmailAddress as pe ON p.BusinessEntityID = pe.BusinessEntityID JOIN Person.PersonPhone pp 
+-- on pp.BusinessEntityID = pe.BusinessEntityID WHERE pe.EmailAddress IS NOT NULL AND pp.PhoneNumber IS NOT null
+
+SELECT * FROM Sales.SalesOrderDetail
+
+-- SELECT * from Sales.SalesOrderHeader soh INNER JOIN Sales.SalesOrderDetail sod on soh.SalesOrderID = soh.SalesOrderID 
+-- INNER JOIN Production.Product as p on p.ProductID = sod.ProductID 
