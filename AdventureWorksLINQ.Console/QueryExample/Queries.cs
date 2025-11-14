@@ -30,11 +30,15 @@ public class Queries
             System.Console.WriteLine(order.Customer.Person.FirstName);
         }
 
-        // foreach (var p in enumerablePeople)
-        //     {
-
-        //         System.Console.WriteLine(p.LastName);
-        //     }
+        var query20 = from d in db.SalesOrderDetails join h in db.SalesOrderHeaders on
+        d.SalesOrderId equals h.SalesOrderId join p in db.Products d.ProductId equals p.ProductId where h.Status == 5
+                      group d by new { p.ProductId, p.Name } into g orderby g.Sum(x => x.LineTotal) descending select new
+                      {
+                          ProductId = g.Key.ProductId,
+                          ProductName = g.Key.Name,
+                          TotalSale = g.Sum(x => x.LineTotal)
+                      };
+                      
     }
     
    
