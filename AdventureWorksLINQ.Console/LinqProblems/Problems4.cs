@@ -1,4 +1,5 @@
 using AdventureWorksLINQ.Console.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksLINQ.Console.LinqProblems
 {
@@ -33,7 +34,53 @@ namespace AdventureWorksLINQ.Console.LinqProblems
              if (page <= 0) page = 1;
             if (pageSize <= 0) pageSize = 20;
 
-            
+            IQueryable<AdventureWorksLINQ.Console.Models.Product> q = db.Products.AsQueryable();
+
+            if (minPrice.HasValue)
+            {
+                q = q.Where(p => p.ListPrice >= minPrice.Value);
+            }
+
+            if (ProductCategoryId.HasValue)
+            {
+                q = q.Where(p => p.ProductSubcategory != null && p.ProductSubcategory.ProductCategoryId == ProductCategoryId.Value);
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var s = search.Trim();
+                q = q.Where(p => EF.Functions.Like(p.Name, $"%{s}%") || EF.Functions.Like(p.ProductNumber, $"%{s}%"));
+            }
+
+            var totalCount = await q.CountAsync().ConfigureAwait(false);
+
+            q = (sortBy.ToLower(), asc) switch
+            {
+                ("price", true) => q.OrderBy(p => p.ListPrice).ThenBy(p => p.ProductId),
+                ("price", false) => q.OrderByDescending(p => p.ListPrice).ThenBy(p => p.ProductId),
+                _ => (asc ? q.OrderBy(p => p.Name).ThenBy(p => p.ProductId) : q.OrderByDescending(p => p.Name).ThenBy(p => p.ProductId))
+            };
+
+            var pageQuery = q
+            .Select(p => new ProductDto
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                ListPrice = p.ListPrice,
+                SubcategoryName = p.ProductSubcategory != null ? p.ProductSubcategory.Name : null,
+                CategoryName = p.ProductSubcategory != null && p.ProductSubcategory.ProductCategory != null ? p.ProductSubcategory.ProductCategory.Name : null
+            }).AsNoTracking().Skip((page - 1) * pageSize).Take(pageSize);
+
+            var items = await pageQuery.ToListAsync().ConfigureAwait(false);
+
+            return new PagedResult<ProductDto>
+            {
+                TotalCount = totalCount,
+                Items = items
+            };
+
+
         }
     }
 
