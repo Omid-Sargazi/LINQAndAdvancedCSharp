@@ -20,7 +20,7 @@ builder.Services.AddAuthentication().AddJwtBearer("Bearer", options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = "local-auth",
         ValidAudience = "local-api",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_YOUR_SECRET_KEY_123"))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_YOUR_SUPER_SECRET_KEY_1234567890!!"))
     };
 });
 
@@ -61,7 +61,7 @@ app.MapGet("/login", (string userName, string password) =>
     };
 
     var identity = new ClaimsIdentity(claims);
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_YOUR_SECRET_KEY_123"));
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_YOUR_SUPER_SECRET_KEY_1234567890!!"));
 
     var tokenDescriptor = new SecurityTokenDescriptor
     {
