@@ -1,0 +1,6 @@
+@RegionBasedPrivacySecurity_HostAddress = http://localhost:5091
+
+GET {{RegionBasedPrivacySecurity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
