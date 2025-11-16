@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using RegionBasedPrivacySecurity.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,8 @@ builder.Services.AddAuthorizationBuilder()
             .RequireClaim("scope", "greetings_api"));
 
 var app = builder.Build();
+
+app.UseRequestLoggingAndAuth();
 
 // تنظیمات Swagger UI
 if (app.Environment.IsDevelopment())
