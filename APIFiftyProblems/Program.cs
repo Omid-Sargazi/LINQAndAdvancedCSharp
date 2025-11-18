@@ -5,11 +5,15 @@ using System.Text;
 using APIFiftyProblems.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddAuthentication("Bearer")
 .AddJwtBearer("Bearer", options =>
@@ -22,7 +26,7 @@ builder.Services.AddAuthentication("Bearer")
         ValidateIssuerSigningKey = true,
         ValidIssuer = "local-auth",
         ValidAudience = "local-api",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_SECRET_KEY_123"))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_VERY_LONG_SECRET_KEY_123!!"))
     };
 });
 
@@ -31,7 +35,7 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 
-app.MapGet("login", (UserLoginDto login) =>
+app.MapPost("login", (UserLoginDto login) =>
 {
     var user = FakeDatabase.FakeUsers.FirstOrDefault(u =>
         u.UserName == login.Username &&
@@ -46,9 +50,9 @@ app.MapGet("login", (UserLoginDto login) =>
             new Claim("region", user.Region),
             new Claim(ClaimTypes.Role, user.Role)
 
-        };
+    };
     var identity = new ClaimsIdentity(claims, "Bearer");
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_SECRET_KEY_123"));
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("THIS_IS_VERY_LONG_SECRET_KEY_123!!"));
 
 
     var tokenDescriptor = new SecurityTokenDescriptor
@@ -75,10 +79,11 @@ app.MapGet("/secure", () => "Secure Data").RequireAuthorization();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 
 
