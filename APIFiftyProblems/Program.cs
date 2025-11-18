@@ -3,16 +3,43 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 using APIFiftyProblems.Models;
+using APIFiftyProblems.Requirements;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddOpenApi();
+// builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Insert Bearer Token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
 
-builder.Services.AddSwaggerGen();
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement{
+    {
+        new OpenApiSecurityScheme{
+            Reference = new OpenApiReference{
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new string[]{}
+    }});
+});
+
+
 
 
 builder.Services.AddAuthentication("Bearer")
@@ -30,7 +57,12 @@ builder.Services.AddAuthentication("Bearer")
     };
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SameRegion", policy => policy.AddRequirements(new SameRegionRequirement()));
+});
+
+builder.Services.AddSingleton<IAuthorizationHandler, SameRegionHandler>();
 
 var app = builder.Build();
 
@@ -75,6 +107,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/secure", () => "Secure Data").RequireAuthorization();
+
+app.MapGet("/region/{region}", (string region) =>
+{
+    return $"This region is{region}";
+}).RequireAuthorization("SameRegion");
 
 
 if (app.Environment.IsDevelopment())
