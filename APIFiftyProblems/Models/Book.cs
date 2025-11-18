@@ -8,7 +8,7 @@ namespace APIFiftyProblems.Models
         public string Author { get; set; }
     }
 
-    public class User
+    public class Student
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace APIFiftyProblems.Models
         public DateTime BorrowDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime? ReturnBook { get; set; }
-        public User User { get; set; }
+        public Student Student { get; set; }
         public Book Book { get; set; }
     }
 }
