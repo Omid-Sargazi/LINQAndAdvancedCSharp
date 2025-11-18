@@ -4,12 +4,15 @@ using System.Text;
 using BimeDotCom.Models;
 using BimeDotCom.Requirements;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddControllers();
 
 
 
@@ -93,6 +96,23 @@ new Claim(ClaimTypes.Role,user.Role),
         token = new JwtSecurityTokenHandler().WriteToken(token)
     });
 });
+
+
+app.MapGet("/claims/{id}", (int id, HttpContext httpContext) =>
+{
+    var claim = FakeDb.Claims.FirstOrDefault(c => c.Id == id);
+    if (claim == null) return Results.NotFound();
+
+    var userId = int.Parse(httpContext.User.FindFirst("userId")?.Value ?? "0");
+    var userRole = httpContext.User.FindFirst(ClaimTypes.Role)?.Value ?? string.Empty;
+    var userRegion = httpContext.User.FindFirst("region")?.Value ?? string.Empty;
+
+    if (userRole == "admin") return Results.Ok(claim);
+    if (claim.UserId == userId) return Results.Ok(claim);
+    if (claim.Region == userRegion) return Results.Ok(claim);
+
+    return Results.Forbid();
+}).RequireAuthorization();
 
 
 if (app.Environment.IsDevelopment())
