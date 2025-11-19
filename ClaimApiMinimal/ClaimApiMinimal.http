@@ -1,0 +1,6 @@
+@ClaimApiMinimal_HostAddress = http://localhost:5163
+
+GET {{ClaimApiMinimal_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
