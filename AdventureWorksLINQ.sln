@@ -105,6 +105,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIFiftyProblems", "APIFift
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BimeDotCom", "BimeDotCom\BimeDotCom.csproj", "{73AAEA79-DBB7-4370-8045-532BF1812FCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCRUD", "SimpleCRUD\SimpleCRUD.csproj", "{64093A41-5700-47DA-A09E-C7B2E68D77EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -298,6 +300,10 @@ Global
 		{73AAEA79-DBB7-4370-8045-532BF1812FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73AAEA79-DBB7-4370-8045-532BF1812FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73AAEA79-DBB7-4370-8045-532BF1812FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64093A41-5700-47DA-A09E-C7B2E68D77EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64093A41-5700-47DA-A09E-C7B2E68D77EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64093A41-5700-47DA-A09E-C7B2E68D77EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64093A41-5700-47DA-A09E-C7B2E68D77EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
