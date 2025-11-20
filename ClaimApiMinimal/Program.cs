@@ -27,7 +27,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         RoleClaimType = ClaimTypes.Role,
         NameClaimType = ClaimTypes.Name
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+            return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine("Token validated successfully");
+            return Task.CompletedTask;
+        }
+    };
 });
+
+
 
 
 
@@ -64,6 +80,10 @@ builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlite("Data Sou
 
 
 var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
+
+
 app.MapGet("/products", async (AppDbContext db) =>
 {
     return await db.Products.ToListAsync();
@@ -77,25 +97,80 @@ app.MapPost("/products",async(Product product,AppDbContext db) =>
 }).RequireAuthorization("AdminOnly");
 
 
-app.MapPost("/login",(ClaimApiMinimal.Models.LoginRequest request) =>
+app.MapPost("/login", (ClaimApiMinimal.Models.LoginRequest request) =>
 {
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var key = Encoding.UTF8.GetBytes("YourSuperSecretKeyForTestingOnly12345");
-
-    var tokenDescriptor = new SecurityTokenDescriptor
+    
+    if (request.Username == "admin" && request.Password == "admin123")
     {
-        Subject = new System.Security.Claims.ClaimsIdentity(new[]
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes("YourSuperSecretKeyForTestingOnly12345");
+
+        var claims = new[]
         {
-            new Claim(ClaimTypes.Name,request.Username),
-            new Claim(ClaimTypes.Role,request.Username=="admin"?"admin":"user"),
-        }),
+            new Claim(ClaimTypes.Name, request.Username),
+            new Claim(ClaimTypes.Role, "admin"), // نقش admin
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
-        Expires = DateTime.UtcNow.AddHours(1),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
-    };
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddHours(1),
+            Issuer = "local-auth",   
+            Audience = "local-api",   
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key), 
+                SecurityAlgorithms.HmacSha256Signature)
+        };
 
-    var token = tokenHandler.CreateToken(tokenDescriptor);
-    return Results.Ok(new{Token=tokenHandler.WriteToken(token)});
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var jwtToken = tokenHandler.WriteToken(token);
+        
+        Console.WriteLine($"🎫 Token generated for: {request.Username} with role: admin");
+        
+        return Results.Ok(new { 
+            Token = jwtToken,
+            Username = request.Username,
+            Role = "admin",
+            ExpiresIn = "1 hour"
+        });
+    }
+    else if (request.Username == "user" && request.Password == "user123")
+    {
+        // کاربر عادی - فقط برای نمایش
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes("YourSuperSecretKeyForTestingOnly12345");
+
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Name, request.Username),
+            new Claim(ClaimTypes.Role, "user"), // نقش user
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddHours(1),
+            Issuer = "local-auth",
+            Audience = "local-api",
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key), 
+                SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var jwtToken = tokenHandler.WriteToken(token);
+        
+        return Results.Ok(new { 
+            Token = jwtToken,
+            Username = request.Username,
+            Role = "user",
+            Message = "این کاربر فقط می‌تواند محصولات را مشاهده کند"
+        });
+    }
+    
+    return Results.Unauthorized();
 });
 
 if (app.Environment.IsDevelopment())
@@ -104,8 +179,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication();
-app.UseAuthorization();
+
 
 
 app.Run();
