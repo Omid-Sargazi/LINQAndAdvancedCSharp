@@ -111,6 +111,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimApiMinimal", "ClaimApi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAuthentication", "LibraryAuthentication\LibraryAuthentication.csproj", "{BBEF5B60-3678-4073-82DB-AD49ED5F294F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureApi", "SecureApi\SecureApi.csproj", "{6AF011A6-E0FD-4AC4-9B24-13C36E2289C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -316,6 +318,10 @@ Global
 		{BBEF5B60-3678-4073-82DB-AD49ED5F294F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBEF5B60-3678-4073-82DB-AD49ED5F294F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBEF5B60-3678-4073-82DB-AD49ED5F294F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF011A6-E0FD-4AC4-9B24-13C36E2289C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF011A6-E0FD-4AC4-9B24-13C36E2289C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF011A6-E0FD-4AC4-9B24-13C36E2289C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF011A6-E0FD-4AC4-9B24-13C36E2289C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
