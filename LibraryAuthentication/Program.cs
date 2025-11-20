@@ -49,6 +49,8 @@ builder.Services.AddAuthorization(options=>
     options.AddPolicy("AdminOnly",policy=>policy.RequireRole("admin"));
     options.AddPolicy("UserOnly",policy=>policy.RequireRole("user"));
     options.AddPolicy("ManagerOnly",policy=>policy.RequireRole("manager"));
+
+    options.AddPolicy("ManagerOrAdmin",policy=>policy.RequireRole("manager","admin"));
 }
 );
 
@@ -80,13 +82,34 @@ builder.Services.AddSwaggerGen(options =>
 
 
 
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-
-
-
-
 var app = builder.Build();
+
+
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+        
+        var errorResponse = new
+        {
+            Success = false,
+            Message = "An internal server error occurred",
+            ErrorCode = "INTERNAL_ERROR", 
+            TimeStamp = DateTime.UtcNow,
+            RequestId = context.TraceIdentifier
+        };
+        
+        await context.Response.WriteAsJsonAsync(errorResponse);
+    }
+});
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -171,7 +194,7 @@ app.MapPost("/login",(LoginRequest request) =>
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, request.UserName),
-            new Claim(ClaimTypes.Role, "user"), // نقش user
+            new Claim(ClaimTypes.Role, "manager"), // نقش user
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
@@ -200,7 +223,50 @@ app.MapPost("/login",(LoginRequest request) =>
     return Results.Unauthorized();
 });
 
+app.MapGet("/books",async (AppDbContext db) =>
+{
+    return await db.Books.ToListAsync();
+});
 
+app.MapPost("/books",async(Book book,AppDbContext db) =>
+{
+   db.Books.Add(book);
+   await db.SaveChangesAsync();
+   return Results.Created($"/books/{book.Id}",book); 
+}).RequireAuthorization("ManagerOrAdmin");
+
+
+
+app.MapPut("/books/{id}",async (int id,Book updatedBook,AppDbContext db) =>
+{
+    var bookDb = db.Books.FirstOrDefault(b=>b.Id==id);
+
+    if(bookDb==null)
+        return Results.NotFound($"book with ID{id} not found");
+
+    bookDb.Title = updatedBook.Title;
+    bookDb.Author=updatedBook.Author;
+    bookDb.ISBN = updatedBook.ISBN;
+
+    await db.SaveChangesAsync();
+
+    return Results.Created($"book{bookDb.Id}",bookDb);
+   
+
+}).RequireAuthorization("AdminOnly");
+
+app.MapPost("/users/register",async (AppDbContext db, User user) =>
+{
+   await db.Users.AddAsync(user);
+    await db.SaveChangesAsync();
+    return Results.Created($"{user.Id}",user); 
+});
+
+app.MapGet("/users",async (AppDbContext db) =>
+{   
+    var users = await db.Users.ToListAsync();
+    return Results.Created($"Users",users);
+}).RequireAuthorization("AdminOrManager");
 
 
 // Configure the HTTP request pipeline.
@@ -209,6 +275,44 @@ if (app.Environment.IsDevelopment())
    app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseExceptionHandler(async exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType="application/json";
+
+        var error = new
+        {
+            Success=false,
+            Message="An Errro occurred while processing your request",
+            ErrorCode="Internal_Error",
+            TimeStamp=DateTime.UtcNow,
+            RequestId=context.TraceIdentifier,
+        };
+
+        await context.Response.WriteAsJsonAsync(error);
+    });
+});
+
+app.UseStatusCodePages(async statusCodeContext =>
+{
+    var response = statusCodeContext.HttpContext.Response;
+    response.ContentType = "application/json";
+    
+    var error = response.StatusCode switch
+    {
+        404 => new { Success = false, Message = "Resource not found", ErrorCode = "NOT_FOUND" },
+        401 => new { Success = false, Message = "Unauthorized access", ErrorCode = "UNAUTHORIZED" },
+        403 => new { Success = false, Message = "Access forbidden", ErrorCode = "FORBIDDEN" },
+        _ => new { Success = false, Message = "An error occurred", ErrorCode = "UNKNOWN_ERROR" }
+    };
+    
+    await response.WriteAsJsonAsync(error);
+});
+
 
 
 
