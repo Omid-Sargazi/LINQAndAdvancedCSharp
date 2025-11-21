@@ -4,12 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using SpaIdentityApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+// var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");;
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseInMemoryDatabase("AppDb"));
+// builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseInMemoryDatabase("AppDb"));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 
 
 builder.Services.AddSwaggerGen(options =>
@@ -39,8 +48,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+// builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+//     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -53,10 +62,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseHttpsRedirection();
+app.MapControllers();
 
 app.MapIdentityApi<IdentityUser>();
 
@@ -91,6 +100,7 @@ app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager,
 })
 .WithOpenApi()
 .RequireAuthorization();
+app.MapRazorPages();
 
 app.Run();
 
