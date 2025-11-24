@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -94,7 +95,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi(); // برای AddOpenApi اگر می‌خوایش
 }
 
-
+app.UseAuthorization();
 
 app.Run();
 

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuthDemoAuth.Controllers
 {
     [ApiController]
-     [Route("api/[controller]")]
+     [Route("api/account")]
     public class AccountController:ControllerBase
     {
         private readonly IUserService _userService;
@@ -56,7 +56,7 @@ namespace AuthDemoAuth.Controllers
             });
         }
 
-        [HttpPost("account/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
            if(!ModelState.IsValid)
@@ -93,7 +93,7 @@ namespace AuthDemoAuth.Controllers
                 StatusCode = StatusCodes.Status401Unauthorized
             });
 
-            
+
 
 
         }

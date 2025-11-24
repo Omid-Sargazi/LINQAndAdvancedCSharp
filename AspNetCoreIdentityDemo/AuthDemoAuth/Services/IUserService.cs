@@ -15,6 +15,10 @@ namespace AuthDemoAuth.Services
         public async Task<bool> RegisterUserAsync(RegisterModel model)
         {
             _users.Add(model);
+            foreach(var item in _users)
+            {
+                Console.WriteLine(item.Email);
+            }
             return await Task.FromResult(true);
         }
 
