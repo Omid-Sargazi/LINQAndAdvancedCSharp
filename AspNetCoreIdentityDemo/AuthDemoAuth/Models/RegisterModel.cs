@@ -16,6 +16,23 @@ namespace AuthDemoAuth.Models
         [DataType(DataType.Password)]
         [Compare("Password",ErrorMessage ="The password and confirm password do not match.")]
         public string ConfirmPassword {get;set;}
+
+        public string Role {get;set;}
+    }
+
+    public class User
+    {
+        public int Id {get;set;}
+        [Required]
+        [EmailAddress(ErrorMessage ="Please Enter a valid Email.")]
+        public string Email {get;set;}
+        
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password {get;set;}
+
+        [Required]
+        public string Role {get;set;}
     }
 
     public class LoginModel
@@ -29,5 +46,12 @@ namespace AuthDemoAuth.Models
         [Required]
         public string Password {get;set;}
         public bool RememberMe {get;set;}
+    }
+
+    public enum UserRole
+    {
+        User,
+        Admin,
+        Manager
     }
 }
