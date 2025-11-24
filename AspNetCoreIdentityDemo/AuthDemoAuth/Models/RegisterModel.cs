@@ -17,7 +17,7 @@ namespace AuthDemoAuth.Models
         [Compare("Password",ErrorMessage ="The password and confirm password do not match.")]
         public string ConfirmPassword {get;set;}
 
-        public string Role {get;set;}
+       // public string Role {get;set;}
     }
 
     public class User

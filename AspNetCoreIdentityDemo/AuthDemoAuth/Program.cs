@@ -34,6 +34,18 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserPolicy",policy=>policy.RequireRole("User"));
+
+    options.AddPolicy("AdminPolicy",policy=>policy.RequireRole("Admin"));
+
+    options.AddPolicy("ManagerPolicy",policy=>policy.RequireRole("Manager"));
+
+    options.AddPolicy("AdminOrManagerPolicy",policy=>policy.RequireRole("Admin","Manager"));
+});
+
+
 builder.Services.AddSingleton<IUserService,UserService>();
 
 var app = builder.Build();
@@ -46,6 +58,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 var summaries = new[]

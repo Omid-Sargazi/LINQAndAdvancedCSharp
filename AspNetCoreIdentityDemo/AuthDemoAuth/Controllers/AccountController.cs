@@ -68,34 +68,33 @@ namespace AuthDemoAuth.Controllers
                 });
             }
 
-            if(!await _userService.UserExistsAsync(model.Email))
+            var user = await _userService.GetUserByEmailAsync(model.Email);
+            if(user==null)
             {
-                return Unauthorized(new Response
-                {
-                    Message="Invalid credentials",
-                    StatusCode = StatusCodes.Status401Unauthorized
-                });
-            }
-
-            var isValidUser = await _userService.ValidateUserAsync(model);
-            if(isValidUser)
-            {
-                return Ok(new Response
-                {
-                    Message = "Login seccessfull",
-                    StatusCode = StatusCodes.Status200OK,
-                });
-            } 
-
-            return Unauthorized(new Response
+                 return Unauthorized(new Response
             {
                 Message="Invalid Credentials",
                 StatusCode = StatusCodes.Status401Unauthorized
             });
+            }
 
+            var isValidUser = await _userService.ValidateUserAsync(model);
+             if (!isValidUser)
+            {
+                return Unauthorized(new Response
+                {
+                    Message = "Invalid credentials", 
+                    StatusCode = StatusCodes.Status401Unauthorized
+                });
+            }
+            return Ok(new LoginResponse
+            {
+                Message = "Login seccessfull",
+                Email=user.Email,
+                Role=user.Role
+            });
 
-
-
+           
         }
     }
 
@@ -103,5 +102,12 @@ namespace AuthDemoAuth.Controllers
     {
         public string Message {get;set;}
         public int StatusCode {get;set;}
+    }
+
+    public class LoginResponse
+    {
+        public string Message {get;set;}
+        public string Role {get;set;}
+        public string Email {get;set;}
     }
 }

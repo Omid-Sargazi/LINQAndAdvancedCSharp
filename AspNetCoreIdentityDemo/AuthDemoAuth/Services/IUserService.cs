@@ -42,7 +42,8 @@ namespace AuthDemoAuth.Services
                 Id = _nextId++,
                 Email = model.Email,
                 Password = model.Password,
-                Role = model.Role ?? UserRole.User.ToString()
+                // Role = model.Role ?? UserRole.User.ToString()
+                Role = UserRole.User.ToString()
             };
             _users.Add(user);
              foreach (var item in _users)
