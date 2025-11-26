@@ -1,0 +1,15 @@
+CREATE TABLE SchoolLevel(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(255),
+);
+
+CREATE TABLE AcademicYear(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(20) NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    IsActive BIT DEFAULT 0
+);
+
+
