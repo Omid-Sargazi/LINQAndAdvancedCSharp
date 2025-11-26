@@ -222,7 +222,6 @@ namespace LinqExamples.ExamplesOfLinq
              g.Select(e => new { e.EmpName, e.Role }).ToList()
             }).ToList();
              
-
              
 
         }

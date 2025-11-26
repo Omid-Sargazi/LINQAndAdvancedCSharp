@@ -37,13 +37,17 @@ namespace AuthDemoAuth.Services
 
         public async Task<bool> RegisterUserAsync(RegisterModel model)
         {
+
+            var role = model.Email.ToLower().Contains("admin")?
+            UserRole.Admin.ToString():
+            UserRole.User.ToString();
             var user = new User
             {
                 Id = _nextId++,
                 Email = model.Email,
                 Password = model.Password,
                 // Role = model.Role ?? UserRole.User.ToString()
-                Role = UserRole.User.ToString()
+                Role = role
             };
             _users.Add(user);
              foreach (var item in _users)

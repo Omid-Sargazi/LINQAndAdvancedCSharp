@@ -137,6 +137,8 @@ namespace LinqExamples.Problems4
 appointmentId => appointmentId, appointment => appointment.Id, (appointmentId, appointment) => appointment.DoctorId).Distinct()
 .Join(doctors, doctorId => doctorId, doctor => doctor.Id, (doctorId, doctor) => doctor.Name).Distinct().ToList()
             }).OrderByDescending(m => m.PrescriptionCount).ThenByDescending(m => m.TotalCost);
+
+            
             
 
 
