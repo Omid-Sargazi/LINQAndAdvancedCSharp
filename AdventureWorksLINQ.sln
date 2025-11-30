@@ -129,6 +129,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthDemoAuth", "AspNetCoreI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompleteAuth", "AspNetCoreIdentityDemo\CompleteAuth\CompleteAuth.csproj", "{AF141A92-C285-48C1-A928-DCE75EFC596E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisDocExamples", "RedisDocExamples\RedisDocExamples.csproj", "{BE35D28F-F41B-462B-A3D3-D7DED15C2C54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -366,6 +368,10 @@ Global
 		{AF141A92-C285-48C1-A928-DCE75EFC596E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF141A92-C285-48C1-A928-DCE75EFC596E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF141A92-C285-48C1-A928-DCE75EFC596E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE35D28F-F41B-462B-A3D3-D7DED15C2C54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE35D28F-F41B-462B-A3D3-D7DED15C2C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE35D28F-F41B-462B-A3D3-D7DED15C2C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE35D28F-F41B-462B-A3D3-D7DED15C2C54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E07C410-C919-435B-A514-B6D7E9F7DFE8} = {3CF678DB-BB25-4033-9573-151554D212D3}
