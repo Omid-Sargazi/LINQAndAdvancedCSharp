@@ -84,13 +84,13 @@ builder.Services.AddAuthorization(options =>
         .Build();
 
     // سیاست‌های کاستوم (بعداً توضیح می‌دم)
-    options.AddPolicy("Over18", policy =>
-        policy.RequireAuthenticatedUser()
-              .AddRequirements(new MinimumAgeRequirement(18)));
+    // options.AddPolicy("Over18", policy =>
+    //     policy.RequireAuthenticatedUser()
+    //           .AddRequirements(new MinimumAgeRequirement(18)));
 
-    options.AddPolicy("EuropeOnly", policy =>
-        policy.RequireAuthenticatedUser()
-              .AddRequirements(new RegionRequirement("Europe")));
+    // options.AddPolicy("EuropeOnly", policy =>
+    //     policy.RequireAuthenticatedUser()
+    //           .AddRequirements(new RegionRequirement("Europe")));
 
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireRole("Admin"));
