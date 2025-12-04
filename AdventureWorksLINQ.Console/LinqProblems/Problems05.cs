@@ -56,5 +56,26 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                 System.Console.WriteLine();
             }
         }
+
+        public static void Problem02_ProductsByPriceRange()
+        {
+            var products = db.Products
+            .Where(p=>p.ListPrice>=100&&p.ListPrice<=500)
+            .Select(p => new
+            {
+                p.Name,
+                p.ListPrice,
+                p.ProductNumber,
+                p.Color
+            })
+            .OrderByDescending(p=>p.ListPrice)
+            .Take(15)
+            .ToList();
+
+            foreach (var p in products)
+            {
+                System.Console.WriteLine($"{p.Name} - ${p.ListPrice:F2} - {p.Color}");
+            }
+        }
     }
 }
