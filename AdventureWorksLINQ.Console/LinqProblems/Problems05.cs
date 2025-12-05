@@ -123,5 +123,58 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                 System.Console.WriteLine($"{cat.CategoryName}: {cat.ProductCount} محصول");
             }
         }
+
+        // public static void Problem05_CustomersInCalifornia()
+        // {
+        //     System.Console.WriteLine("\n=== مشتریان کالیفرنیا ===");
+            
+        //     var customers = db.Customers
+        //         .Where(c => c.Person != null && c.Person.EmailAddresses != null && 
+        //                     c.Person.EmailAddresses.Any(e => e.EmailAddress1.EndsWith("@ca.com")))
+        //         .Select(c => new
+        //         {
+        //             c.X,
+        //             c.LastName,
+        //             c.EmailAddress,
+        //             Phone = c.Phone,
+        //             City = c.Address.City
+        //         })
+        //         .OrderBy(c => c.LastName)
+        //         .Take(15)
+        //         .ToList();
+            
+        //     foreach (var cust in customers)
+        //     {
+        //         System.Console.WriteLine($"{cust.FirstName} {cust.LastName} - {cust.City} - {cust.EmailAddress}");
+        //     }
+        // }
+
+
+        public static void Problem06_OrderDetailsWithProducts()
+        {
+            System.Console.WriteLine("\n=== جزئیات سفارشات با اطلاعات محصول ===");
+            
+            var orderDetails = db.SalesOrderDetails
+                .Include(od => od.SalesOrder)
+                .Include(od => od.ProductId)
+                .Where(od => od.SalesOrder.OrderDate.Year == 2013)
+                .Select(od => new
+                {
+                    OrderNumber = od.SalesOrder.SalesOrderNumber,
+                    ProductName = od.ProductId,
+                    od.OrderQty,
+                    od.UnitPrice,
+                    LineTotal = od.LineTotal,
+                    OrderDate = od.SalesOrder.OrderDate
+                })
+                .OrderByDescending(od => od.OrderDate)
+                .Take(20)
+                .ToList();
+            
+            foreach (var detail in orderDetails)
+            {
+                System.Console.WriteLine($"{detail.OrderNumber} - {detail.ProductName} - {detail.OrderQty} x ${detail.UnitPrice:F2}");
+            }
+        }
     }
 }
