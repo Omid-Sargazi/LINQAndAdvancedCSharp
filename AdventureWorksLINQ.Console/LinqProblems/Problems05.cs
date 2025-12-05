@@ -176,5 +176,30 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                 System.Console.WriteLine($"{detail.OrderNumber} - {detail.ProductName} - {detail.OrderQty} x ${detail.UnitPrice:F2}");
             }
         }
+
+         public static void Problem07_VendorsWithAddress()
+        {
+            System.Console.WriteLine("\n=== فروشندگان و آدرس آنها ===");
+            
+            var vendors = db.Vendors
+                .Include(v => v.BusinessEntity)
+                .ThenInclude(bea => bea.BusinessEntityAddresses)
+                .Select(v => new
+                {
+                    v.Name,
+                    AccountNumber = v.AccountNumber,
+                    Address = v.AccountNumber,
+                    City = v.BusinessEntity,
+                    Phone = v.CreditRating
+                })
+                .OrderBy(v => v.Name)
+                .Take(15)
+                .ToList();
+            
+            foreach (var vendor in vendors)
+            {
+                System.Console.WriteLine($"{vendor.Name} - {vendor.City} - {vendor.Phone}");
+            }
+        }
     }
 }
