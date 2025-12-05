@@ -101,5 +101,27 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                 System.Console.WriteLine($"{order.OrderDate:yyyy-MM-dd} - {order.SalesOrderNumber} - ${order.TotalDue:F2}");
             }
         }
+
+         public static void Problem04_ProductsPerCategory()
+        {
+            System.Console.WriteLine("\n=== تعداد محصولات هر دسته‌بندی ===");
+            
+            var categories = db.ProductCategories
+                .Select(c => new
+                {
+                    CategoryName = c.Name,
+                    ProductCount = c.ProductSubcategories
+                        .SelectMany(sc => sc.Products)
+                        .Count()
+                })
+                .Where(c => c.ProductCount > 0)
+                .OrderByDescending(c => c.ProductCount)
+                .ToList();
+            
+            foreach (var cat in categories)
+            {
+                System.Console.WriteLine($"{cat.CategoryName}: {cat.ProductCount} محصول");
+            }
+        }
     }
 }
