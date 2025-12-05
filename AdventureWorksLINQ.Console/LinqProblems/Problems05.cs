@@ -77,5 +77,29 @@ namespace AdventureWorksLINQ.Console.LinqProblems
                 System.Console.WriteLine($"{p.Name} - ${p.ListPrice:F2} - {p.Color}");
             }
         }
+
+
+        public static void Problem03_RecentOrders()
+        {
+            System.Console.WriteLine("\n=== آخرین 10 سفارش ===");
+            
+            var orders = db.SalesOrderHeaders
+                .OrderByDescending(o => o.OrderDate)
+                .Select(o => new
+                {
+                    o.OrderDate,
+                    o.CustomerId,
+                    o.SalesOrderNumber,
+                    o.TotalDue,
+                    o.Status
+                })
+                .Take(10)
+                .ToList();
+            
+            foreach (var order in orders)
+            {
+                System.Console.WriteLine($"{order.OrderDate:yyyy-MM-dd} - {order.SalesOrderNumber} - ${order.TotalDue:F2}");
+            }
+        }
     }
 }
